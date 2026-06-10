@@ -3,10 +3,441 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prosperous — Engineering Design</title>
-<a href="index.html">กลับหน้าแรก</a>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Prompt:wght@600;700&display=swap" rel="stylesheet">
+<title>Prosperous — Engineering Design Document</title>
+<div class="mode-bar">
+  <a href="index.html" class="mode-btn active">Story Boards</a>
+  
+  <a href="prosperous-edd.html" class="mode-btn">Architecture Engineering</a>
+</div>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ════ RESET & MODE BAR ════ */
+*{ box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; background: #0f172a; }
+.mode-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 99999; background: #1e293b; display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid rgba(255,255,255,.1); height: 44px; }
+.mode-btn { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.65); padding: 5px 14px; border-radius: 20px; cursor: pointer; font-family: 'Sarabun', sans-serif; font-size: 12px; font-weight: 600; transition: all .2s; white-space: nowrap; }
+.mode-btn:hover { background: rgba(255,255,255,.15); color: #fff; }
+.mode-btn.active { background: #C8102E; border-color: #C8102E; color: #fff; box-shadow: 0 2px 8px rgba(200,16,46,.4); }
+.mode-tag { margin-left: auto; font-size: 10px; color: rgba(255,255,255,.25); font-family: monospace; white-space: nowrap; }
+.mode-panel { display: none; }
+.mode-panel.active { display: block; }
+
+/* ════ V5 PROTOTYPE STYLES ════ */
+
+/* ════ GLOBAL RESET & MODE ════ */
+*{ box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; background: #0f172a; }
+
+.mode-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
+  background: #1e293b; display: flex; align-items: center; gap: 8px;
+  padding: 7px 14px; border-bottom: 1px solid rgba(255,255,255,.1);
+  height: 44px;
+}
+.mode-btn {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.65); padding: 5px 14px; border-radius: 20px;
+  cursor: pointer; font-family: 'Sarabun', sans-serif; font-size: 12px;
+  font-weight: 600; transition: all .2s; white-space: nowrap; letter-spacing: .3px;
+}
+.mode-btn:hover { background: rgba(255,255,255,.15); color: #fff; }
+.mode-btn.active { background: #C8102E; border-color: #C8102E; color: #fff; box-shadow: 0 2px 8px rgba(200,16,46,.4); }
+.mode-tag { margin-left: auto; font-size: 10px; color: rgba(255,255,255,.25); font-family: monospace; white-space: nowrap; }
+.mode-panel { display: none; }
+.mode-panel.active { display: block; }
+
+/* ════ HAMBURGER ════ */
+.hamburger-btn {
+  display: none !important;
+  flex-direction: column; gap: 5px; cursor: pointer;
+  padding: 4px; border: none; background: transparent; margin-left: auto;
+}
+.hamburger-btn span { display: block; width: 20px; height: 2px; background: #444; border-radius: 2px; }
+
+/* ════ V5 STYLES ════ */
+
+  :root {
+    --primary: #C8102E;
+    --primary-dark: #9A0C23;
+    --ink: #1A1A1A;
+    --slate: #5A6472;
+    --mist: #F4F6F8;
+    --line: #E2E6EB;
+    --white: #FFFFFF;
+    --success: #1B9E5A;
+    --amber: #E8A317;
+    --radius: 14px;
+    --shadow: 0 4px 20px rgba(20,30,50,0.08);
+    --shadow-lg: 0 12px 40px rgba(20,30,50,0.14);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Sarabun', sans-serif; background: #DDE2E8; color: var(--ink); line-height: 1.6; padding: 24px; }
+  .app-title { text-align: center; margin-bottom: 8px; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 26px; color: var(--ink); }
+  .app-sub { text-align: center; color: var(--slate); margin-bottom: 24px; font-size: 14px; }
+
+  .pagenav { max-width: 1100px; margin: 0 auto 20px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .pagenav button { font-family: 'Sarabun'; font-size: 12px; font-weight: 500; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--white); color: var(--slate); cursor: pointer; transition: all .2s; }
+  .pagenav button:hover { border-color: var(--primary); color: var(--primary); }
+  .pagenav button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .pagenav .grouplabel { width: 100%; text-align: center; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); margin-top: 8px; }
+
+  .device { max-width: 1100px; margin: 0 auto; background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; border: 1px solid var(--line); }
+  .browser-bar { background: #EFF2F5; padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #FF5F57; } .dot.y { background: #FEBC2E; } .dot.g { background: #28C840; }
+  .url { flex: 1; margin-left: 12px; background: #fff; border-radius: 8px; padding: 5px 12px; font-size: 12px; color: var(--slate); }
+
+  .page { display: none; min-height: 600px; }
+  .page.active { display: block; animation: fade .3s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* ── Nav chrome ── */
+  .topbar { background: var(--ink); color: #fff; font-size: 12px; padding: 6px 28px; display: flex; justify-content: space-between; }
+  .topbar a { color: #fff; opacity: .8; text-decoration: none; cursor: pointer; }
+  .navbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; border-bottom: 1px solid var(--line); background: #fff; }
+  .logo { font-family: 'Prompt'; font-weight: 700; font-size: 22px; color: var(--primary); cursor: pointer; }
+  .logo span { color: var(--ink); }
+  .navlinks { display: flex; gap: 22px; }
+  .navlinks a { color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; }
+  .navlinks a:hover, .navlinks a.active { color: var(--primary); }
+
+  /* ── Buttons ── */
+  .btn { font-family: 'Sarabun'; font-weight: 600; border: none; border-radius: 10px; padding: 12px 22px; cursor: pointer; font-size: 14px; transition: all .2s; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.5); margin-left: 10px; }
+  .btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+  .btn-outline:hover { background: var(--primary); color: #fff; }
+  .btn-sm { padding: 7px 14px; font-size: 13px; }
+  .btn-gray { background: #e5e7eb; color: var(--ink); border: none; }
+  .btn-danger { background: #dc2626; color: #fff; border: none; }
+  .btn-danger:hover { background: #b91c1c; }
+
+  /* ── Layout helpers ── */
+  .section { padding: 36px 28px; }
+  .section h2 { font-family: 'Prompt'; font-size: 22px; margin-bottom: 6px; }
+  .section .lead { color: var(--slate); margin-bottom: 22px; font-size: 14px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 30px 28px; }
+  .breadcrumb { padding: 14px 28px; font-size: 13px; color: var(--slate); cursor: pointer; }
+  .breadcrumb:hover { color: var(--primary); }
+  .spec { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .summary { background: var(--mist); border-radius: var(--radius); padding: 20px; }
+  .summary .line { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+  .summary .total { font-weight: 700; font-size: 18px; border-top: 1px solid var(--line); padding-top: 12px; margin-top: 8px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  .field input, .field select, .field textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; font-family: 'Sarabun'; font-size: 14px; }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 12px; }
+
+  /* ── Hero ── */
+  .hero { background: linear-gradient(120deg, #1A1A1A 0%, #2C0A10 60%, var(--primary-dark) 100%); color: #fff; padding: 56px 28px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; }
+  .hero h1 { font-family: 'Prompt'; font-size: 36px; line-height: 1.25; margin-bottom: 14px; }
+  .hero p { opacity: .85; margin-bottom: 22px; font-size: 15px; }
+  .hero-img { background: rgba(255,255,255,.08); border: 1px dashed rgba(255,255,255,.3); border-radius: var(--radius); height: 240px; display: flex; align-items: center; justify-content: center; font-size: 72px; }
+
+  /* ── Feature grid ── */
+  .features { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .feature { background: var(--mist); border-radius: var(--radius); padding: 22px; }
+  .feature .ic { font-size: 28px; margin-bottom: 10px; }
+  .feature h3 { font-size: 16px; margin-bottom: 6px; }
+  .feature p { font-size: 13px; color: var(--slate); }
+
+  /* ── Product cards ── */
+  .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .card { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; cursor: pointer; transition: all .2s; }
+  .card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+  .card .ph { height: 160px; background: linear-gradient(135deg,#F0F3F6,#E2E8EE); display: flex; align-items: center; justify-content: center; font-size: 52px; }
+  .card .body { padding: 16px 18px; }
+  .card .cat { font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+  .card .name { font-weight: 700; font-size: 15px; margin-bottom: 6px; font-family: 'Prompt'; }
+  .card .desc { font-size: 13px; color: var(--slate); line-height: 1.5; margin-bottom: 10px; }
+  .card .cta { font-size: 13px; color: var(--primary); font-weight: 600; }
+  .prod-badge { display: inline-block; background: var(--mist); border: 1px solid var(--line); border-radius: 6px; font-size: 12px; padding: 3px 8px; margin-right: 4px; margin-bottom: 4px; color: var(--slate); }
+
+  /* ── Product detail ── */
+  .gallery-main { background: linear-gradient(135deg,#F0F3F6,#E2E8EE); border-radius: var(--radius); height: 320px; display: flex; align-items: center; justify-content: center; font-size: 90px; }
+  .thumbs { display: flex; gap: 10px; margin-top: 12px; }
+  .thumb { width: 64px; height: 64px; background: #EEF1F4; border-radius: 10px; border: 1px solid var(--line); }
+
+  /* ── Product detail tabs (defibtech style) ── */
+  .prod-tabs { display: flex; border-bottom: 2px solid var(--line); padding: 0 28px; background: #fff; }
+  .prod-tabs button { font-family: 'Sarabun'; font-size: 14px; font-weight: 500; padding: 13px 18px; background: none; border: none; border-bottom: 3px solid transparent; margin-bottom: -2px; cursor: pointer; color: var(--slate); transition: all .15s; }
+  .prod-tabs button:hover { color: var(--ink); }
+  .prod-tabs button.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── Accordion ── */
+  .acc { border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+  .acc-head { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; cursor: pointer; font-size: 14px; font-weight: 600; background: var(--mist); color: var(--ink); user-select: none; }
+  .acc-head.open { background: var(--primary); color: #fff; }
+  .acc-icon { transition: transform .2s; }
+  .acc-head.open .acc-icon { transform: rotate(180deg); }
+  .acc-body { display: none; padding: 14px 16px; background: #fff; font-size: 14px; color: #444; line-height: 1.75; }
+  .acc-body.open { display: block; }
+  .acc-body ul { padding-left: 18px; }
+  .acc-body li { margin-bottom: 5px; }
+
+  /* ── Specs table ── */
+  .specs-tbl { width: 100%; border-collapse: collapse; }
+  .specs-tbl tr { border-bottom: 1px solid var(--line); }
+  .specs-tbl tr:last-child { border-bottom: none; }
+  .specs-tbl td { padding: 10px 14px; font-size: 14px; }
+  .specs-tbl td:first-child { color: var(--slate); width: 45%; font-weight: 500; background: var(--mist); }
+  .specs-tbl td:last-child { font-weight: 600; }
+
+  /* ── Step number circles ── */
+  .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0; }
+
+  /* ── CTA bar ── */
+  .cta-bar { background: var(--ink); color: #fff; padding: 24px 28px; display: flex; justify-content: space-between; align-items: center; }
+  .cta-bar h3 { font-family: 'Prompt'; font-size: 18px; margin-bottom: 4px; }
+  .cta-bar p { font-size: 13px; opacity: .8; }
+
+  /* ── News ── */
+  .news-card { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; cursor: pointer; transition: all .2s; }
+  .news-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .news-card .img { height: 170px; background: linear-gradient(135deg,#F0F3F6,#E2E8EE); display: flex; align-items: center; justify-content: center; font-size: 48px; }
+  .news-card .nb { padding: 16px 18px; }
+  .ntag { display: inline-block; background: #FFF0F2; color: var(--primary); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
+  .ntitle { font-family: 'Prompt'; font-size: 15px; font-weight: 600; margin-bottom: 5px; line-height: 1.4; }
+  .ndate { font-size: 12px; color: var(--slate); margin-bottom: 7px; }
+  .nexcerpt { font-size: 13px; color: var(--slate); line-height: 1.55; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .chip { padding: 6px 16px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: 13px; cursor: pointer; font-family: 'Sarabun'; }
+  .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  /* ── Article ── */
+  .article-wrap { max-width: 720px; margin: 0 auto; padding: 36px 28px; }
+  .article-wrap h1 { font-family: 'Prompt'; font-size: 26px; line-height: 1.35; margin-bottom: 10px; }
+  .article-wrap .ameta { font-size: 13px; color: var(--slate); margin-bottom: 20px; }
+  .article-wrap .acover { height: 320px; background: linear-gradient(135deg,#F0F3F6,#E2E8EE); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 80px; margin-bottom: 24px; }
+  .article-wrap p { font-size: 15px; line-height: 1.8; margin-bottom: 16px; color: #333; }
+  .article-wrap h3 { font-family: 'Prompt'; font-size: 18px; margin: 22px 0 10px; }
+
+  /* ── CSR ── */
+  .csr-band { background: linear-gradient(120deg,#1A1A1A 0%,#2C0A10 100%); color: #fff; padding: 48px 28px; }
+  .csr-band h2 { font-family: 'Prompt'; font-size: 26px; margin-bottom: 10px; text-align: center; }
+  .csr-band .lead { opacity: .85; max-width: 640px; margin: 0 auto 28px; font-size: 15px; text-align: center; }
+  .csr-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .csr-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: var(--radius); padding: 24px; }
+  .csr-card .ic { font-size: 32px; margin-bottom: 12px; }
+  .csr-card h3 { font-size: 16px; margin-bottom: 8px; font-weight: 600; }
+  .csr-card p { font-size: 13px; opacity: .8; line-height: 1.6; }
+
+  /* ── Admin ── */
+  .admin { display: grid; grid-template-columns: 220px 1fr; min-height: 600px; }
+  .sidebar { background: var(--ink); color: #fff; padding: 20px 0; }
+  .sidebar .brand { font-family: 'Prompt'; font-weight: 700; padding: 0 20px 20px; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .sidebar a { display: block; padding: 12px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-size: 14px; cursor: pointer; }
+  .sidebar a:hover, .sidebar a.active { background: rgba(255,255,255,.08); color: #fff; border-left: 3px solid var(--primary); }
+  .admin-main { padding: 24px; background: var(--mist); }
+  .admin-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 22px; }
+  .stat { background: #fff; border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+  .stat .slabel { font-size: 12px; color: var(--slate); }
+  .stat .snum { font-family: 'Prompt'; font-size: 28px; font-weight: 700; margin: 6px 0; }
+  .stat .ssub { font-size: 12px; color: var(--success); }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  th, td { text-align: left; padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--line); }
+  th { background: #FAFBFC; color: var(--slate); font-weight: 600; }
+  .pill { padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .pill.act { background: #E0EEFF; color: #2563EB; }
+  .pill.crs { background: #E7F6ED; color: var(--success); }
+  .pill.knw { background: #FFF3DA; color: var(--amber); }
+  .pill.csr { background: #F0E7FF; color: #7C3AED; }
+  .form-card { background: #fff; border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+  .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 600px; background: linear-gradient(135deg,#1A1A1A,#2C0A10); }
+  .login-card { background: #fff; padding: 36px; border-radius: 18px; width: 360px; box-shadow: var(--shadow-lg); }
+
+  /* ── Footer ── */
+  .footer { background: var(--ink); color: #fff; padding: 30px 28px; display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; font-size: 13px; }
+  .footer h4 { margin-bottom: 10px; font-size: 14px; }
+  .footer a { display: block; color: rgba(255,255,255,.7); text-decoration: none; margin-bottom: 6px; cursor: pointer; }
+
+  /* ── Contact Form Section (defibtech style) ── */
+  .contact-section { background: #F7F8FA; border-top: 1px solid var(--line); padding: 48px 28px; }
+  .contact-section .cs-head { text-align: center; margin-bottom: 32px; }
+  .contact-section .cs-head h2 { font-family: 'Prompt'; font-size: 22px; margin-bottom: 8px; }
+  .contact-section .cs-head p { color: var(--slate); font-size: 14px; max-width: 540px; margin: 0 auto; }
+  .contact-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 800px; margin: 0 auto; }
+  .contact-form-grid .full { grid-column: 1 / -1; }
+  .cf-field { display: flex; flex-direction: column; gap: 5px; }
+  .cf-field label { font-size: 12px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: .04em; }
+  .cf-field input, .cf-field select, .cf-field textarea {
+    padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px;
+    font-family: 'Sarabun'; font-size: 14px; color: var(--ink); background: #fff;
+    transition: border-color .15s;
+  }
+  .cf-field input:focus, .cf-field select:focus, .cf-field textarea:focus { outline: none; border-color: var(--primary); }
+  .cf-field textarea { resize: vertical; min-height: 100px; }
+  .cf-check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--slate); cursor: pointer; }
+  .cf-check input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
+  .cf-submit { text-align: center; margin-top: 8px; }
+  .cf-submit .btn { min-width: 160px; }
+
+  /* ── Course cards ── */
+  .course-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: all .2s; }
+  .course-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+  .course-card .cc-top { background: linear-gradient(120deg,#1A1A1A,#2C0A10); color: #fff; padding: 24px; }
+  .course-card .cc-level { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; opacity: .7; margin-bottom: 6px; }
+  .course-card .cc-name { font-family: 'Prompt'; font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .course-card .cc-tag { display: inline-block; background: var(--primary); color: #fff; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+  .course-card .cc-body { padding: 18px 20px; }
+  .course-card .cc-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+  .course-card .cc-meta span { font-size: 12px; color: var(--slate); }
+  .course-card .cc-desc { font-size: 13px; color: var(--slate); line-height: 1.6; margin-bottom: 14px; }
+  .course-card .cc-cta { font-size: 13px; color: var(--primary); font-weight: 700; }
+
+  /* ── Rescue club ── */
+  .club-hero { background: linear-gradient(120deg,#0A1628 0%,#1A2C50 60%,#0D2444 100%); color: #fff; padding: 64px 28px; text-align: center; }
+  .club-hero h1 { font-family: 'Prompt'; font-size: 36px; line-height: 1.25; margin-bottom: 14px; }
+  .club-hero p { opacity: .85; font-size: 15px; max-width: 600px; margin: 0 auto 24px; }
+  .club-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 999px; padding: 6px 16px; font-size: 13px; font-weight: 600; margin-bottom: 24px; }
+  .rank-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .rank-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; text-align: center; }
+  .rank-card .rank-ic { font-size: 36px; margin-bottom: 10px; }
+  .rank-card .rank-name { font-family: 'Prompt'; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .rank-card .rank-sub { font-size: 12px; color: var(--slate); margin-bottom: 12px; }
+  .rank-card ul { text-align: left; padding-left: 16px; font-size: 13px; color: var(--slate); }
+  .rank-card li { margin-bottom: 4px; }
+  .benefit-row { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .benefit-row:last-child { border-bottom: none; }
+  .benefit-ic { font-size: 24px; flex-shrink: 0; width: 40px; text-align: center; }
+  .benefit-row h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .benefit-row p { font-size: 13px; color: var(--slate); }
+
+  /* ── About ── */
+  .about-hero { background: linear-gradient(120deg,#1A1A1A 0%,#2C0A10 100%); color: #fff; padding: 56px 28px; }
+  .about-hero h1 { font-family: 'Prompt'; font-size: 32px; margin-bottom: 12px; }
+  .about-hero p { opacity: .85; font-size: 15px; max-width: 580px; line-height: 1.8; }
+  .timeline { border-left: 3px solid var(--primary); padding-left: 28px; margin: 24px 0; }
+  .tl-item { position: relative; padding-bottom: 24px; }
+  .tl-item::before { content: ''; position: absolute; left: -35px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--primary); }
+  .tl-item .tl-year { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: .06em; }
+  .tl-item h4 { font-size: 15px; font-weight: 600; margin: 2px 0 4px; }
+  .tl-item p { font-size: 13px; color: var(--slate); }
+  .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+  .team-card { text-align: center; }
+  .team-card .av { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg,var(--primary),var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 10px; }
+  .team-card .t-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+  .team-card .t-role { font-size: 12px; color: var(--slate); }
+
+  @media(max-width:760px) {
+    .hero,.two-col,.features,.grid,.csr-grid,.footer { grid-template-columns: 1fr; }
+    .admin { grid-template-columns: 1fr; }
+    .contact-form-grid { grid-template-columns: 1fr; }
+    .contact-form-grid .full { grid-column: 1; }
+    .rank-grid,.team-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── Modal / Success overlay ── */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:999; align-items:center; justify-content:center; }
+  .modal-overlay.show { display:flex; }
+  .modal-box { background:#fff; border-radius:20px; padding:40px 36px; max-width:420px; width:90%; text-align:center; box-shadow:var(--shadow-lg); animation:fade .3s ease; }
+  .modal-box .m-ic { font-size:56px; margin-bottom:14px; }
+  .modal-box h3 { font-family:'Prompt'; font-size:22px; margin-bottom:8px; }
+  .modal-box p { font-size:14px; color:var(--slate); margin-bottom:22px; }
+
+  /* ── Search ── */
+  .search-bar { display:flex; gap:10px; margin-bottom:24px; }
+  .search-bar input { flex:1; padding:12px 16px; border:2px solid var(--line); border-radius:10px; font-family:'Sarabun'; font-size:15px; }
+  .search-bar input:focus { outline:none; border-color:var(--primary); }
+  .search-result { display:flex; gap:16px; align-items:flex-start; padding:16px; border:1px solid var(--line); border-radius:var(--radius); margin-bottom:10px; cursor:pointer; transition:all .2s; background:#fff; }
+  .search-result:hover { box-shadow:var(--shadow); border-color:var(--primary); }
+  .search-result .sr-ic { font-size:28px; flex-shrink:0; width:48px; height:48px; border-radius:10px; background:var(--mist); display:flex; align-items:center; justify-content:center; }
+  .search-result .sr-type { font-size:11px; color:var(--primary); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px; }
+  .search-result .sr-title { font-size:14px; font-weight:600; margin-bottom:3px; }
+  .search-result .sr-desc { font-size:12px; color:var(--slate); }
+
+  /* ── Solutions ── */
+  .sol-hero { padding:56px 28px; background:linear-gradient(120deg,#1A1A1A,#2C0A10); color:#fff; }
+  .sol-hero h1 { font-family:'Prompt'; font-size:30px; margin-bottom:10px; }
+  .sol-hero p { opacity:.8; max-width:540px; font-size:15px; line-height:1.8; }
+  .sol-card { border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:#fff; cursor:pointer; transition:all .2s; }
+  .sol-card:hover { box-shadow:var(--shadow); transform:translateY(-3px); }
+  .sol-card .sc-top { height:140px; display:flex; align-items:center; justify-content:center; font-size:52px; }
+  .sol-card .sc-body { padding:18px 20px; }
+  .sol-card h3 { font-family:'Prompt'; font-size:16px; margin-bottom:6px; }
+  .sol-card p { font-size:13px; color:var(--slate); line-height:1.55; margin-bottom:10px; }
+  .sol-card .sc-cta { font-size:13px; color:var(--primary); font-weight:700; }
+
+  /* ── 404 ── */
+  .not-found { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:500px; text-align:center; padding:48px 28px; }
+  .not-found .nf-num { font-family:'Prompt'; font-size:96px; font-weight:700; color:var(--line); line-height:1; margin-bottom:8px; }
+  .not-found h2 { font-family:'Prompt'; font-size:24px; margin-bottom:10px; }
+  .not-found p { color:var(--slate); font-size:14px; max-width:400px; margin-bottom:24px; }
+
+
+
+/* ════ V6 MOBILE RESPONSIVE ════ */
+@media (max-width: 768px) {
+  /* Remove device frame on mobile - show full screen */
+  .device-wrap { 
+    background: #fff !important;
+    display: block !important;
+    padding: 0 !important;
+    min-height: calc(100svh - 44px) !important;
+  }
+  .device { 
+    width: 100% !important; 
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: calc(100svh - 44px) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #fff !important;
+  }
+  .screen { 
+    height: auto !important;
+    min-height: calc(100svh - 44px) !important;
+    border-radius: 0 !important;
+    overflow-y: auto !important;
+  }
+  .page { min-height: calc(100svh - 44px) !important; }
+  /* Navbar mobile */
+  .nav-links { display: none !important; }
+  .hamburger-btn { display: flex !important; }
+  .nav-mobile-open .nav-links {
+    display: flex !important;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; left: 0; right: 0;
+    background: #fff;
+    padding: 12px 16px;
+    z-index: 999;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    border-top: 1px solid #eee;
+  }
+  .nav-mobile-open .nav-links a { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  /* Product tabs */
+  .prod-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  /* Grids to single column */
+  .products-grid, .sol-grid, .course-grid, .news-grid { grid-template-columns: 1fr !important; }
+  /* Hero */
+  .hero { padding: 32px 16px 24px !important; }
+  .hero h1 { font-size: 20px !important; line-height: 1.4 !important; }
+  .hero p { font-size: 13px !important; }
+  /* Forms */
+  .form-row { flex-direction: column !important; }
+  /* Admin */
+  .admin-layout { flex-direction: column !important; }
+  .admin-sidebar { width: 100% !important; flex-direction: row !important; overflow-x: auto !important; }
+  .admin-sidebar .sidebar-item { flex-shrink: 0 !important; }
+  .admin-sidebar .sidebar-label { display: none !important; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 18px !important; }
+  .section-title { font-size: 17px !important; }
+  .btn { padding: 10px 14px !important; font-size: 13px !important; }
+}
+
+
+/* ════ EDD STYLES ════ */
+.edd-root { background: #f8fafc; min-height: calc(100svh - 44px); font-family: 'Sarabun', sans-serif; padding-top: 44px; }
+
 :root{--red:#C8102E;--ink:#1A1A1A;--slate:#5A6472;--mist:#F4F6F8;--line:#E2E6EB;--success:#1B9E5A;--amber:#E8A317;--blue:#1A5FC8;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Sarabun',sans-serif;background:#DDE2E8;color:var(--ink);}
@@ -70,33 +501,187 @@ svg.d{font-family:'Sarabun',sans-serif;display:block;max-width:100%;height:auto;
 .mx-tbl td{padding:7px 10px;border:1px solid var(--line);text-align:center;vertical-align:middle;}
 .mx-tbl td:first-child{text-align:left;font-weight:500;}
 .allow{color:#1B9E5A;font-size:16px;} .deny{color:#C8102E;font-size:16px;} .cond{color:#E8A317;font-size:13px;font-weight:700;}
+
+
+
+/* ════ V7 NEW STYLES ════ */
+
+/* ════ V7 ADDITIONS ════ */
+
+/* Testimonials */
+.testi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 24px; }
+.testi-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border-left: 4px solid var(--red); }
+.testi-quote { font-size: 14px; line-height: 1.7; color: #374151; font-style: italic; margin-bottom: 14px; }
+.testi-author { display: flex; flex-direction: column; gap: 2px; }
+.testi-org { font-weight: 700; font-size: 13px; color: var(--red); }
+.testi-role { font-size: 12px; color: #9ca3af; }
+.client-logos { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+.client-logos span { background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 6px 16px; font-size: 13px; color: #6b7280; }
+
+/* FAQ */
+.faq-list { max-width: 760px; margin: 24px auto 0; }
+.faq-item { border: 1px solid #e5e7eb; border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; background: #fff; transition: box-shadow .2s; }
+.faq-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.faq-item.open { border-color: var(--red); }
+.faq-q { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; font-weight: 600; font-size: 14px; color: #111827; gap: 12px; }
+.faq-arrow { color: var(--red); transition: transform .25s; font-size: 11px; flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a { max-height: 0; overflow: hidden; font-size: 13.5px; line-height: 1.7; color: #4b5563; padding: 0 18px; transition: max-height .3s ease, padding .3s; }
+.faq-item.open .faq-a { max-height: 200px; padding: 0 18px 16px; }
+
+/* Video */
+.video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+.video-card { cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); transition: transform .2s; }
+.video-card:hover { transform: translateY(-3px); }
+.video-thumb { position:relative; background: linear-gradient(135deg, #1e293b, #334155); color: rgba(255,255,255,.8); display: flex; flex-direction: column; align-items: center; justify-content: center; height: 130px; font-size: 28px; gap: 8px; }
+.video-thumb span { font-size: 13px; text-align: center; padding: 0 12px; color: rgba(255,255,255,.6); }
+.video-label { background: rgba(255,255,255,.05); color: rgba(255,255,255,.8); padding: 10px 14px; font-size: 13px; }
+
+/* Form Validation */
+.form-field { position: relative; }
+.field-error { color: #ef4444; font-size: 11px; margin-top: 3px; display: none; }
+.form-field.invalid input, .form-field.invalid select, .form-field.invalid textarea { border-color: #ef4444 !important; }
+.form-field.invalid .field-error { display: block; }
+.form-field.valid input, .form-field.valid select, .form-field.valid textarea { border-color: #10b981 !important; }
+
+/* Page transition */
+.page { animation: pageFadeIn .25s ease; }
+@keyframes pageFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Admin export button */
+.btn-export { background: #16a34a; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'Sarabun', sans-serif; font-size: 13px; font-weight: 600; }
+.btn-export:hover { background: #15803d; }
+
+/* Mobile Responsive Additions */
+@media (max-width: 768px) {
+  .testi-grid { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: 1fr; }
+  .faq-q { font-size: 13px; }
+  .device-wrap { background: #fff !important; display: block !important; padding: 0 !important; min-height: calc(100svh - 44px) !important; }
+  .device { width: 100% !important; max-width: 100% !important; height: auto !important; min-height: calc(100svh - 44px) !important; border-radius: 0 !important; box-shadow: none !important; border: none !important; background: #fff !important; }
+  .screen { height: auto !important; min-height: calc(100svh - 44px) !important; border-radius: 0 !important; overflow-y: auto !important; }
+  .page { min-height: calc(100svh - 44px) !important; }
+  .navlinks { display: none !important; }
+  .hamburger-btn { display: flex !important; }
+  .nav-mobile-open .navlinks { display: flex !important; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: #fff; padding: 12px 16px; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,.12); border-top: 1px solid #eee; }
+  .nav-mobile-open .navlinks a { padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 15px; }
+  .grid { grid-template-columns: 1fr !important; }
+  .features { grid-template-columns: 1fr !important; }
+  .hero { padding: 32px 16px 24px !important; flex-direction: column !important; gap: 12px !important; }
+  .hero h1 { font-size: 20px !important; }
+  .hero-img { font-size: 48px !important; }
+  .form-row { flex-direction: column !important; }
+  .admin-layout { flex-direction: column !important; }
+  .admin-sidebar { width: 100% !important; flex-direction: row !important; overflow-x: auto !important; min-width: unset !important; }
+  .admin-content { padding: 16px !important; }
+  .prod-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+  .tab { display: inline-block; }
+  .sol-grid { grid-template-columns: 1fr !important; }
+  .course-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 17px !important; }
+  .section-title, h2 { font-size: 17px !important; }
+  .btn { padding: 10px 14px !important; font-size: 13px !important; }
+  .navbar { padding: 0 12px !important; }
+}
+
+
+/* ════ EDD STYLES ════ */
+.edd-root { background: #f8fafc; min-height: calc(100svh - 44px); font-family: 'Sarabun', sans-serif; padding-top: 44px; }
+
+:root{--red:#C8102E;--ink:#1A1A1A;--slate:#5A6472;--mist:#F4F6F8;--line:#E2E6EB;--success:#1B9E5A;--amber:#E8A317;--blue:#1A5FC8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sarabun',sans-serif;background:#DDE2E8;color:var(--ink);}
+.hdr{background:var(--red);color:#fff;padding:20px 28px;display:flex;justify-content:space-between;align-items:center;}
+.hdr h1{font-family:'Prompt';font-size:20px;font-weight:700;}
+.hdr p{font-size:12px;opacity:.8;margin-top:3px;}
+.hdr-r{text-align:right;font-size:12px;opacity:.75;}
+.tabs-bar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.tabs{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 12px;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:11px 14px;font-size:12px;font-weight:500;color:var(--slate);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:.2s;font-family:'Sarabun';}
+.tab:hover{color:var(--red);}
+.tab.on{color:var(--red);border-bottom-color:var(--red);}
+.main{max-width:1100px;margin:0 auto;padding:20px 14px 60px;}
+.panel{display:none;}
+.panel.on{display:block;animation:pop .25s ease;}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.ptitle{font-family:'Prompt';font-size:18px;font-weight:700;margin-bottom:3px;}
+.psub{color:var(--slate);font-size:13px;margin-bottom:18px;}
+.dcard{background:#fff;border-radius:12px;border:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden;}
+.dcard-h{padding:11px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;}
+.dcard-h h3{font-size:13px;font-weight:600;flex:1;}
+.badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--mist);color:var(--slate);}
+.dcard-b{padding:20px;overflow-x:auto;}
+svg.d{font-family:'Sarabun',sans-serif;display:block;max-width:100%;height:auto;}
+.ctbl{width:100%;border-collapse:collapse;font-size:12px;}
+.ctbl th{background:var(--mist);padding:7px 11px;text-align:left;font-weight:600;color:var(--slate);font-size:11px;letter-spacing:.04em;border-bottom:2px solid var(--line);}
+.ctbl td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+.ctbl tr:hover td{background:#fafbfc;}
+.ctbl .tot td{font-weight:700;background:var(--red);color:#fff;}
+.ctbl .sub td{font-weight:700;background:#fff0f0;color:var(--red);}
+.stag{display:inline-block;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:600;}
+.stag.done{background:#e8fff0;color:var(--success);}
+.stag.todo{background:#fff8e0;color:var(--amber);}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:18px;}
+.sbox{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 14px;}
+.sbox .lb{font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.sbox .vl{font-family:'Prompt';font-size:20px;font-weight:700;}
+.sbox .un{font-size:11px;color:var(--slate);}
+.r{color:var(--red);} .g{color:var(--success);} .b{color:var(--blue);} .a{color:var(--amber);}
+.note{margin-top:12px;padding:11px 13px;background:#fff5f5;border-radius:8px;border-left:3px solid var(--red);font-size:12px;color:var(--slate);line-height:1.8;}
+.note b{color:var(--red);}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.stabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.stab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--mist);color:var(--slate);border:1px solid var(--line);transition:.15s;font-family:'Sarabun';}
+.stab:hover{color:var(--red);}
+.stab.on{background:var(--red);color:#fff;border-color:var(--red);}
+.sqpanel{display:none;}
+.sqpanel.on{display:block;}
+.nfr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:4px;}
+.nfr-card{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 15px;}
+.nfr-card .nfr-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.nfr-card ul{padding-left:14px;font-size:12px;color:var(--slate);line-height:2;}
+.ctx-card{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 15px;}
+.codeblock{background:#1A1A1A;border-radius:8px;padding:12px 14px;font-family:'Courier New',monospace;font-size:11px;line-height:1.7;color:#E8EDF2;overflow-x:auto;margin:6px 0;}
+.codeblock .k{color:#C8102E;} .codeblock .s{color:#98D8A0;} .codeblock .n{color:#79B8FF;} .codeblock .c{color:#6A737D;font-style:italic;}
+.fr-row td:first-child{font-weight:700;color:var(--red);font-family:monospace;font-size:11px;}
+.ph1{background:#fff5f5;} .ph2{background:#eef4ff;}
+.mx-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.mx-tbl th{padding:8px 10px;text-align:center;background:var(--mist);font-size:11px;font-weight:700;color:var(--slate);border:1px solid var(--line);}
+.mx-tbl td{padding:7px 10px;border:1px solid var(--line);text-align:center;vertical-align:middle;}
+.mx-tbl td:first-child{text-align:left;font-weight:500;}
+.allow{color:#1B9E5A;font-size:16px;} .deny{color:#C8102E;font-size:16px;} .cond{color:#E8A317;font-size:13px;font-weight:700;}
+
 </style>
 </head>
-<body>
+<body style="background:#f8fafc;margin:0;padding:0;">
+<div class="edd-root">
 <div class="hdr"><div><h1>Prosperous — Engineering Design Document</h1><p>อ้างอิงจาก prosperous-v5.html · Next.js + Tailwind CSS v4 · Vercel</p></div><div class="hdr-r">มิถุนายน 2568<br>In Development</div></div>
 <div class="tabs-bar"><div class="tabs">
-<div class="tab on" onclick="go('ctx',this)">📌 Context</div>
-<div class="tab" onclick="go('uc',this)">👤 Use Case</div>
-<div class="tab" onclick="go('dfd0',this)">🔷 DFD 0</div>
-<div class="tab" onclick="go('dfd1',this)">🔶 DFD 1</div>
-<div class="tab" onclick="go('act',this)">⚡ Activity</div>
-<div class="tab" onclick="go('cls',this)">🏗️ Class</div>
-<div class="tab" onclick="go('seq',this)">↔️ Sequence</div>
-<div class="tab" onclick="go('sta',this)">🔄 State</div>
-<div class="tab" onclick="go('cost',this)">💰 ราคา</div>
-<div class="tab" onclick="go('er',this)">🗃️ ER</div>
-<div class="tab" onclick="go('pf',this)">🗺️ Page Flow</div>
-<div class="tab" onclick="go('gantt',this)">📅 Gantt</div>
-<div class="tab" onclick="go('dep',this)">🚀 Deployment</div>
-<div class="tab" onclick="go('comp',this)">🧩 Components</div>
-<div class="tab" onclick="go('gloss',this)">📖 Glossary</div>
-<div class="tab" onclick="go('fr',this)">📋 Requirements</div>
-<div class="tab" onclick="go('schema',this)">📨 API Schema</div>
-<div class="tab" onclick="go('dict',this)">📚 Data Dict</div>
-<div class="tab" onclick="go('auth',this)">🔐 Auth & Errors</div>
-<div class="tab" onclick="go('env',this)">⚙️ Env Variables</div>
-<div class="tab" onclick="go('ac',this)">✅ Acceptance</div>
-<div class="tab" onclick="go('trace',this)">🔗 Traceability</div>
+<div class="tab on" onclick="eddGo('ctx',this)">📌 Context</div>
+<div class="tab" onclick="eddGo('uc',this)">👤 Use Case</div>
+<div class="tab" onclick="eddGo('dfd0',this)">🔷 DFD 0</div>
+<div class="tab" onclick="eddGo('dfd1',this)">🔶 DFD 1</div>
+<div class="tab" onclick="eddGo('act',this)">⚡ Activity</div>
+<div class="tab" onclick="eddGo('cls',this)">🏗️ Class</div>
+<div class="tab" onclick="eddGo('seq',this)">↔️ Sequence</div>
+<div class="tab" onclick="eddGo('sta',this)">🔄 State</div>
+<div class="tab" onclick="eddGo('cost',this)">💰 ราคา</div>
+<div class="tab" onclick="eddGo('er',this)">🗃️ ER</div>
+<div class="tab" onclick="eddGo('pf',this)">🗺️ Page Flow</div>
+<div class="tab" onclick="eddGo('gantt',this)">📅 Gantt</div>
+<div class="tab" onclick="eddGo('dep',this)">🚀 Deployment</div>
+<div class="tab" onclick="eddGo('comp',this)">🧩 Components</div>
+<div class="tab" onclick="eddGo('gloss',this)">📖 Glossary</div>
+<div class="tab" onclick="eddGo('fr',this)">📋 Requirements</div>
+<div class="tab" onclick="eddGo('schema',this)">📨 API Schema</div>
+<div class="tab" onclick="eddGo('dict',this)">📚 Data Dict</div>
+<div class="tab" onclick="eddGo('auth',this)">🔐 Auth & Errors</div>
+<div class="tab" onclick="eddGo('env',this)">⚙️ Env Variables</div>
+<div class="tab" onclick="eddGo('ac',this)">✅ Acceptance</div>
+<div class="tab" onclick="eddGo('trace',this)">🔗 Traceability</div>
 </div></div>
 <div class="main">
 <div id="p-ctx" class="panel on">
@@ -200,87 +785,58 @@ svg.d{font-family:'Sarabun',sans-serif;display:block;max-width:100%;height:auto;
 
 <div id="act1" class="sqpanel on">
 <div class="dcard"><div class="dcard-h"><h3>Flow 1 — ส่งฟอร์มติดต่อ / ขอใบเสนอราคา</h3><span class="badge">11 Actions · 1 Decision · Validation Loop</span></div>
-<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 526" width="880"><defs><marker id="f1a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#5A6472" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f1r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f1g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f1o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#E8A317" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
-<rect x="10" y="8" width="268" height="32" rx="8" fill="#1A5FC8"/>
-<text x="144" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">👤 User</text>
-<rect x="286" y="8" width="276" height="32" rx="8" fill="#C8102E"/>
-<text x="424" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">🖥 Frontend</text>
-<rect x="570" y="8" width="300" height="32" rx="8" fill="#1B9E5A"/>
-<text x="720" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">⚙️ Backend / DB</text>
-<rect x="10" y="40" width="268" height="486" fill="#E8F4FF" opacity=".4"/>
-<rect x="286" y="40" width="276" height="486" fill="#FFF5F5" opacity=".4"/>
-<rect x="570" y="40" width="300" height="486" fill="#F0FFF4" opacity=".4"/>
-<rect x="10" y="8" width="860" height="526" rx="10" fill="none" stroke="#E2E6EB" stroke-width="1.5"/>
-<line x1="278" y1="40" x2="278" y2="534" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/>
-<line x1="564" y1="40" x2="564" y2="534" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/><circle cx="144" cy="54" r="11" fill="#1A1A1A"/><line x1="144" y1="65" x2="144" y2="70" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="44" y="70" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="93" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เปิดหน้าสินค้า AED</text><line x1="144" y1="106" x2="144" y2="118" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="44" y="118" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">คลิกแท็บ ติดต่อ</text><line x1="144" y1="154" x2="144" y2="166" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="44" y="166" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="189" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">กรอกฟอร์ม (5 ช่อง)</text><rect x="34" y="162" width="7" height="44" rx="3" fill="#E8A317" opacity=".6"/><line x1="144" y1="202" x2="144" y2="214" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="44" y="214" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="237" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">กด "ส่งข้อมูล"</text><line x1="244" y1="232" x2="324" y2="232" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f1b)"/><rect x="256" y="221" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="284" y="231" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun">submit</text><rect x="324" y="214" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="237" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">Validate ฟอร์ม (Zod)</text><line x1="424" y1="250" x2="424" y2="262" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f1a)"/><polygon points="424,262 478,289 424,316 370,289" fill="#FFFBEE" stroke="#E8A317" stroke-width="1.5"/><text x="424" y="293" text-anchor="middle" font-size="10" fill="#1A1A1A" font-family="Sarabun">ผ่าน?</text><path d="M370,289 L282,289 L282,184 L244,184" fill="none" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f1r)"/><rect x="285" y="282" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="313" y="292" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">ไม่ผ่าน</text><line x1="424" y1="316" x2="424" y2="334" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f1g)"/><rect x="410" y="315" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="438" y="325" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">ผ่าน ✓</text><rect x="324" y="334" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="357" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">POST /api/contact</text><line x1="524" y1="352" x2="622" y2="352" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f1r)"/><rect x="545" y="341" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="573" y="351" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">request</text><rect x="620" y="334" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="357" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">Validate server-side</text><line x1="720" y1="370" x2="720" y2="382" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="620" y="382" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="405" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">INSERT lead (status='new')</text><line x1="720" y1="418" x2="720" y2="430" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="620" y="430" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2" stroke-dasharray="5 2"/><text x="720" y="453" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">Send email notify (async)</text><line x1="622" y1="448" x2="524" y2="448" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f1g)" stroke-dasharray="5 3"/><rect x="545" y="437" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="573" y="447" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">201 OK</text><rect x="324" y="430" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="424" y="453" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">แสดง Success Modal ✅</text><line x1="324" y1="448" x2="244" y2="448" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f1g)" stroke-dasharray="5 3"/><rect x="44" y="430" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="453" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">รับ Confirmation ✅</text><line x1="144" y1="466" x2="144" y2="478" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f1a)"/><circle cx="144" cy="490" r="10" fill="none" stroke="#1A1A1A" stroke-width="2.5"/><circle cx="144" cy="490" r="6" fill="#1A1A1A"/></svg></div></div>
+<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 680" width="100%" style="max-width:880px"><defs>
+  <marker id="f1a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f1r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f1g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f1o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/></marker>
+</defs><rect x="10" y="56" width="268" height="624" fill="#EFF6FF" opacity=".5"/><rect x="284" y="56" width="276" height="624" fill="#FFF5F5" opacity=".5"/><rect x="566" y="56" width="300" height="624" fill="#F0FFF4" opacity=".5"/><line x1="284" y1="56" x2="284" y2="680" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><line x1="566" y1="56" x2="566" y2="680" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><rect x="10" y="8" width="866" height="672" rx="10" fill="none" stroke="#CBD5E1" stroke-width="1.5"/><rect x="10" y="8" width="854" height="48" rx="8" fill="#1e293b"/><rect x="10" y="8" width="268" height="48" rx="4" fill="#1A5FC8" opacity=".9"/><text x="144" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">👤 User / Actor</text><rect x="284" y="8" width="276" height="48" rx="4" fill="#C8102E" opacity=".9"/><text x="422" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">🖥 Frontend</text><rect x="566" y="8" width="300" height="48" rx="4" fill="#1B9E5A" opacity=".9"/><text x="716" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">⚙️ Backend / DB</text><circle cx="144" cy="60" r="10" fill="#1e293b"/><line x1="144" y1="70" x2="144" y2="77" stroke="#475569" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="44" y="80" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เปิดหน้าสินค้า</text><line x1="144" y1="116" x2="144" y2="141" stroke="#475569" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="44" y="144" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">คลิกแท็บ ติดต่อ</text><line x1="144" y1="180" x2="144" y2="205" stroke="#475569" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="44" y="208" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">กรอกฟอร์ม (5 ช่อง)</text><line x1="144" y1="244" x2="144" y2="269" stroke="#475569" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="44" y="272" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">กด "ส่งข้อมูล"</text><line x1="244" y1="290" x2="327" y2="290" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f1b)"/><rect x="256" y="281" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="284" y="291" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun,sans-serif">submit</text><rect x="324" y="272" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Validate (Zod)</text><line x1="424" y1="308" x2="424" y2="333" stroke="#475569" stroke-width="1.3" marker-end="url(#f1a)"/><polygon points="424,330 476,354 424,378 372,354" fill="#FFFBEE" stroke="#D97706" stroke-width="1.5"/><text x="424" y="358" text-anchor="middle" font-size="10" fill="#92400e" font-family="Sarabun,sans-serif">ผ่าน?</text><path d="M372,354 L214,354 L214,226 L244,226" fill="none" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f1r)"/><rect x="186" y="283" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="214" y="293" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">ไม่ผ่าน</text><line x1="424" y1="378" x2="424" y2="397" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f1g)"/><rect x="396" y="382" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="424" y="392" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">ผ่าน ✓</text><rect x="324" y="400" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="422" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">POST /api/contact</text><line x1="524" y1="418" x2="617" y2="418" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f1r)"/><rect x="541" y="409" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="419" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">request</text><rect x="614" y="400" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="422" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Validate server-side</text><line x1="717" y1="436" x2="717" y2="461" stroke="#475569" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="614" y="464" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="486" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">INSERT lead → DB</text><line x1="717" y1="500" x2="717" y2="525" stroke="#475569" stroke-width="1.3" marker-end="url(#f1a)"/><rect x="614" y="528" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Send email (async)</text><text x="714" y="563" text-anchor="middle" font-size="9" fill="#64748b" font-family="Sarabun,sans-serif">via Resend API</text><line x1="614" y1="546" x2="521" y2="546" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f1g)" stroke-dasharray="5 3"/><rect x="541" y="537" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="547" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">201 OK</text><rect x="324" y="528" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">แสดง Success Modal ✅</text><line x1="324" y1="546" x2="241" y2="546" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f1g)" stroke-dasharray="5 3"/><rect x="256" y="537" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="284" y="547" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">confirm</text><rect x="44" y="528" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">รับ Confirmation ✅</text><line x1="144" y1="564" x2="144" y2="589" stroke="#475569" stroke-width="1.3" marker-end="url(#f1a)"/><circle cx="144" cy="592" r="10" fill="none" stroke="#1e293b" stroke-width="2.5"/><circle cx="144" cy="592" r="6" fill="#1e293b"/></svg></div></div>
 </div>
 
 <div id="act2" class="sqpanel">
 <div class="dcard"><div class="dcard-h"><h3>Flow 2 — สมัครหลักสูตร CPR/AED</h3><span class="badge">10 Actions · 1 Decision · Seat Check Guard</span></div>
-<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 570" width="880"><defs><marker id="f2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#5A6472" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f2r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f2o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#E8A317" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
-<rect x="10" y="8" width="268" height="32" rx="8" fill="#1A5FC8"/>
-<text x="144" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">👤 User</text>
-<rect x="286" y="8" width="276" height="32" rx="8" fill="#C8102E"/>
-<text x="424" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">🖥 Frontend</text>
-<rect x="570" y="8" width="300" height="32" rx="8" fill="#1B9E5A"/>
-<text x="720" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">⚙️ Backend / DB</text>
-<rect x="10" y="40" width="268" height="530" fill="#E8F4FF" opacity=".4"/>
-<rect x="286" y="40" width="276" height="530" fill="#FFF5F5" opacity=".4"/>
-<rect x="570" y="40" width="300" height="530" fill="#F0FFF4" opacity=".4"/>
-<rect x="10" y="8" width="860" height="570" rx="10" fill="none" stroke="#E2E6EB" stroke-width="1.5"/>
-<line x1="278" y1="40" x2="278" y2="578" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/>
-<line x1="564" y1="40" x2="564" y2="578" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/><circle cx="144" cy="54" r="11" fill="#1A1A1A"/><line x1="144" y1="65" x2="144" y2="70" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="44" y="70" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="93" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เปิดหน้า /courses</text><line x1="144" y1="106" x2="144" y2="118" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="44" y="118" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เลือกหลักสูตร CPR/AED</text><line x1="144" y1="154" x2="144" y2="166" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="44" y="166" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="189" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">คลิก "ลงทะเบียน"</text><line x1="244" y1="184" x2="324" y2="184" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f2b)"/><rect x="256" y="173" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="284" y="183" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun">open form</text><rect x="324" y="166" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="189" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">กรอกฟอร์มสมัคร</text><line x1="424" y1="202" x2="424" y2="214" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="324" y="214" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="237" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">กด "ยืนยันสมัคร"</text><line x1="424" y1="250" x2="424" y2="262" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="324" y="262" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="285" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">Validate ฟอร์ม</text><line x1="424" y1="298" x2="424" y2="310" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><line x1="524" y1="328" x2="622" y2="328" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f2r)"/><rect x="545" y="317" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="573" y="327" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">POST</text><rect x="324" y="310" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="333" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">POST /api/registrations</text><rect x="620" y="310" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="333" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">ตรวจที่นั่งว่าง</text><line x1="720" y1="346" x2="720" y2="358" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><polygon points="720,358 774,385 720,412 666,385" fill="#FFFBEE" stroke="#E8A317" stroke-width="1.5"/><text x="720" y="389" text-anchor="middle" font-size="10" fill="#1A1A1A" font-family="Sarabun">มีที่นั่ง?</text><path d="M666,385 L570,385 L570,328 L524,328" fill="none" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f2r)"/><rect x="532" y="348" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="560" y="358" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">เต็ม 409</text><rect x="324" y="308" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="4 2"/><text x="424" y="330" text-anchor="middle" font-size="10" font-weight="600" fill="#C8102E" font-family="Sarabun">แสดง "คอร์สเต็มแล้ว" ❌</text><line x1="720" y1="412" x2="720" y2="424" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f2g)"/><rect x="706" y="405" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="734" y="415" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">มีที่ว่าง</text><rect x="620" y="424" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="447" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">INSERT registration (pending)</text><line x1="720" y1="460" x2="720" y2="472" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="620" y="472" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2" stroke-dasharray="5 2"/><text x="720" y="494" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">Send confirm email (async)</text><line x1="622" y1="490" x2="524" y2="490" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f2g)" stroke-dasharray="5 3"/><rect x="545" y="479" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="573" y="489" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">201 Created</text><rect x="324" y="472" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="424" y="495" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">แสดง Modal ✅ + รอ Email</text><line x1="324" y1="490" x2="244" y2="490" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f2g)" stroke-dasharray="5 3"/><rect x="44" y="472" width="200" height="36" rx="18" fill="#E8F4FF" stroke="#1A5FC8" stroke-width="1.2"/><text x="144" y="495" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">รับ Confirmation + Email</text><line x1="144" y1="508" x2="144" y2="520" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f2a)"/><circle cx="144" cy="532" r="10" fill="none" stroke="#1A1A1A" stroke-width="2.5"/><circle cx="144" cy="532" r="6" fill="#1A1A1A"/></svg></div></div>
+<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 736" width="100%" style="max-width:880px"><defs>
+  <marker id="f2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f2r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f2o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/></marker>
+</defs><rect x="10" y="56" width="268" height="680" fill="#EFF6FF" opacity=".5"/><rect x="284" y="56" width="276" height="680" fill="#FFF5F5" opacity=".5"/><rect x="566" y="56" width="300" height="680" fill="#F0FFF4" opacity=".5"/><line x1="284" y1="56" x2="284" y2="736" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><line x1="566" y1="56" x2="566" y2="736" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><rect x="10" y="8" width="866" height="728" rx="10" fill="none" stroke="#CBD5E1" stroke-width="1.5"/><rect x="10" y="8" width="854" height="48" rx="8" fill="#1e293b"/><rect x="10" y="8" width="268" height="48" rx="4" fill="#1A5FC8" opacity=".9"/><text x="144" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">👤 User / Actor</text><rect x="284" y="8" width="276" height="48" rx="4" fill="#C8102E" opacity=".9"/><text x="422" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">🖥 Frontend</text><rect x="566" y="8" width="300" height="48" rx="4" fill="#1B9E5A" opacity=".9"/><text x="716" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">⚙️ Backend / DB</text><circle cx="144" cy="60" r="10" fill="#1e293b"/><line x1="144" y1="70" x2="144" y2="77" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="44" y="80" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เลือกหลักสูตร CPR</text><line x1="144" y1="116" x2="144" y2="141" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="44" y="144" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">คลิก สมัครเรียน</text><line x1="244" y1="162" x2="327" y2="162" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f2b)"/><rect x="256" y="153" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="284" y="163" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun,sans-serif">click</text><rect x="324" y="144" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">โหลดฟอร์มสมัคร</text><line x1="424" y1="180" x2="424" y2="205" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="324" y="208" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">แสดงรายละเอียด + ราคา</text><line x1="324" y1="226" x2="241" y2="226" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)" stroke-dasharray="5 3"/><rect x="44" y="208" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">กรอกข้อมูลส่วนตัว</text><line x1="144" y1="244" x2="144" y2="269" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="44" y="272" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">กด "ส่งใบสมัคร"</text><line x1="244" y1="290" x2="327" y2="290" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f2b)"/><rect x="256" y="281" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="284" y="291" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun,sans-serif">submit</text><rect x="324" y="272" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Validate ฟอร์ม</text><line x1="424" y1="308" x2="424" y2="333" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)"/><polygon points="424,330 476,354 424,378 372,354" fill="#FFFBEE" stroke="#D97706" stroke-width="1.5"/><text x="424" y="358" text-anchor="middle" font-size="10" fill="#92400e" font-family="Sarabun,sans-serif">ผ่าน?</text><path d="M372,354 L214,354 L214,418 L244,418" fill="none" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f2r)"/><rect x="186" y="379" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="214" y="389" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">ไม่ผ่าน</text><line x1="424" y1="378" x2="424" y2="397" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f2g)"/><rect x="396" y="382" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="424" y="392" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">ผ่าน ✓</text><rect x="324" y="400" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="422" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">POST /api/register</text><line x1="524" y1="418" x2="617" y2="418" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f2r)"/><rect x="541" y="409" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="419" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">request</text><rect x="614" y="400" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="422" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">ตรวจสอบที่นั่งว่าง</text><line x1="717" y1="436" x2="717" y2="461" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="614" y="464" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="486" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">INSERT registration</text><line x1="717" y1="500" x2="717" y2="525" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)"/><rect x="614" y="528" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Send confirm email</text><text x="714" y="563" text-anchor="middle" font-size="9" fill="#64748b" font-family="Sarabun,sans-serif">Resend API</text><line x1="614" y1="546" x2="521" y2="546" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f2g)" stroke-dasharray="5 3"/><rect x="541" y="537" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="547" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">201 OK</text><rect x="324" y="528" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Success + ปฏิทิน</text><line x1="324" y1="546" x2="241" y2="546" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f2g)" stroke-dasharray="5 3"/><rect x="44" y="528" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">รับ email ยืนยัน ✅</text><line x1="144" y1="564" x2="144" y2="589" stroke="#475569" stroke-width="1.3" marker-end="url(#f2a)"/><circle cx="144" cy="592" r="10" fill="none" stroke="#1e293b" stroke-width="2.5"/><circle cx="144" cy="592" r="6" fill="#1e293b"/></svg></div></div>
 </div>
 
 <div id="act3" class="sqpanel">
 <div class="dcard"><div class="dcard-h"><h3>Flow 3 — Admin Login + JWT Auth</h3><span class="badge">10 Actions · 2 Decisions · Token Lifecycle</span></div>
-<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 562" width="880"><defs><marker id="f3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#5A6472" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f3r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f3g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f3b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f3o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#E8A317" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
-<rect x="10" y="8" width="268" height="32" rx="8" fill="#E8A317"/>
-<text x="144" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">👨‍💼 Admin</text>
-<rect x="286" y="8" width="276" height="32" rx="8" fill="#C8102E"/>
-<text x="424" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">🖥 Frontend</text>
-<rect x="570" y="8" width="300" height="32" rx="8" fill="#1B9E5A"/>
-<text x="720" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">⚙️ Backend / DB</text>
-<rect x="10" y="40" width="268" height="522" fill="#FFF8E0" opacity=".4"/>
-<rect x="286" y="40" width="276" height="522" fill="#FFF5F5" opacity=".4"/>
-<rect x="570" y="40" width="300" height="522" fill="#F0FFF4" opacity=".4"/>
-<rect x="10" y="8" width="860" height="562" rx="10" fill="none" stroke="#E2E6EB" stroke-width="1.5"/>
-<line x1="278" y1="40" x2="278" y2="570" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/>
-<line x1="564" y1="40" x2="564" y2="570" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/><circle cx="144" cy="54" r="11" fill="#1A1A1A"/><line x1="144" y1="65" x2="144" y2="70" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f3a)"/><rect x="44" y="70" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="93" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เปิด URL /admin/*</text><line x1="244" y1="88" x2="324" y2="88" stroke="#E8A317" stroke-width="1.3" marker-end="url(#f3o)"/><rect x="256" y="77" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="284" y="87" text-anchor="middle" font-size="9" fill="#E8A317" font-family="Sarabun">request</text><rect x="324" y="70" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="93" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">Middleware ตรวจ JWT cookie</text><line x1="424" y1="106" x2="424" y2="118" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f3a)"/><polygon points="424,118 478,145 424,172 370,145" fill="#FFFBEE" stroke="#E8A317" stroke-width="1.5"/><text x="424" y="149" text-anchor="middle" font-size="10" fill="#1A1A1A" font-family="Sarabun">token valid?</text><line x1="424" y1="172" x2="424" y2="172" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f3r)"/><rect x="413" y="149" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="441" y="159" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">ไม่มี/หมดอายุ</text><rect x="324" y="172" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">redirect → /admin/login</text><line x1="324" y1="190" x2="244" y2="190" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f3r)" stroke-dasharray="5 3"/><rect x="44" y="172" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">กรอก username + password</text><line x1="144" y1="208" x2="144" y2="220" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f3a)"/><rect x="44" y="220" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="243" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">กด "เข้าสู่ระบบ"</text><line x1="244" y1="238" x2="324" y2="238" stroke="#E8A317" stroke-width="1.3" marker-end="url(#f3o)"/><rect x="256" y="227" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="284" y="237" text-anchor="middle" font-size="9" fill="#E8A317" font-family="Sarabun">submit</text><rect x="324" y="220" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="243" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">POST /api/auth/login</text><line x1="524" y1="238" x2="622" y2="238" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f3r)"/><rect x="545" y="227" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="573" y="237" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">verify</text><rect x="620" y="220" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="243" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">bcrypt.compare(pass, hash)</text><line x1="720" y1="256" x2="720" y2="268" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f3a)"/><polygon points="720,268 774,295 720,322 666,295" fill="#FFFBEE" stroke="#E8A317" stroke-width="1.5"/><text x="720" y="299" text-anchor="middle" font-size="10" fill="#1A1A1A" font-family="Sarabun">ถูกต้อง?</text><path d="M666,295 L570,295 L570,238 L524,238" fill="none" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f3r)"/><rect x="533" y="253" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="561" y="263" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">รหัสผิด 401</text><rect x="324" y="218" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="4 2" opacity=".7"/><text x="424" y="240" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">แสดง error "รหัสผ่านไม่ถูกต้อง"</text><line x1="720" y1="322" x2="720" y2="334" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f3g)"/><rect x="708" y="313" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="736" y="323" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">ถูกต้อง ✓</text><rect x="620" y="334" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="357" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">SignJWT → 8h exp</text><line x1="720" y1="370" x2="720" y2="382" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f3a)"/><rect x="620" y="382" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="405" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">Set-Cookie httpOnly Secure</text><line x1="622" y1="400" x2="524" y2="400" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f3g)" stroke-dasharray="5 3"/><rect x="545" y="389" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="573" y="399" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">200 + cookie</text><rect x="324" y="382" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="405" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">redirect → /admin (Dashboard)</text><line x1="324" y1="400" x2="244" y2="400" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f3g)" stroke-dasharray="5 3"/><rect x="44" y="382" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="405" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เข้าสู่ Dashboard ✅</text><line x1="478" y1="145" x2="524" y2="145" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f3g)"/><path d="M524,145 L524,400 L524,400" fill="none" stroke="#1B9E5A" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f3g)"/><rect x="456" y="126" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="484" y="136" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">valid ✓</text><line x1="144" y1="418" x2="144" y2="430" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f3a)"/><circle cx="144" cy="442" r="10" fill="none" stroke="#1A1A1A" stroke-width="2.5"/><circle cx="144" cy="442" r="6" fill="#1A1A1A"/><text x="864" y="149" font-size="8" fill="#1B9E5A" font-family="Sarabun" text-anchor="end">→ ผ่านได้เลย</text></svg></div></div>
+<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 608" width="100%" style="max-width:880px"><defs>
+  <marker id="f3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f3r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f3g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f3b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f3o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/></marker>
+</defs><rect x="10" y="56" width="268" height="552" fill="#EFF6FF" opacity=".5"/><rect x="284" y="56" width="276" height="552" fill="#FFF5F5" opacity=".5"/><rect x="566" y="56" width="300" height="552" fill="#F0FFF4" opacity=".5"/><line x1="284" y1="56" x2="284" y2="608" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><line x1="566" y1="56" x2="566" y2="608" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><rect x="10" y="8" width="866" height="600" rx="10" fill="none" stroke="#CBD5E1" stroke-width="1.5"/><rect x="10" y="8" width="854" height="48" rx="8" fill="#1e293b"/><rect x="10" y="8" width="268" height="48" rx="4" fill="#1A5FC8" opacity=".9"/><text x="144" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">👤 User / Actor</text><rect x="284" y="8" width="276" height="48" rx="4" fill="#C8102E" opacity=".9"/><text x="422" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">🖥 Frontend</text><rect x="566" y="8" width="300" height="48" rx="4" fill="#1B9E5A" opacity=".9"/><text x="716" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">⚙️ Backend / DB</text><circle cx="144" cy="60" r="10" fill="#1e293b"/><line x1="144" y1="70" x2="144" y2="77" stroke="#475569" stroke-width="1.3" marker-end="url(#f3a)"/><rect x="44" y="80" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เปิด /admin/login</text><line x1="244" y1="98" x2="327" y2="98" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f3b)"/><rect x="324" y="80" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Render Login Form</text><line x1="424" y1="116" x2="424" y2="141" stroke="#475569" stroke-width="1.3" marker-end="url(#f3a)"/><rect x="44" y="144" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">กรอก email + password</text><line x1="244" y1="162" x2="327" y2="162" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f3b)"/><rect x="256" y="153" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="284" y="163" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun,sans-serif">submit</text><rect x="324" y="144" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">POST /api/auth/login</text><line x1="524" y1="162" x2="617" y2="162" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f3r)"/><rect x="541" y="153" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="163" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">request</text><rect x="614" y="144" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">ค้นหา admin ใน DB</text><line x1="717" y1="180" x2="717" y2="205" stroke="#475569" stroke-width="1.3" marker-end="url(#f3a)"/><rect x="614" y="208" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">bcrypt.compare(pw)</text><line x1="717" y1="244" x2="717" y2="269" stroke="#475569" stroke-width="1.3" marker-end="url(#f3a)"/><polygon points="717,266 769,290 717,314 665,290" fill="#FFFBEE" stroke="#D97706" stroke-width="1.5"/><text x="717" y="294" text-anchor="middle" font-size="10" fill="#92400e" font-family="Sarabun,sans-serif">ตรงกัน?</text><path d="M665,290 L494,290 L494,162 L524,162" fill="none" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f3r)"/><rect x="466" y="219" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="494" y="229" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">ไม่ตรง</text><line x1="717" y1="314" x2="717" y2="333" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f3g)"/><rect x="689" y="318" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="717" y="328" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">ตรง ✓</text><rect x="614" y="336" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="358" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Sign JWT (8h)</text><line x1="614" y1="354" x2="521" y2="354" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f3g)" stroke-dasharray="5 3"/><rect x="541" y="345" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="355" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">token</text><rect x="324" y="336" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="358" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Set-Cookie + redirect</text><line x1="324" y1="354" x2="241" y2="354" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f3g)" stroke-dasharray="5 3"/><rect x="44" y="336" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="358" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เข้า Dashboard ✅</text><line x1="144" y1="372" x2="144" y2="397" stroke="#475569" stroke-width="1.3" marker-end="url(#f3a)"/><circle cx="144" cy="400" r="10" fill="none" stroke="#1e293b" stroke-width="2.5"/><circle cx="144" cy="400" r="6" fill="#1e293b"/></svg></div></div>
 </div>
 
 <div id="act4" class="sqpanel">
 <div class="dcard"><div class="dcard-h"><h3>Flow 4 — Admin จัดการ Lead Status</h3><span class="badge">10 Actions · 1 Decision · Error Branch</span></div>
-<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 500" width="880"><defs><marker id="f4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#5A6472" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f4r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f4g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f4o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#E8A317" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
-<rect x="10" y="8" width="268" height="32" rx="8" fill="#E8A317"/>
-<text x="144" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">👨‍💼 Admin</text>
-<rect x="286" y="8" width="276" height="32" rx="8" fill="#C8102E"/>
-<text x="424" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">🖥 Frontend</text>
-<rect x="570" y="8" width="300" height="32" rx="8" fill="#1B9E5A"/>
-<text x="720" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">⚙️ Backend / DB</text>
-<rect x="10" y="40" width="268" height="460" fill="#FFF8E0" opacity=".4"/>
-<rect x="286" y="40" width="276" height="460" fill="#FFF5F5" opacity=".4"/>
-<rect x="570" y="40" width="300" height="460" fill="#F0FFF4" opacity=".4"/>
-<rect x="10" y="8" width="860" height="500" rx="10" fill="none" stroke="#E2E6EB" stroke-width="1.5"/>
-<line x1="278" y1="40" x2="278" y2="508" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/>
-<line x1="564" y1="40" x2="564" y2="508" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/><circle cx="144" cy="54" r="11" fill="#1A1A1A"/><line x1="144" y1="65" x2="144" y2="70" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="44" y="70" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="93" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เปิด /admin/leads</text><line x1="244" y1="88" x2="324" y2="88" stroke="#E8A317" stroke-width="1.3" marker-end="url(#f4o)"/><rect x="256" y="77" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="284" y="87" text-anchor="middle" font-size="9" fill="#E8A317" font-family="Sarabun">navigate</text><rect x="324" y="70" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="93" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">GET /api/admin/leads</text><line x1="524" y1="88" x2="622" y2="88" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f4r)"/><rect x="620" y="70" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="93" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">SELECT leads ORDER BY date</text><line x1="622" y1="88" x2="524" y2="88" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f4g)" stroke-dasharray="5 3"/><rect x="545" y="71" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="573" y="81" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">leads[ ]</text><line x1="424" y1="106" x2="424" y2="118" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="324" y="118" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">แสดงตาราง Leads</text><line x1="324" y1="136" x2="244" y2="136" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f4g)" stroke-dasharray="5 3"/><rect x="44" y="118" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เห็นตาราง Leads</text><line x1="144" y1="154" x2="144" y2="166" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="44" y="166" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="189" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">คลิก Lead → เลือก status</text><line x1="144" y1="202" x2="144" y2="214" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="44" y="214" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="237" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">กด "อัพเดต"</text><line x1="244" y1="232" x2="324" y2="232" stroke="#E8A317" stroke-width="1.3" marker-end="url(#f4o)"/><rect x="256" y="221" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="284" y="231" text-anchor="middle" font-size="9" fill="#E8A317" font-family="Sarabun">PATCH</text><rect x="324" y="214" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="237" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">PATCH /api/admin/leads/[id]</text><line x1="524" y1="232" x2="622" y2="232" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f4r)"/><rect x="620" y="214" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="237" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">UPDATE lead SET status, updated_at</text><line x1="720" y1="250" x2="720" y2="262" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f4a)"/><polygon points="720,262 774,289 720,316 666,289" fill="#FFFBEE" stroke="#E8A317" stroke-width="1.5"/><text x="720" y="293" text-anchor="middle" font-size="10" fill="#1A1A1A" font-family="Sarabun">success?</text><line x1="666" y1="289" x2="570" y2="289" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f4r)"/><path d="M570,289 L570,370 L524,370" fill="none" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f4r)"/><rect x="604" y="274" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="632" y="284" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun">500 error</text><line x1="720" y1="316" x2="720" y2="334" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f4g)"/><rect x="708" y="311" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="736" y="321" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">200 OK</text><rect x="620" y="334" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="357" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">200 OK · { lead }</text><line x1="622" y1="352" x2="524" y2="352" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f4g)" stroke-dasharray="5 3"/><rect x="324" y="334" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="357" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">อัพเดต status pill ใน table</text><line x1="324" y1="352" x2="244" y2="352" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f4g)" stroke-dasharray="5 3"/><rect x="44" y="334" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="357" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เห็น status เปลี่ยน ✅</text><rect x="324" y="352" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="4 2" opacity=".7"/><text x="424" y="374" text-anchor="middle" font-size="10" fill="#C8102E" font-family="Sarabun">แสดง error toast</text><line x1="324" y1="370" x2="244" y2="370" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f4r)" stroke-dasharray="5 3"/><rect x="44" y="352" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="375" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">รับรู้ error</text><line x1="144" y1="388" x2="144" y2="400" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f4a)"/><circle cx="144" cy="412" r="10" fill="none" stroke="#1A1A1A" stroke-width="2.5"/><circle cx="144" cy="412" r="6" fill="#1A1A1A"/></svg></div></div>
+<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 608" width="100%" style="max-width:880px"><defs>
+  <marker id="f4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f4r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f4g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f4o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/></marker>
+</defs><rect x="10" y="56" width="268" height="552" fill="#EFF6FF" opacity=".5"/><rect x="284" y="56" width="276" height="552" fill="#FFF5F5" opacity=".5"/><rect x="566" y="56" width="300" height="552" fill="#F0FFF4" opacity=".5"/><line x1="284" y1="56" x2="284" y2="608" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><line x1="566" y1="56" x2="566" y2="608" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><rect x="10" y="8" width="866" height="600" rx="10" fill="none" stroke="#CBD5E1" stroke-width="1.5"/><rect x="10" y="8" width="854" height="48" rx="8" fill="#1e293b"/><rect x="10" y="8" width="268" height="48" rx="4" fill="#1A5FC8" opacity=".9"/><text x="144" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">👤 User / Actor</text><rect x="284" y="8" width="276" height="48" rx="4" fill="#C8102E" opacity=".9"/><text x="422" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">🖥 Frontend</text><rect x="566" y="8" width="300" height="48" rx="4" fill="#1B9E5A" opacity=".9"/><text x="716" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">⚙️ Backend / DB</text><circle cx="144" cy="60" r="10" fill="#1e293b"/><line x1="144" y1="70" x2="144" y2="77" stroke="#475569" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="44" y="80" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เปิด Admin Leads</text><line x1="244" y1="98" x2="327" y2="98" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f4b)"/><rect x="324" y="80" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">GET /api/leads</text><line x1="524" y1="98" x2="617" y2="98" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f4r)"/><rect x="541" y="89" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="99" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">request</text><rect x="614" y="80" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Query leads + filter</text><line x1="614" y1="98" x2="521" y2="98" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f4g)" stroke-dasharray="5 3"/><rect x="541" y="89" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="99" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">200 OK</text><line x1="424" y1="116" x2="424" y2="141" stroke="#475569" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="324" y="144" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">แสดงตาราง Leads</text><line x1="324" y1="162" x2="241" y2="162" stroke="#475569" stroke-width="1.3" marker-end="url(#f4a)" stroke-dasharray="5 3"/><rect x="44" y="144" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เลือก Lead + สถานะ</text><line x1="144" y1="180" x2="144" y2="205" stroke="#475569" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="44" y="208" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">กด Update Status</text><line x1="244" y1="226" x2="327" y2="226" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f4b)"/><rect x="256" y="217" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="284" y="227" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun,sans-serif">PATCH</text><rect x="324" y="208" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">PATCH /api/leads/:id</text><line x1="524" y1="226" x2="617" y2="226" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f4r)"/><rect x="541" y="217" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="227" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">request</text><rect x="614" y="208" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">UPDATE lead status</text><line x1="717" y1="244" x2="717" y2="269" stroke="#475569" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="614" y="272" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Return updated row</text><line x1="614" y1="290" x2="521" y2="290" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f4g)" stroke-dasharray="5 3"/><rect x="541" y="281" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="291" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">200</text><rect x="324" y="272" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Refresh row UI ✅</text><line x1="324" y1="290" x2="241" y2="290" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f4g)" stroke-dasharray="5 3"/><rect x="44" y="272" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เห็นสถานะใหม่ ✅</text><line x1="144" y1="308" x2="144" y2="333" stroke="#475569" stroke-width="1.3" marker-end="url(#f4a)"/><rect x="44" y="336" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="358" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Export CSV (opt)</text><line x1="244" y1="354" x2="327" y2="354" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f4b)"/><rect x="256" y="345" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="284" y="355" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun,sans-serif">GET CSV</text><rect x="324" y="336" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="358" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">สร้างไฟล์ CSV</text><line x1="144" y1="372" x2="144" y2="397" stroke="#475569" stroke-width="1.3" marker-end="url(#f4a)"/><circle cx="144" cy="400" r="10" fill="none" stroke="#1e293b" stroke-width="2.5"/><circle cx="144" cy="400" r="6" fill="#1e293b"/></svg></div></div>
 </div>
 
 <div id="act5" class="sqpanel">
 <div class="dcard"><div class="dcard-h"><h3>Flow 5 — Admin เพิ่ม/เผยแพร่บทความ</h3><span class="badge">10 Actions · 1 Decision · Publish vs Draft</span></div>
-<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 580" width="880"><defs><marker id="f5a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#5A6472" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f5r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f5g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f5b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker><marker id="f5o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#E8A317" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
-<rect x="10" y="8" width="268" height="32" rx="8" fill="#E8A317"/>
-<text x="144" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">👨‍💼 Admin</text>
-<rect x="286" y="8" width="276" height="32" rx="8" fill="#C8102E"/>
-<text x="424" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">🖥 Frontend</text>
-<rect x="570" y="8" width="300" height="32" rx="8" fill="#1B9E5A"/>
-<text x="720" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun">⚙️ Backend / DB</text>
-<rect x="10" y="40" width="268" height="540" fill="#FFF8E0" opacity=".4"/>
-<rect x="286" y="40" width="276" height="540" fill="#FFF5F5" opacity=".4"/>
-<rect x="570" y="40" width="300" height="540" fill="#F0FFF4" opacity=".4"/>
-<rect x="10" y="8" width="860" height="580" rx="10" fill="none" stroke="#E2E6EB" stroke-width="1.5"/>
-<line x1="278" y1="40" x2="278" y2="588" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/>
-<line x1="564" y1="40" x2="564" y2="588" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="5 4"/><circle cx="144" cy="54" r="11" fill="#1A1A1A"/><line x1="144" y1="65" x2="144" y2="70" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="44" y="70" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="93" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เปิด /admin/news</text><line x1="144" y1="106" x2="144" y2="118" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="44" y="118" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">คลิก "เพิ่มบทความ"</text><line x1="244" y1="136" x2="324" y2="136" stroke="#E8A317" stroke-width="1.3" marker-end="url(#f5o)"/><rect x="256" y="125" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="284" y="135" text-anchor="middle" font-size="9" fill="#E8A317" font-family="Sarabun">navigate</text><rect x="324" y="118" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เปิดฟอร์ม Add Article</text><line x1="324" y1="136" x2="244" y2="136" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f5g)" stroke-dasharray="5 3"/><rect x="44" y="166" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="189" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">กรอก title, type, summary</text><line x1="144" y1="202" x2="144" y2="214" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="44" y="214" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="237" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">เขียนเนื้อหา (editor)</text><line x1="144" y1="250" x2="144" y2="262" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><polygon points="144,262 198,289 144,316 90,289" fill="#FFFBEE" stroke="#E8A317" stroke-width="1.5"/><text x="144" y="293" text-anchor="middle" font-size="10" fill="#1A1A1A" font-family="Sarabun">เผยแพร่/ร่าง?</text><line x1="198" y1="289" x2="244" y2="289" stroke="#1B9E5A" stroke-width="1.3"/><path d="M244,289 L244,334 L324,334" fill="none" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f5g)"/><rect x="168" y="274" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="196" y="284" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">เผยแพร่</text><line x1="144" y1="316" x2="144" y2="334" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="130" y="311" width="56" height="14" rx="3" fill="#fff" opacity=".92"/><text x="158" y="321" text-anchor="middle" font-size="9" fill="#5A6472" font-family="Sarabun">ร่าง (draft)</text><rect x="324" y="334" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="357" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">POST /api/admin/articles</text><line x1="244" y1="352" x2="324" y2="352" stroke="#E8A317" stroke-width="1.3" marker-end="url(#f5o)"/><rect x="256" y="333" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="284" y="343" text-anchor="middle" font-size="9" fill="#E8A317" font-family="Sarabun">status=draft</text><line x1="524" y1="352" x2="622" y2="352" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f5r)"/><rect x="620" y="334" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="357" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">Generate slug from title</text><line x1="720" y1="370" x2="720" y2="382" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="620" y="382" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="405" text-anchor="middle" font-size="10" font-weight="600" fill="#1A1A1A" font-family="Sarabun">DOMPurify.sanitize(content)</text><line x1="720" y1="418" x2="720" y2="430" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="620" y="430" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="453" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">INSERT article (status=?)</text><line x1="720" y1="466" x2="720" y2="478" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="620" y="478" width="200" height="36" rx="18" fill="#E8FFE8" stroke="#1B9E5A" stroke-width="1.2"/><text x="720" y="501" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">201 Created · { id, slug }</text><line x1="622" y1="496" x2="524" y2="496" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f5g)" stroke-dasharray="5 3"/><rect x="545" y="485" width="56" height="14" rx="3" fill="#fff" opacity=".9"/><text x="573" y="495" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun">201</text><rect x="324" y="478" width="200" height="36" rx="18" fill="#FFF0F0" stroke="#C8102E" stroke-width="1.2"/><text x="424" y="501" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">redirect → /admin/news ✅</text><line x1="324" y1="496" x2="244" y2="496" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f5g)" stroke-dasharray="5 3"/><rect x="44" y="478" width="200" height="36" rx="18" fill="#FFF8E0" stroke="#E8A317" stroke-width="1.2"/><text x="144" y="501" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A" font-family="Sarabun">บทความปรากฏใน list</text><line x1="144" y1="514" x2="144" y2="526" stroke="#5A6472" stroke-width="1.3" marker-end="url(#f5a)"/><circle cx="144" cy="538" r="10" fill="none" stroke="#1A1A1A" stroke-width="2.5"/><circle cx="144" cy="538" r="6" fill="#1A1A1A"/></svg></div></div>
+<div class="dcard-b" style="overflow-x:auto;"><svg class="d" viewBox="0 0 880 736" width="100%" style="max-width:880px"><defs>
+  <marker id="f5a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f5r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f5g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1B9E5A" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f5b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#1A5FC8" stroke-width="1.5" stroke-linecap="round"/></marker>
+  <marker id="f5o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 2L9 5L1 8" fill="none" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/></marker>
+</defs><rect x="10" y="56" width="268" height="680" fill="#EFF6FF" opacity=".5"/><rect x="284" y="56" width="276" height="680" fill="#FFF5F5" opacity=".5"/><rect x="566" y="56" width="300" height="680" fill="#F0FFF4" opacity=".5"/><line x1="284" y1="56" x2="284" y2="736" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><line x1="566" y1="56" x2="566" y2="736" stroke="#D0D5DD" stroke-width="1" stroke-dasharray="4 3"/><rect x="10" y="8" width="866" height="728" rx="10" fill="none" stroke="#CBD5E1" stroke-width="1.5"/><rect x="10" y="8" width="854" height="48" rx="8" fill="#1e293b"/><rect x="10" y="8" width="268" height="48" rx="4" fill="#1A5FC8" opacity=".9"/><text x="144" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">👤 User / Actor</text><rect x="284" y="8" width="276" height="48" rx="4" fill="#C8102E" opacity=".9"/><text x="422" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">🖥 Frontend</text><rect x="566" y="8" width="300" height="48" rx="4" fill="#1B9E5A" opacity=".9"/><text x="716" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">⚙️ Backend / DB</text><circle cx="144" cy="60" r="10" fill="#1e293b"/><line x1="144" y1="70" x2="144" y2="77" stroke="#475569" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="44" y="80" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เปิด Admin → ข่าว</text><line x1="244" y1="98" x2="327" y2="98" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f5b)"/><rect x="324" y="80" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">GET /api/articles</text><line x1="524" y1="98" x2="617" y2="98" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f5r)"/><rect x="614" y="80" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Query articles</text><line x1="614" y1="98" x2="521" y2="98" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f5g)" stroke-dasharray="5 3"/><rect x="541" y="89" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="99" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">200</text><line x1="424" y1="116" x2="424" y2="141" stroke="#475569" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="324" y="144" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">แสดงรายการบทความ</text><line x1="324" y1="162" x2="241" y2="162" stroke="#475569" stroke-width="1.3" marker-end="url(#f5a)" stroke-dasharray="5 3"/><rect x="44" y="144" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="166" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">คลิก "เพิ่มบทความ"</text><line x1="144" y1="180" x2="144" y2="205" stroke="#475569" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="44" y="208" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">กรอก Title, Content,
+Tag, Cover</text><line x1="144" y1="244" x2="144" y2="269" stroke="#475569" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="44" y="272" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">กด "บันทึก"</text><line x1="244" y1="290" x2="327" y2="290" stroke="#1A5FC8" stroke-width="1.3" marker-end="url(#f5b)"/><rect x="256" y="281" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="284" y="291" text-anchor="middle" font-size="9" fill="#1A5FC8" font-family="Sarabun,sans-serif">POST</text><rect x="324" y="272" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Validate + slug gen</text><line x1="424" y1="308" x2="424" y2="333" stroke="#475569" stroke-width="1.3" marker-end="url(#f5a)"/><polygon points="424,330 476,354 424,378 372,354" fill="#FFFBEE" stroke="#D97706" stroke-width="1.5"/><text x="424" y="358" text-anchor="middle" font-size="10" fill="#92400e" font-family="Sarabun,sans-serif">ผ่าน?</text><path d="M372,354 L214,354 L214,226 L244,226" fill="none" stroke="#C8102E" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#f5r)"/><rect x="186" y="283" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="214" y="293" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">ไม่ผ่าน</text><line x1="424" y1="378" x2="424" y2="397" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f5g)"/><rect x="396" y="382" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="424" y="392" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">ผ่าน ✓</text><rect x="324" y="400" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="422" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">POST /api/articles</text><line x1="524" y1="418" x2="617" y2="418" stroke="#C8102E" stroke-width="1.3" marker-end="url(#f5r)"/><rect x="541" y="409" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="419" text-anchor="middle" font-size="9" fill="#C8102E" font-family="Sarabun,sans-serif">request</text><rect x="614" y="400" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="422" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">INSERT article</text><line x1="717" y1="436" x2="717" y2="461" stroke="#475569" stroke-width="1.3" marker-end="url(#f5a)"/><rect x="614" y="464" width="200" height="36" rx="18" fill="#F0FFF4" stroke="#1B9E5A" stroke-width="1.3"/><text x="714" y="486" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Return {id, slug}</text><line x1="614" y1="482" x2="521" y2="482" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f5g)" stroke-dasharray="5 3"/><rect x="541" y="473" width="56" height="14" rx="3" fill="white" opacity=".9"/><text x="569" y="483" text-anchor="middle" font-size="9" fill="#1B9E5A" font-family="Sarabun,sans-serif">201</text><rect x="324" y="464" width="200" height="36" rx="18" fill="#FFF5F5" stroke="#C8102E" stroke-width="1.3"/><text x="424" y="486" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">Redirect → preview</text><line x1="324" y1="482" x2="241" y2="482" stroke="#1B9E5A" stroke-width="1.3" marker-end="url(#f5g)" stroke-dasharray="5 3"/><rect x="44" y="464" width="200" height="36" rx="18" fill="#EFF6FF" stroke="#1A5FC8" stroke-width="1.3"/><text x="144" y="486" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b" font-family="Sarabun,sans-serif">เห็นบทความใหม่ ✅</text><line x1="144" y1="500" x2="144" y2="525" stroke="#475569" stroke-width="1.3" marker-end="url(#f5a)"/><circle cx="144" cy="528" r="10" fill="none" stroke="#1e293b" stroke-width="2.5"/><circle cx="144" cy="528" r="6" fill="#1e293b"/></svg></div></div>
 </div>
 
 </div>
@@ -508,6 +1064,64 @@ svg.d{font-family:'Sarabun',sans-serif;display:block;max-width:100%;height:auto;
   <div class="sbox"><div class="lb">Ops ปีแรก</div><div class="vl g">72,000</div><div class="un">บาท/ปี</div></div>
   <div class="sbox"><div class="lb">รวมทั้งหมดปีแรก</div><div class="vl r">722,000</div><div class="un">บาท</div></div>
   <div class="sbox"><div class="lb">ระยะเวลา Phase 1</div><div class="vl a">3–4</div><div class="un">เดือน</div></div>
+</div>
+
+<div class="dcard" style="margin-bottom:16px">
+  <div class="dcard-h"><h3>📐 เกณฑ์การคิดราคา — ใช้อะไรมาคำนวณ?</h3><span class="badge">Transparent Pricing</span></div>
+  <div class="dcard-b" style="padding:0">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:8px;overflow:hidden">
+      
+      <div style="background:#f8fafc;padding:20px;border-right:1px solid #e2e8f0">
+        <div style="font-weight:700;color:#1e293b;margin-bottom:12px;font-size:14px">📏 หน่วยที่ใช้คิดราคา</div>
+        <table style="width:100%;font-size:12.5px;border-collapse:collapse">
+          <tr style="background:#e2e8f0"><th style="padding:6px 10px;text-align:left">ปัจจัย</th><th style="padding:6px 10px;text-align:right">รายละเอียด</th></tr>
+          <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 10px">ราคา dev/ชั่วโมง</td><td style="padding:6px 10px;text-align:right;font-weight:600">800 บาท/ชม.</td></tr>
+          <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 10px">หน้าธรรมดา</td><td style="padding:6px 10px;text-align:right;font-weight:600">8–12 ชม./หน้า</td></tr>
+          <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 10px">หน้า complex (form/tab)</td><td style="padding:6px 10px;text-align:right;font-weight:600">16–28 ชม./หน้า</td></tr>
+          <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 10px">Admin page</td><td style="padding:6px 10px;text-align:right;font-weight:600">20–40 ชม./หน้า</td></tr>
+          <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 10px">API endpoint</td><td style="padding:6px 10px;text-align:right;font-weight:600">4–8 ชม./endpoint</td></tr>
+          <tr><td style="padding:6px 10px">ทดสอบ QA</td><td style="padding:6px 10px;text-align:right;font-weight:600">15% ของ dev</td></tr>
+        </table>
+      </div>
+
+      <div style="background:#fff;padding:20px">
+        <div style="font-weight:700;color:#1e293b;margin-bottom:12px;font-size:14px">🧮 สูตรคำนวณแต่ละรายการ</div>
+        <div style="font-size:12.5px;line-height:1.9;color:#374151">
+          <div style="background:#f0fdf4;border-radius:6px;padding:10px 12px;margin-bottom:8px">
+            <span style="font-weight:700;color:#15803d">ราคาหน้า</span> = จำนวนชั่วโมง × 800 บาท<br>
+            <span style="color:#6b7280;font-size:11px">เช่น AED detail (28 ชม.) = 22,400 ≈ <strong>22,000 บาท</strong></span>
+          </div>
+          <div style="background:#eff6ff;border-radius:6px;padding:10px 12px;margin-bottom:8px">
+            <span style="font-weight:700;color:#1d4ed8">ราคา API</span> = จำนวน endpoint × ชม. × 800<br>
+            <span style="color:#6b7280;font-size:11px">เช่น 5 endpoints × 6 ชม. × 800 = <strong>24,000 บาท</strong></span>
+          </div>
+          <div style="background:#fef9c3;border-radius:6px;padding:10px 12px;margin-bottom:8px">
+            <span style="font-weight:700;color:#92400e">Ops ราย ปี</span> = Vercel Pro + Supabase + Resend + domain<br>
+            <span style="color:#6b7280;font-size:11px">~6,000 บาท/เดือน × 12 เดือน = <strong>72,000 บาท/ปี</strong></span>
+          </div>
+          <div style="background:#fff1f2;border-radius:6px;padding:10px 12px">
+            <span style="font-weight:700;color:#be123c">Buffer 10%</span> รวมอยู่ในแต่ละรายการแล้ว<br>
+            <span style="color:#6b7280;font-size:11px">ครอบคลุม revision, meetings, bug fixes หลัง launch</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="padding:16px 20px;background:#f1f5f9;border-top:1px solid #e2e8f0">
+      <div style="font-weight:700;font-size:13px;color:#1e293b;margin-bottom:8px">📦 สิ่งที่รวมในราคา (ไม่มีค่าใช้จ่ายซ่อน)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px">
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:4px 12px">✅ Source code ทั้งหมด</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:4px 12px">✅ Deploy บน Vercel</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:4px 12px">✅ Git repository</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:4px 12px">✅ รับประกัน bug 30 วัน</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:4px 12px">✅ คู่มือการใช้งาน Admin</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:4px 12px">✅ Training 2 ชม.</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:4px 12px">❌ ไม่รวม domain ชื่อ</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:4px 12px">❌ ไม่รวม stock photo license</span>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="dcard"><div class="dcard-h"><h3>Phase 1 — UI ทั้งหมด (จาก prototype)</h3><span class="badge">28 หน้า</span></div><div class="dcard-b"><table class="ctbl"><thead><tr><th>รายการ</th><th>รายละเอียด</th><th>สถานะ</th><th style="text-align:right">บาท</th></tr></thead><tbody><tr><td>หน้าแรก</td><td>Hero, Features, Products 3 การ์ด, ข่าว, Footer</td><td><span class="stag done">✅ Done</span></td><td>22,000</td></tr><tr><td>หน้าสินค้า</td><td>รายการ + chip filter + CTA โทร/Line</td><td><span class="stag done">✅ Done</span></td><td>15,000</td></tr><tr><td>Lifeline AED detail</td><td>4 แท็บ, specs table, วิธีใช้ 4 ขั้น, ฟอร์ม</td><td><span class="stag done">✅ Done</span></td><td>28,000</td></tr><tr><td>AutoShock AED detail</td><td>Auto mode, IPX5, เหมาะสระ/ผู้สูงอายุ</td><td><span class="stag done">✅ Done</span></td><td>20,000</td></tr><tr><td>อุปกรณ์กายภาพ</td><td>Rescue Board, Ring Buoy, Spine Board</td><td><span class="stag done">✅ Done</span></td><td>18,000</td></tr><tr><td>CSR + บริการ</td><td>CSR grid, หลักสูตร, ชมรม overview</td><td><span class="stag done">✅ Done</span></td><td>14,000</td></tr><tr><td>หน้าหลักสูตร</td><td>CPR, AED, Water Safety, Rescue Swimmer cards</td><td><span class="stag done">✅ Done</span></td><td>22,000</td></tr><tr><td>Course detail</td><td>รายละเอียด, ตาราง D1–D5, ฟอร์มสมัคร</td><td><span class="stag done">✅ Done</span></td><td>18,000</td></tr><tr><td>Rescue Swimmer Club</td><td>Rank 3 ระดับ, benefits, recruitment notice</td><td><span class="stag done">✅ Done</span></td><td>16,000</td></tr><tr><td>ข่าวสาร + บทความ</td><td>filter chips, news cards, article detail</td><td><span class="stag done">✅ Done</span></td><td>24,000</td></tr><tr><td>ติดต่อ + เกี่ยวกับเรา</td><td>ฟอร์ม, timeline ปี 57–67, ทีม, stats 300+/5000+/120+</td><td><span class="stag done">✅ Done</span></td><td>28,000</td></tr><tr><td>Solutions + Hotel Package</td><td>sol-hero, cards, ฟอร์มโรงแรม</td><td><span class="stag done">✅ Done</span></td><td>22,000</td></tr><tr><td>ค้นหา + 404</td><td>search bar + results, not-found</td><td><span class="stag done">✅ Done</span></td><td>15,000</td></tr><tr><td>Admin Login + Dashboard</td><td>login card, stat grid, sidebar 7 เมนู</td><td><span class="stag done">✅ Done</span></td><td>22,000</td></tr><tr><td>Admin: ข่าว/เพิ่ม/แก้ไข</td><td>ตาราง, form, status เผยแพร่/ร่าง</td><td><span class="stag done">✅ Done</span></td><td>28,000</td></tr><tr><td>Admin: Leads</td><td>ตาราง, status pill, filter</td><td><span class="stag done">✅ Done</span></td><td>12,000</td></tr><tr><td>Admin: ไลฟ์การ์ด</td><td>stats 24/18/6, ตาราง, ระดับ ILSE</td><td><span class="stag done">✅ Done</span></td><td>10,000</td></tr><tr><td>Admin: หลักสูตร + ตั้งค่า</td><td>schedule table, ข้อมูลบริษัท, เปลี่ยนรหัส</td><td><span class="stag done">✅ Done</span></td><td>18,000</td></tr><tr><td>Migrate → Next.js + Tailwind v4</td><td>แปลง HTML prototype → App Router components</td><td><span class="stag todo">🔄 กำลังทำ</span></td><td>35,000</td></tr><tr><td>SEO + QA</td><td>meta tags, Thai OG, mobile, Sarabun font</td><td><span class="stag todo">🔄 Todo</span></td><td>25,000</td></tr><tr class="sub"><td><strong>รวม Phase 1</strong></td><td></td><td></td><td><strong>448,000</strong></td></tr></tbody></table></div></div>
 <div class="dcard"><div class="dcard-h"><h3>Phase 2 — Backend + Database (อนาคต)</h3><span class="badge">Real Data</span></div><div class="dcard-b"><table class="ctbl"><thead><tr><th>รายการ</th><th>รายละเอียด</th><th style="text-align:right">บาท</th></tr></thead><tbody><tr><td>Database (Supabase)</td><td>Articles, Leads, Lifeguards, Courses, Settings</td><td>20,000</td></tr><tr><td>API: Contact Form</td><td>POST /api/contact → บันทึก Lead จริง</td><td>15,000</td></tr><tr><td>Admin Auth (JWT)</td><td>Login จริง, bcrypt, httpOnly cookie</td><td>18,000</td></tr><tr><td>Admin CRUD Articles</td><td>GET/POST/PUT/DELETE /api/articles</td><td>20,000</td></tr><tr><td>Email (SendGrid)</td><td>notify admin + auto-reply ผู้ติดต่อ</td><td>15,000</td></tr><tr><td>Rich Text Editor</td><td>TipTap แทน textarea ใน admin-add</td><td>22,000</td></tr><tr><td>Course Registration</td><td>บันทึกสมัคร + ส่งอีเมลยืนยัน</td><td>20,000</td></tr><tr><td>Lifeguard API</td><td>CRUD + status update จริง</td><td>15,000</td></tr><tr><td>Image Upload (Cloudinary)</td><td>รูปสินค้า, cover บทความ</td><td>15,000</td></tr><tr><td>Line Notify</td><td>แจ้ง @prosperous เมื่อมี Lead ใหม่</td><td>10,000</td></tr><tr><td>Security</td><td>Rate limiting, CORS, input sanitize</td><td>12,000</td></tr><tr><td>Analytics Dashboard</td><td>Pageviews, leads, conversion</td><td>20,000</td></tr><tr class="sub"><td><strong>รวม Phase 2</strong></td><td></td><td><strong>202,000</strong></td></tr></tbody></table></div></div>
@@ -1479,9 +2093,9 @@ POST /api/auth/logout → Set-Cookie: token= Max-Age=0</pre></div>
 <div class="note" style="margin-top:10px;"><b>✅ ครบ 100%</b> ทุก FR มี Use Case mapping · ทุก Use Case มี API endpoint · ทุก endpoint มี DB table · ทุก table มี Data Dictionary · ทุก FR มี Acceptance Criteria ที่ทดสอบได้จริง</div>
 </div></div>
 </div>
-
+  </div>
 <script>
-function go(id,el){
+function eddGo(id,el){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   document.getElementById('p-'+id).classList.add('on');

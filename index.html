@@ -2,11 +2,60 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prosperous - Interactive Prototype</title>
-<a href="prosperous-engineering-design.html">ดูหน้าการออกแบบวิศวกรรม</a>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Prosperous — Interactive Prototype</title>
+<div class="mode-bar">
+  <a href="index.html" class="mode-btn">Story Boards</a>
+  
+  <a href="prosperous-edd.html" class="mode-btn active">Architecture Engineering</a>
+</div>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ════ RESET & MODE BAR ════ */
+*{ box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; background: #0f172a; }
+.mode-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 99999; background: #1e293b; display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid rgba(255,255,255,.1); height: 44px; }
+.mode-btn { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.65); padding: 5px 14px; border-radius: 20px; cursor: pointer; font-family: 'Sarabun', sans-serif; font-size: 12px; font-weight: 600; transition: all .2s; white-space: nowrap; }
+.mode-btn:hover { background: rgba(255,255,255,.15); color: #fff; }
+.mode-btn.active { background: #C8102E; border-color: #C8102E; color: #fff; box-shadow: 0 2px 8px rgba(200,16,46,.4); }
+.mode-tag { margin-left: auto; font-size: 10px; color: rgba(255,255,255,.25); font-family: monospace; white-space: nowrap; }
+.mode-panel { display: none; }
+.mode-panel.active { display: block; }
+
+/* ════ V5 PROTOTYPE STYLES ════ */
+
+/* ════ GLOBAL RESET & MODE ════ */
+*{ box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; background: #0f172a; }
+
+.mode-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
+  background: #1e293b; display: flex; align-items: center; gap: 8px;
+  padding: 7px 14px; border-bottom: 1px solid rgba(255,255,255,.1);
+  height: 44px;
+}
+.mode-btn {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.65); padding: 5px 14px; border-radius: 20px;
+  cursor: pointer; font-family: 'Sarabun', sans-serif; font-size: 12px;
+  font-weight: 600; transition: all .2s; white-space: nowrap; letter-spacing: .3px;
+}
+.mode-btn:hover { background: rgba(255,255,255,.15); color: #fff; }
+.mode-btn.active { background: #C8102E; border-color: #C8102E; color: #fff; box-shadow: 0 2px 8px rgba(200,16,46,.4); }
+.mode-tag { margin-left: auto; font-size: 10px; color: rgba(255,255,255,.25); font-family: monospace; white-space: nowrap; }
+.mode-panel { display: none; }
+.mode-panel.active { display: block; }
+
+/* ════ HAMBURGER ════ */
+.hamburger-btn {
+  display: none !important;
+  flex-direction: column; gap: 5px; cursor: pointer;
+  padding: 4px; border: none; background: transparent; margin-left: auto;
+}
+.hamburger-btn span { display: block; width: 20px; height: 2px; background: #444; border-radius: 2px; }
+
+/* ════ V5 STYLES ════ */
+
   :root {
     --primary: #C8102E;
     --primary-dark: #9A0C23;
@@ -319,6 +368,292 @@
   .not-found .nf-num { font-family:'Prompt'; font-size:96px; font-weight:700; color:var(--line); line-height:1; margin-bottom:8px; }
   .not-found h2 { font-family:'Prompt'; font-size:24px; margin-bottom:10px; }
   .not-found p { color:var(--slate); font-size:14px; max-width:400px; margin-bottom:24px; }
+
+
+
+/* ════ V6 MOBILE RESPONSIVE ════ */
+@media (max-width: 768px) {
+  /* Remove device frame on mobile - show full screen */
+  .device-wrap { 
+    background: #fff !important;
+    display: block !important;
+    padding: 0 !important;
+    min-height: calc(100svh - 44px) !important;
+  }
+  .device { 
+    width: 100% !important; 
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: calc(100svh - 44px) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #fff !important;
+  }
+  .screen { 
+    height: auto !important;
+    min-height: calc(100svh - 44px) !important;
+    border-radius: 0 !important;
+    overflow-y: auto !important;
+  }
+  .page { min-height: calc(100svh - 44px) !important; }
+  /* Navbar mobile */
+  .nav-links { display: none !important; }
+  .hamburger-btn { display: flex !important; }
+  .nav-mobile-open .nav-links {
+    display: flex !important;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; left: 0; right: 0;
+    background: #fff;
+    padding: 12px 16px;
+    z-index: 999;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    border-top: 1px solid #eee;
+  }
+  .nav-mobile-open .nav-links a { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  /* Product tabs */
+  .prod-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  /* Grids to single column */
+  .products-grid, .sol-grid, .course-grid, .news-grid { grid-template-columns: 1fr !important; }
+  /* Hero */
+  .hero { padding: 32px 16px 24px !important; }
+  .hero h1 { font-size: 20px !important; line-height: 1.4 !important; }
+  .hero p { font-size: 13px !important; }
+  /* Forms */
+  .form-row { flex-direction: column !important; }
+  /* Admin */
+  .admin-layout { flex-direction: column !important; }
+  .admin-sidebar { width: 100% !important; flex-direction: row !important; overflow-x: auto !important; }
+  .admin-sidebar .sidebar-item { flex-shrink: 0 !important; }
+  .admin-sidebar .sidebar-label { display: none !important; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 18px !important; }
+  .section-title { font-size: 17px !important; }
+  .btn { padding: 10px 14px !important; font-size: 13px !important; }
+}
+
+
+/* ════ EDD STYLES ════ */
+.edd-root { background: #f8fafc; min-height: calc(100svh - 44px); font-family: 'Sarabun', sans-serif; padding-top: 44px; }
+
+:root{--red:#C8102E;--ink:#1A1A1A;--slate:#5A6472;--mist:#F4F6F8;--line:#E2E6EB;--success:#1B9E5A;--amber:#E8A317;--blue:#1A5FC8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sarabun',sans-serif;background:#DDE2E8;color:var(--ink);}
+.hdr{background:var(--red);color:#fff;padding:20px 28px;display:flex;justify-content:space-between;align-items:center;}
+.hdr h1{font-family:'Prompt';font-size:20px;font-weight:700;}
+.hdr p{font-size:12px;opacity:.8;margin-top:3px;}
+.hdr-r{text-align:right;font-size:12px;opacity:.75;}
+.tabs-bar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.tabs{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 12px;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:11px 14px;font-size:12px;font-weight:500;color:var(--slate);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:.2s;font-family:'Sarabun';}
+.tab:hover{color:var(--red);}
+.tab.on{color:var(--red);border-bottom-color:var(--red);}
+.main{max-width:1100px;margin:0 auto;padding:20px 14px 60px;}
+.panel{display:none;}
+.panel.on{display:block;animation:pop .25s ease;}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.ptitle{font-family:'Prompt';font-size:18px;font-weight:700;margin-bottom:3px;}
+.psub{color:var(--slate);font-size:13px;margin-bottom:18px;}
+.dcard{background:#fff;border-radius:12px;border:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden;}
+.dcard-h{padding:11px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;}
+.dcard-h h3{font-size:13px;font-weight:600;flex:1;}
+.badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--mist);color:var(--slate);}
+.dcard-b{padding:20px;overflow-x:auto;}
+svg.d{font-family:'Sarabun',sans-serif;display:block;max-width:100%;height:auto;}
+.ctbl{width:100%;border-collapse:collapse;font-size:12px;}
+.ctbl th{background:var(--mist);padding:7px 11px;text-align:left;font-weight:600;color:var(--slate);font-size:11px;letter-spacing:.04em;border-bottom:2px solid var(--line);}
+.ctbl td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+.ctbl tr:hover td{background:#fafbfc;}
+.ctbl .tot td{font-weight:700;background:var(--red);color:#fff;}
+.ctbl .sub td{font-weight:700;background:#fff0f0;color:var(--red);}
+.stag{display:inline-block;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:600;}
+.stag.done{background:#e8fff0;color:var(--success);}
+.stag.todo{background:#fff8e0;color:var(--amber);}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:18px;}
+.sbox{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 14px;}
+.sbox .lb{font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.sbox .vl{font-family:'Prompt';font-size:20px;font-weight:700;}
+.sbox .un{font-size:11px;color:var(--slate);}
+.r{color:var(--red);} .g{color:var(--success);} .b{color:var(--blue);} .a{color:var(--amber);}
+.note{margin-top:12px;padding:11px 13px;background:#fff5f5;border-radius:8px;border-left:3px solid var(--red);font-size:12px;color:var(--slate);line-height:1.8;}
+.note b{color:var(--red);}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.stabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.stab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--mist);color:var(--slate);border:1px solid var(--line);transition:.15s;font-family:'Sarabun';}
+.stab:hover{color:var(--red);}
+.stab.on{background:var(--red);color:#fff;border-color:var(--red);}
+.sqpanel{display:none;}
+.sqpanel.on{display:block;}
+.nfr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:4px;}
+.nfr-card{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 15px;}
+.nfr-card .nfr-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.nfr-card ul{padding-left:14px;font-size:12px;color:var(--slate);line-height:2;}
+.ctx-card{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 15px;}
+.codeblock{background:#1A1A1A;border-radius:8px;padding:12px 14px;font-family:'Courier New',monospace;font-size:11px;line-height:1.7;color:#E8EDF2;overflow-x:auto;margin:6px 0;}
+.codeblock .k{color:#C8102E;} .codeblock .s{color:#98D8A0;} .codeblock .n{color:#79B8FF;} .codeblock .c{color:#6A737D;font-style:italic;}
+.fr-row td:first-child{font-weight:700;color:var(--red);font-family:monospace;font-size:11px;}
+.ph1{background:#fff5f5;} .ph2{background:#eef4ff;}
+.mx-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.mx-tbl th{padding:8px 10px;text-align:center;background:var(--mist);font-size:11px;font-weight:700;color:var(--slate);border:1px solid var(--line);}
+.mx-tbl td{padding:7px 10px;border:1px solid var(--line);text-align:center;vertical-align:middle;}
+.mx-tbl td:first-child{text-align:left;font-weight:500;}
+.allow{color:#1B9E5A;font-size:16px;} .deny{color:#C8102E;font-size:16px;} .cond{color:#E8A317;font-size:13px;font-weight:700;}
+
+
+
+/* ════ V7 NEW STYLES ════ */
+
+/* ════ V7 ADDITIONS ════ */
+
+/* Testimonials */
+.testi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 24px; }
+.testi-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border-left: 4px solid var(--red); }
+.testi-quote { font-size: 14px; line-height: 1.7; color: #374151; font-style: italic; margin-bottom: 14px; }
+.testi-author { display: flex; flex-direction: column; gap: 2px; }
+.testi-org { font-weight: 700; font-size: 13px; color: var(--red); }
+.testi-role { font-size: 12px; color: #9ca3af; }
+.client-logos { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+.client-logos span { background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 6px 16px; font-size: 13px; color: #6b7280; }
+
+/* FAQ */
+.faq-list { max-width: 760px; margin: 24px auto 0; }
+.faq-item { border: 1px solid #e5e7eb; border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; background: #fff; transition: box-shadow .2s; }
+.faq-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.faq-item.open { border-color: var(--red); }
+.faq-q { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; font-weight: 600; font-size: 14px; color: #111827; gap: 12px; }
+.faq-arrow { color: var(--red); transition: transform .25s; font-size: 11px; flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a { max-height: 0; overflow: hidden; font-size: 13.5px; line-height: 1.7; color: #4b5563; padding: 0 18px; transition: max-height .3s ease, padding .3s; }
+.faq-item.open .faq-a { max-height: 200px; padding: 0 18px 16px; }
+
+/* Video */
+.video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+.video-card { cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); transition: transform .2s; }
+.video-card:hover { transform: translateY(-3px); }
+.video-thumb { position:relative; background: linear-gradient(135deg, #1e293b, #334155); color: rgba(255,255,255,.8); display: flex; flex-direction: column; align-items: center; justify-content: center; height: 130px; font-size: 28px; gap: 8px; }
+.video-thumb span { font-size: 13px; text-align: center; padding: 0 12px; color: rgba(255,255,255,.6); }
+.video-label { background: rgba(255,255,255,.05); color: rgba(255,255,255,.8); padding: 10px 14px; font-size: 13px; }
+
+/* Form Validation */
+.form-field { position: relative; }
+.field-error { color: #ef4444; font-size: 11px; margin-top: 3px; display: none; }
+.form-field.invalid input, .form-field.invalid select, .form-field.invalid textarea { border-color: #ef4444 !important; }
+.form-field.invalid .field-error { display: block; }
+.form-field.valid input, .form-field.valid select, .form-field.valid textarea { border-color: #10b981 !important; }
+
+/* Page transition */
+.page { animation: pageFadeIn .25s ease; }
+@keyframes pageFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Admin export button */
+.btn-export { background: #16a34a; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'Sarabun', sans-serif; font-size: 13px; font-weight: 600; }
+.btn-export:hover { background: #15803d; }
+
+/* Mobile Responsive Additions */
+@media (max-width: 768px) {
+  .testi-grid { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: 1fr; }
+  .faq-q { font-size: 13px; }
+  .device-wrap { background: #fff !important; display: block !important; padding: 0 !important; min-height: calc(100svh - 44px) !important; }
+  .device { width: 100% !important; max-width: 100% !important; height: auto !important; min-height: calc(100svh - 44px) !important; border-radius: 0 !important; box-shadow: none !important; border: none !important; background: #fff !important; }
+  .screen { height: auto !important; min-height: calc(100svh - 44px) !important; border-radius: 0 !important; overflow-y: auto !important; }
+  .page { min-height: calc(100svh - 44px) !important; }
+  .navlinks { display: none !important; }
+  .hamburger-btn { display: flex !important; }
+  .nav-mobile-open .navlinks { display: flex !important; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: #fff; padding: 12px 16px; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,.12); border-top: 1px solid #eee; }
+  .nav-mobile-open .navlinks a { padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 15px; }
+  .grid { grid-template-columns: 1fr !important; }
+  .features { grid-template-columns: 1fr !important; }
+  .hero { padding: 32px 16px 24px !important; flex-direction: column !important; gap: 12px !important; }
+  .hero h1 { font-size: 20px !important; }
+  .hero-img { font-size: 48px !important; }
+  .form-row { flex-direction: column !important; }
+  .admin-layout { flex-direction: column !important; }
+  .admin-sidebar { width: 100% !important; flex-direction: row !important; overflow-x: auto !important; min-width: unset !important; }
+  .admin-content { padding: 16px !important; }
+  .prod-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+  .tab { display: inline-block; }
+  .sol-grid { grid-template-columns: 1fr !important; }
+  .course-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 17px !important; }
+  .section-title, h2 { font-size: 17px !important; }
+  .btn { padding: 10px 14px !important; font-size: 13px !important; }
+  .navbar { padding: 0 12px !important; }
+}
+
+
+/* ════ EDD STYLES ════ */
+.edd-root { background: #f8fafc; min-height: calc(100svh - 44px); font-family: 'Sarabun', sans-serif; padding-top: 44px; }
+
+:root{--red:#C8102E;--ink:#1A1A1A;--slate:#5A6472;--mist:#F4F6F8;--line:#E2E6EB;--success:#1B9E5A;--amber:#E8A317;--blue:#1A5FC8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sarabun',sans-serif;background:#DDE2E8;color:var(--ink);}
+.hdr{background:var(--red);color:#fff;padding:20px 28px;display:flex;justify-content:space-between;align-items:center;}
+.hdr h1{font-family:'Prompt';font-size:20px;font-weight:700;}
+.hdr p{font-size:12px;opacity:.8;margin-top:3px;}
+.hdr-r{text-align:right;font-size:12px;opacity:.75;}
+.tabs-bar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.tabs{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 12px;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:11px 14px;font-size:12px;font-weight:500;color:var(--slate);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:.2s;font-family:'Sarabun';}
+.tab:hover{color:var(--red);}
+.tab.on{color:var(--red);border-bottom-color:var(--red);}
+.main{max-width:1100px;margin:0 auto;padding:20px 14px 60px;}
+.panel{display:none;}
+.panel.on{display:block;animation:pop .25s ease;}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.ptitle{font-family:'Prompt';font-size:18px;font-weight:700;margin-bottom:3px;}
+.psub{color:var(--slate);font-size:13px;margin-bottom:18px;}
+.dcard{background:#fff;border-radius:12px;border:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden;}
+.dcard-h{padding:11px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;}
+.dcard-h h3{font-size:13px;font-weight:600;flex:1;}
+.badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--mist);color:var(--slate);}
+.dcard-b{padding:20px;overflow-x:auto;}
+svg.d{font-family:'Sarabun',sans-serif;display:block;max-width:100%;height:auto;}
+.ctbl{width:100%;border-collapse:collapse;font-size:12px;}
+.ctbl th{background:var(--mist);padding:7px 11px;text-align:left;font-weight:600;color:var(--slate);font-size:11px;letter-spacing:.04em;border-bottom:2px solid var(--line);}
+.ctbl td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+.ctbl tr:hover td{background:#fafbfc;}
+.ctbl .tot td{font-weight:700;background:var(--red);color:#fff;}
+.ctbl .sub td{font-weight:700;background:#fff0f0;color:var(--red);}
+.stag{display:inline-block;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:600;}
+.stag.done{background:#e8fff0;color:var(--success);}
+.stag.todo{background:#fff8e0;color:var(--amber);}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:18px;}
+.sbox{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 14px;}
+.sbox .lb{font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.sbox .vl{font-family:'Prompt';font-size:20px;font-weight:700;}
+.sbox .un{font-size:11px;color:var(--slate);}
+.r{color:var(--red);} .g{color:var(--success);} .b{color:var(--blue);} .a{color:var(--amber);}
+.note{margin-top:12px;padding:11px 13px;background:#fff5f5;border-radius:8px;border-left:3px solid var(--red);font-size:12px;color:var(--slate);line-height:1.8;}
+.note b{color:var(--red);}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.stabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.stab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--mist);color:var(--slate);border:1px solid var(--line);transition:.15s;font-family:'Sarabun';}
+.stab:hover{color:var(--red);}
+.stab.on{background:var(--red);color:#fff;border-color:var(--red);}
+.sqpanel{display:none;}
+.sqpanel.on{display:block;}
+.nfr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:4px;}
+.nfr-card{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 15px;}
+.nfr-card .nfr-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.nfr-card ul{padding-left:14px;font-size:12px;color:var(--slate);line-height:2;}
+.ctx-card{background:#fff;border-radius:10px;border:1px solid var(--line);padding:13px 15px;}
+.codeblock{background:#1A1A1A;border-radius:8px;padding:12px 14px;font-family:'Courier New',monospace;font-size:11px;line-height:1.7;color:#E8EDF2;overflow-x:auto;margin:6px 0;}
+.codeblock .k{color:#C8102E;} .codeblock .s{color:#98D8A0;} .codeblock .n{color:#79B8FF;} .codeblock .c{color:#6A737D;font-style:italic;}
+.fr-row td:first-child{font-weight:700;color:var(--red);font-family:monospace;font-size:11px;}
+.ph1{background:#fff5f5;} .ph2{background:#eef4ff;}
+.mx-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.mx-tbl th{padding:8px 10px;text-align:center;background:var(--mist);font-size:11px;font-weight:700;color:var(--slate);border:1px solid var(--line);}
+.mx-tbl td{padding:7px 10px;border:1px solid var(--line);text-align:center;vertical-align:middle;}
+.mx-tbl td:first-child{text-align:left;font-weight:500;}
+.allow{color:#1B9E5A;font-size:16px;} .deny{color:#C8102E;font-size:16px;} .cond{color:#E8A317;font-size:13px;font-weight:700;}
+
 </style>
 </head>
 <body>
@@ -345,8 +680,9 @@
         <a onclick="go('products')">สินค้า</a>
         <a onclick="go('csr')">บริการและ CSR</a>
         <a onclick="go('news')">ข่าวสาร</a>
-        <a onclick="go('contact')">ติดต่อ</a>
+        <a onclick="go('contact-page')">ติดต่อ</a>
       </div>
+      <button class="hamburger-btn" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
     </div>
     <div class="hero">
       <div>
@@ -355,15 +691,15 @@
         <button class="btn btn-primary" onclick="go('products')">ดูสินค้าทั้งหมด</button>
         <button class="btn btn-ghost" onclick="go('csr')">บริการ CSR</button>
       </div>
-      <div class="hero-img">🫀</div>
+      <div class="hero-img" style="font-size:0"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover;border-radius:16px" alt="AED device"></div>
     </div>
     <div class="section">
       <h2>ทำไมต้องเลือก Prosperous</h2>
       <div class="lead">เราไม่ได้แค่ขายอุปกรณ์ — เราดูแลความปลอดภัยขององค์กรคุณอย่างครบวงจร</div>
       <div class="features">
-        <div class="feature"><div class="ic">🏅</div><h3>ผลิตภัณฑ์มาตรฐาน FDA</h3><p>อุปกรณ์ทุกชิ้นผ่านการรับรองมาตรฐานการแพทย์ระดับสากล พร้อมใบรับรองครบถ้วน</p></div>
-        <div class="feature"><div class="ic">🎓</div><h3>อบรม CPR &amp; ความปลอดภัยทางน้ำ</h3><p>ทีมวิทยากรมืออาชีพ จัดอบรมให้หน่วยงาน องค์กร และประชาชนทั่วไป</p></div>
-        <div class="feature"><div class="ic">📄</div><h3>ออกบิลในนามบริษัทได้</h3><p>รองรับการจัดซื้อในระบบองค์กร ออกใบกำกับภาษีพร้อมเอกสารครบ</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="AED"></div><h3>ผลิตภัณฑ์มาตรฐาน FDA</h3><p>อุปกรณ์ทุกชิ้นผ่านการรับรองมาตรฐานการแพทย์ระดับสากล พร้อมใบรับรองครบถ้วน</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="CPR"></div><h3>อบรม CPR &amp; ความปลอดภัยทางน้ำ</h3><p>ทีมวิทยากรมืออาชีพ จัดอบรมให้หน่วยงาน องค์กร และประชาชนทั่วไป</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1554224311-beede415c15e?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Document"></div><h3>ออกบิลในนามบริษัทได้</h3><p>รองรับการจัดซื้อในระบบองค์กร ออกใบกำกับภาษีพร้อมเอกสารครบ</p></div>
       </div>
     </div>
     <div class="section" style="background:var(--mist)">
@@ -371,7 +707,7 @@
       <div class="lead">คลิกที่การ์ดเพื่อดูรายละเอียด</div>
       <div class="grid">
         <div class="card" onclick="go('prod-aed')">
-          <div class="ph">⚡</div>
+          <div class="ph" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="AED"></div>
           <div class="body">
             <div class="cat">AED</div>
             <div class="name">เครื่องกระตุกหัวใจอัตโนมัติ</div>
@@ -380,7 +716,7 @@
           </div>
         </div>
         <div class="card" onclick="go('prod-auto-aed')">
-          <div class="ph">🤖</div>
+          <div class="ph" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Auto AED"></div>
           <div class="body">
             <div class="cat">Auto AED</div>
             <div class="name">AED อัตโนมัติเต็มรูปแบบ</div>
@@ -389,7 +725,7 @@
           </div>
         </div>
         <div class="card" onclick="go('prod-physio')">
-          <div class="ph">🏋️</div>
+          <div class="ph" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Physio equipment"></div>
           <div class="body">
             <div class="cat">อุปกรณ์กายภาพ</div>
             <div class="name">อุปกรณ์กายภาพบำบัดและกู้ชีพ</div>
@@ -404,22 +740,101 @@
       <div class="lead">กิจกรรม หลักสูตร และความรู้ด้านความปลอดภัย</div>
       <div class="grid">
         <div class="news-card" onclick="go('news-detail')">
-          <div class="img">🏊</div>
+          <div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Water rescue training"></div>
           <div class="nb"><span class="ntag">กิจกรรม</span><div class="ntitle">อบรม CPR ทางน้ำ ให้กับ รร.บางนาวิทยา</div><div class="ndate">5 มิถุนายน 2568</div><div class="nexcerpt">ทีมวิทยากร Prosperous ออกอบรมการช่วยชีวิตทางน้ำ ให้คณะครูและนักเรียน 120 คน</div></div>
         </div>
         <div class="news-card" onclick="go('news-detail')">
-          <div class="img">🏅</div>
+          <div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="First Aid training"></div>
           <div class="nb"><span class="ntag">หลักสูตร</span><div class="ntitle">เปิดรับสมัคร First Aid &amp; AED รุ่นที่ 8</div><div class="ndate">1 มิถุนายน 2568</div><div class="nexcerpt">อบรมปฐมพยาบาลเบื้องต้นและการใช้ AED สำหรับพนักงานองค์กร รับวุฒิบัตร</div></div>
         </div>
         <div class="news-card" onclick="go('news-detail')">
-          <div class="img">❤️</div>
+          <div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="AED heart"></div>
           <div class="nb"><span class="ntag">ความรู้</span><div class="ntitle">วิธีใช้ AED อย่างถูกต้องในชีวิตจริง</div><div class="ndate">20 พฤษภาคม 2568</div><div class="nexcerpt">หลายคนกลัวใช้ AED เพราะกังวลว่าจะทำผิด บทความนี้อธิบายทีละขั้นตอน</div></div>
         </div>
       </div>
       <div style="text-align:center;margin-top:22px"><button class="btn btn-outline" onclick="go('news')">ดูข่าวสารทั้งหมด →</button></div>
     </div>
+
+    <!-- ══ TESTIMONIALS ══ -->
+    <div class="section" style="background:var(--mist)">
+      <h2 style="text-align:center">องค์กรที่ไว้วางใจ Prosperous</h2>
+      <div class="lead" style="text-align:center">ลูกค้าองค์กรและสถาบันทั่วประเทศ</div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-quote">"ทีม Prosperous มีความเป็นมืออาชีพสูงมาก ติดตั้ง AED พร้อมอบรมพนักงานครบ 3 สาขาภายใน 2 สัปดาห์"</div>
+          <div class="testi-author"><span class="testi-org">🏨 โรงแรมแกรนด์ แปซิฟิก กรุงเทพฯ</span><span class="testi-role">ผู้จัดการฝ่ายความปลอดภัย</span></div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote">"CPR Training ของ Prosperous ตรงกับมาตรฐาน AHA ทีมบุคลากรของเราพร้อมรับมือเหตุฉุกเฉินได้จริง"</div>
+          <div class="testi-author"><span class="testi-org">🏊 สระว่ายน้ำ Aqua Sport Academy</span><span class="testi-role">ผู้อำนวยการสถาบัน</span></div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote">"เอกสารครบ ออกบิลในนามบริษัทได้ทันที ประสานงานง่าย และมีบริการหลังการขายที่ดีเยี่ยม"</div>
+          <div class="testi-author"><span class="testi-org">🏫 โรงเรียนนานาชาติ ISB Bangkok</span><span class="testi-role">เจ้าหน้าที่จัดซื้อ</span></div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote">"Auto AED ที่ติดตั้งในสนามกีฬาให้ความมั่นใจกับนักกีฬาและผู้ชมได้เป็นอย่างดี"</div>
+          <div class="testi-author"><span class="testi-org">🏟️ สมาคมกีฬาแห่งชาติ</span><span class="testi-role">ผู้จัดการสนาม</span></div>
+        </div>
+      </div>
+      <div class="client-logos">
+        <span>🏨 โรงแรม</span><span>🏥 โรงพยาบาล</span><span>🏫 โรงเรียน</span><span>🏊 สระว่ายน้ำ</span><span>🏟️ สนามกีฬา</span><span>🏢 องค์กรเอกชน</span>
+      </div>
+    </div>
+
+    <!-- ══ VIDEO ══ -->
+    <div class="section" style="background:#0f172a;color:#fff">
+      <h2 style="text-align:center;color:#fff">ดูการทำงานจริง</h2>
+      <div class="lead" style="text-align:center;color:rgba(255,255,255,.6)">วิดีโอสาธิตและไฮไลต์การฝึกทีม Rescue Swimmer</div>
+      <div class="video-grid">
+        <div class="video-card" onclick="alert('เปิด YouTube: สาธิตการใช้ AED')">
+          <div class="video-thumb" style="padding:0;overflow:hidden"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover;opacity:.7" alt="AED demo"/><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px">▶</div><div style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:12px;color:rgba(255,255,255,.8)">วิธีใช้ AED ทีละขั้นตอน</div></div>
+          <div class="video-label">⚡ AED Demo — 3:42</div>
+        </div>
+        <div class="video-card" onclick="alert('เปิด YouTube: CPR Training')">
+          <div class="video-thumb" style="padding:0;overflow:hidden"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover;opacity:.7" alt="CPR Training"/><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px">▶</div><div style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:12px;color:rgba(255,255,255,.8)">CPR Training Highlight</div></div>
+          <div class="video-label">🎓 อบรม CPR — 5:10</div>
+        </div>
+        <div class="video-card" onclick="alert('เปิด Facebook: STORIESbyTuk')">
+          <div class="video-thumb" style="padding:0;overflow:hidden"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover;opacity:.7" alt="Rescue Swimmer"/><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px">▶</div><div style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:12px;color:rgba(255,255,255,.8)">Rescue Swimmer Training</div></div>
+          <div class="video-label">🏊 Military Style Training — 8:24</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ FAQ ══ -->
+    <div class="section">
+      <h2 style="text-align:center">คำถามที่พบบ่อย</h2>
+      <div class="lead" style="text-align:center">ข้อมูลที่ควรรู้ก่อนตัดสินใจ</div>
+      <div class="faq-list">
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>AED จำเป็นต้องมีใบอนุญาตในการใช้งานหรือไม่?</span><span class="faq-arrow">▼</span></div>
+          <div class="faq-a">ไม่จำเป็น ประชาชนทั่วไปสามารถใช้ AED ได้โดยไม่ต้องมีใบอนุญาต กฎหมายไทยคุ้มครองผู้ช่วยชีวิตในฐานะ "Good Samaritan" อย่างไรก็ตาม Prosperous แนะนำให้อบรม CPR ควบคู่กันเพื่อเพิ่มประสิทธิภาพการช่วยชีวิต</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>ราคา AED โดยประมาณเท่าไหร่?</span><span class="faq-arrow">▼</span></div>
+          <div class="faq-a">ราคาเริ่มต้นที่ 35,000 – 120,000 บาท ขึ้นอยู่กับรุ่นและฟีเจอร์ สำหรับองค์กรที่ซื้อหลายเครื่องหรือต้องการแพ็คเกจรวมอบรม กรุณาติดต่อเพื่อรับใบเสนอราคาพิเศษ</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>ต้องบำรุงรักษา AED อย่างไร?</span><span class="faq-arrow">▼</span></div>
+          <div class="faq-a">AED มีระบบตรวจสอบตัวเองอัตโนมัติทุกวัน ผู้ดูแลควรตรวจสอบแบตเตอรี่และแผ่น Electrode ทุก 6-12 เดือน Prosperous มีบริการ Maintenance Contract พร้อมแจ้งเตือนเมื่อถึงเวลาเปลี่ยนอุปกรณ์สิ้นเปลือง</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>ออกใบกำกับภาษีในนามบริษัทได้ไหม?</span><span class="faq-arrow">▼</span></div>
+          <div class="faq-a">ได้ครับ Prosperous จดทะเบียนภาษีมูลค่าเพิ่ม (VAT) พร้อมออกใบกำกับภาษีเต็มรูปแบบ รองรับทุกกระบวนการจัดซื้อขององค์กร ทั้งภาคเอกชนและภาครัฐ</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>อบรม CPR ใช้เวลานานเท่าไหร่ และจัด In-House ได้ไหม?</span><span class="faq-arrow">▼</span></div>
+          <div class="faq-a">หลักสูตร CPR & First Aid พื้นฐาน ใช้เวลา 1 วัน (6 ชั่วโมง) สามารถจัดอบรม In-House ที่สำนักงานของท่านได้ตลอดทั้งปี รองรับผู้เข้าร่วมสูงสุด 30 คนต่อรุ่น</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>ไลฟ์การ์ดมีใบรับรองวิชาชีพไหม?</span><span class="faq-arrow">▼</span></div>
+          <div class="faq-a">ใบรับรองระดับ ILSE (International Lifesaving) และผ่านการอบรม Military-style ของ Prosperous Rescue Swimmer Club ทุกคน พร้อมประกันอุบัติเหตุตลอดสัญญา</div>
+        </div>
+      </div>
+    </div>
     <div class="footer">
-      <div><h4>Prosperous</h4><a onclick="go('csr')">เกี่ยวกับเรา</a><a onclick="go('csr')">บริการ CSR</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div><h4>Prosperous</h4><a onclick="go('about')">เกี่ยวกับเรา</a><a onclick="go('csr')">บริการ CSR</a><a onclick="go('contact-page')">ติดต่อ</a></div>
       <div><h4>สินค้า</h4><a onclick="go('prod-aed')">AED</a><a onclick="go('prod-auto-aed')">Auto AED</a><a onclick="go('prod-physio')">อุปกรณ์กายภาพ</a></div>
       <div><h4>บริการ</h4><a onclick="go('csr')">อบรม CPR</a><a onclick="go('csr')">ไลฟ์การ์ด</a><a onclick="go('news')">ข่าวสาร</a></div>
       <div><h4>ติดตามเรา</h4><a>Facebook</a><a>Line: @prosperous</a><a>YouTube</a></div>
@@ -436,9 +851,16 @@
         <a onclick="go('products')" class="active">สินค้า</a>
         <a onclick="go('csr')">บริการและ CSR</a>
         <a onclick="go('news')">ข่าวสาร</a>
-        <a onclick="go('contact')">ติดต่อ</a>
+        <a onclick="go('contact-page')">ติดต่อ</a>
       </div>
     </div>
+<div style="height:220px;overflow:hidden;position:relative">
+  <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1100&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Medical equipment"/>
+  <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(20,20,20,.72),rgba(20,20,20,.2))"></div>
+  <div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 36px">
+    <div style="color:#fff"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;opacity:.7;margin-bottom:8px">Prosperous Products</div><h1 style="font-family:'Prompt';font-size:30px;margin:0;line-height:1.3">อุปกรณ์กู้ชีพ<br>มาตรฐานสากล</h1></div>
+  </div>
+</div>
     <div class="breadcrumb" onclick="go('home')">← หน้าแรก</div>
     <div class="section">
       <h2>สินค้าของเรา</h2>
@@ -451,7 +873,7 @@
       </div>
       <div class="grid">
         <div class="card" onclick="go('prod-aed')">
-          <div class="ph">⚡</div>
+          <div class="ph" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="AED"></div>
           <div class="body">
             <div class="cat">AED</div>
             <div class="name">เครื่องกระตุกหัวใจอัตโนมัติ</div>
@@ -461,7 +883,7 @@
           </div>
         </div>
         <div class="card" onclick="go('prod-auto-aed')">
-          <div class="ph">🤖</div>
+          <div class="ph" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Auto AED"></div>
           <div class="body">
             <div class="cat">Auto AED</div>
             <div class="name">AED อัตโนมัติเต็มรูปแบบ</div>
@@ -471,7 +893,7 @@
           </div>
         </div>
         <div class="card" onclick="go('prod-physio')">
-          <div class="ph">🏋️</div>
+          <div class="ph" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Physio equipment"></div>
           <div class="body">
             <div class="cat">อุปกรณ์กายภาพ</div>
             <div class="name">อุปกรณ์กายภาพบำบัดและกู้ชีพ</div>
@@ -485,8 +907,8 @@
         <div style="font-size:20px;margin-bottom:8px">📞</div>
         <h3 style="font-family:'Prompt';margin-bottom:6px">สนใจสั่งซื้อหรือขอใบเสนอราคา?</h3>
         <p style="color:var(--slate);font-size:14px;margin-bottom:14px">ติดต่อทีมขายเพื่อรับข้อมูลสินค้า ราคาพิเศษ และออกใบเสนอราคาสำหรับองค์กร</p>
-        <button class="btn btn-primary" onclick="go('contact')">📞 โทร 02-XXX-XXXX</button>
-        <button class="btn btn-outline" style="margin-left:10px" onclick="go('contact')">💬 Line: @prosperous</button>
+        <button class="btn btn-primary" onclick="go('contact-page')">📞 โทร 02-XXX-XXXX</button>
+        <button class="btn btn-outline" style="margin-left:10px" onclick="go('contact-page')">💬 Line: @prosperous</button>
       </div>
     </div>
   </div>
@@ -497,12 +919,12 @@
   <div class="page" id="prod-aed">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')" class="active">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')" class="active">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('products')">← กลับไปหน้าสินค้า</div>
     <!-- hero zone -->
     <div style="display:grid;grid-template-columns:1fr 1fr;background:#F7F8FA">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:120px;padding:48px;background:linear-gradient(135deg,#ECEEF2,#DFE3EA)">⚡</div>
+      <div style="overflow:hidden;height:300px"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="AED device"></div>
       <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
         <div style="font-size:12px;color:var(--slate);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">สินค้า Prosperous</div>
         <h1 style="font-family:'Prompt';font-size:30px;margin-bottom:8px">Lifeline AED</h1>
@@ -590,7 +1012,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="บริษัท ABC จำกัด / โรงพยาบาล / โรงเรียน..."></div>
         <div class="cf-field"><label>จำนวนที่สนใจ</label><select><option value="">-- เลือก --</option><option>1 เครื่อง</option><option>2–5 เครื่อง</option><option>6–10 เครื่อง</option><option>10+ เครื่อง</option></select></div>
@@ -610,11 +1032,11 @@
   <div class="page" id="prod-auto-aed">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')" class="active">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')" class="active">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('products')">← กลับไปหน้าสินค้า</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;background:#F7F8FA">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:120px;padding:48px;background:linear-gradient(135deg,#ECEEF2,#DFE3EA)">🤖</div>
+      <div style="overflow:hidden;height:300px"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80&fit=crop&crop=center" style="width:100%;height:100%;object-fit:cover" alt="Auto AED device"></div>
       <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
         <div style="font-size:12px;color:var(--slate);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">สินค้า Prosperous</div>
         <h1 style="font-family:'Prompt';font-size:30px;margin-bottom:8px">AutoShock AED</h1>
@@ -687,7 +1109,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="บริษัท ABC จำกัด / โรงพยาบาล / โรงเรียน..."></div>
         <div class="cf-field"><label>จำนวนที่สนใจ</label><select><option value="">-- เลือก --</option><option>1 เครื่อง</option><option>2–5 เครื่อง</option><option>6–10 เครื่อง</option><option>10+ เครื่อง</option></select></div>
@@ -707,11 +1129,11 @@
   <div class="page" id="prod-physio">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')" class="active">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')" class="active">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('products')">← กลับไปหน้าสินค้า</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;background:#F7F8FA">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:120px;padding:48px;background:linear-gradient(135deg,#ECEEF2,#DFE3EA)">🏋️</div>
+      <div style="overflow:hidden;height:300px"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Rescue equipment"></div>
       <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
         <div style="font-size:12px;color:var(--slate);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">สินค้า Prosperous</div>
         <h1 style="font-family:'Prompt';font-size:28px;margin-bottom:8px">อุปกรณ์กายภาพและกู้ชีพ</h1>
@@ -783,7 +1205,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="สระว่ายน้ำ / ศูนย์กีฬา / โรงแรม / โรงพยาบาล..."></div>
         <div class="cf-field"><label>จำนวนที่สนใจ</label><select><option value="">-- เลือก --</option><option>ชิ้นเดียว</option><option>2–10 ชิ้น</option><option>10+ ชิ้น (ราคาส่ง)</option></select></div>
@@ -799,25 +1221,28 @@
   <div class="page" id="csr">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('home')">← หน้าแรก</div>
-    <div class="csr-band">
+    <div style="height:200px;overflow:hidden">
+  <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=80&fit=crop&crop=top" style="width:100%;height:100%;object-fit:cover" alt="CSR training"/>
+</div>
+<div class="csr-band">
       <h2>บริการและ CSR ของ Prosperous</h2>
       <div class="lead">เราไม่ได้แค่จำหน่ายอุปกรณ์ เราเป็นส่วนหนึ่งของการสร้างความปลอดภัยให้ชุมชนและองค์กรในทุกมิติ</div>
       <div class="csr-grid">
-        <div class="csr-card"><div class="ic">🏊</div><h3>อบรม CPR ทางน้ำ</h3><p>อบรมการช่วยชีวิตทางน้ำและ CPR ให้กับประชาชน โรงเรียน หน่วยงานราชการ และองค์กรเอกชน โดยวิทยากรที่ผ่านการรับรองระดับสากล</p></div>
-        <div class="csr-card"><div class="ic">👨‍🚒</div><h3>จัดหาไลฟ์การ์ดมืออาชีพ</h3><p>บริการจัดหาและส่งไลฟ์การ์ดในนามบริษัท Prosperous สำหรับสระว่ายน้ำ ชายหาด รีสอร์ท งานอีเวนต์ ออกบิลในนามบริษัทได้ทุกกรณี</p></div>
-        <div class="csr-card"><div class="ic">🎓</div><h3>หลักสูตรอบรม AED</h3><p>จัดหลักสูตรอบรมการใช้ AED และปฐมพยาบาลเบื้องต้น สำหรับพนักงานองค์กร ออกวุฒิบัตรรับรอง</p></div>
+        <div class="csr-card"><div class="ic" style="font-size:0;width:64px;height:64px;border-radius:12px;overflow:hidden;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=140&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Water CPR"></div><h3>อบรม CPR ทางน้ำ</h3><p>อบรมการช่วยชีวิตทางน้ำและ CPR ให้กับประชาชน โรงเรียน หน่วยงานราชการ และองค์กรเอกชน โดยวิทยากรที่ผ่านการรับรองระดับสากล</p></div>
+        <div class="csr-card"><div class="ic" style="font-size:0;width:64px;height:64px;border-radius:12px;overflow:hidden;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=140&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Lifeguard"></div><h3>จัดหาไลฟ์การ์ดมืออาชีพ</h3><p>บริการจัดหาและส่งไลฟ์การ์ดในนามบริษัท Prosperous สำหรับสระว่ายน้ำ ชายหาด รีสอร์ท งานอีเวนต์ ออกบิลในนามบริษัทได้ทุกกรณี</p></div>
+        <div class="csr-card"><div class="ic" style="font-size:0;width:64px;height:64px;border-radius:12px;overflow:hidden;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=140&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="AED Training"></div><h3>หลักสูตรอบรม AED</h3><p>จัดหลักสูตรอบรมการใช้ AED และปฐมพยาบาลเบื้องต้น สำหรับพนักงานองค์กร ออกวุฒิบัตรรับรอง</p></div>
       </div>
     </div>
     <div class="section">
       <h2>ทำไมองค์กรของคุณควรมีไลฟ์การ์ดจาก Prosperous</h2>
       <div class="lead">บริการครบ โปร่งใส ออกเอกสารได้ทุกรูปแบบ</div>
       <div class="features">
-        <div class="feature"><div class="ic">📄</div><h3>ออกบิลในนามบริษัทได้</h3><p>รองรับระบบบัญชีองค์กร ภาครัฐ เอกชน มีใบกำกับภาษีและเอกสารครบถ้วน</p></div>
-        <div class="feature"><div class="ic">✅</div><h3>ไลฟ์การ์ดผ่านการรับรอง</h3><p>ทุกคนผ่านการฝึกและทดสอบตามมาตรฐาน พร้อมประกันภัยตลอดการปฏิบัติงาน</p></div>
-        <div class="feature"><div class="ic">🗓️</div><h3>ยืดหยุ่นตามความต้องการ</h3><p>รับงานรายวัน รายเดือน หรือสัญญาระยะยาว รองรับทั้งงานประจำและอีเวนต์</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1554224311-beede415c15e?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Document"></div><h3>ออกบิลในนามบริษัทได้</h3><p>รองรับระบบบัญชีองค์กร ภาครัฐ เอกชน มีใบกำกับภาษีและเอกสารครบถ้วน</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Certified Lifeguard"></div><h3>ไลฟ์การ์ดผ่านการรับรอง</h3><p>ทุกคนผ่านการฝึกและทดสอบตามมาตรฐาน พร้อมประกันภัยตลอดการปฏิบัติงาน</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Schedule"></div><h3>ยืดหยุ่นตามความต้องการ</h3><p>รับงานรายวัน รายเดือน หรือสัญญาระยะยาว รองรับทั้งงานประจำและอีเวนต์</p></div>
       </div>
     </div>
     <div class="contact-section">
@@ -828,7 +1253,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="บริษัท / โรงแรม / โรงเรียน..."></div>
         <div class="cf-field full"><label>บริการที่สนใจ</label><select><option>อบรม CPR ทางน้ำ</option><option>จ้างไลฟ์การ์ด</option><option>อบรม AED สำหรับองค์กร</option><option>Corporate Safety Package</option><option>ชมรม Rescue Swimmer อบรมให้หน่วยงาน</option><option>อื่นๆ</option></select></div>
@@ -844,7 +1269,7 @@
   <div class="page" id="news">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')" class="active">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')" class="active">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('home')">← หน้าแรก</div>
     <div class="section">
@@ -858,12 +1283,12 @@
         <span class="chip">CSR</span>
       </div>
       <div class="grid">
-        <div class="news-card" onclick="go('news-detail')"><div class="img">🏊</div><div class="nb"><span class="ntag">กิจกรรม</span><div class="ntitle">อบรม CPR ทางน้ำ ให้กับ รร.บางนาวิทยา 120 คน</div><div class="ndate">5 มิถุนายน 2568</div><div class="nexcerpt">ทีมวิทยากร Prosperous ออกอบรมการช่วยชีวิตทางน้ำ ให้ความรู้ภาคทฤษฎีและปฏิบัติจริง</div></div></div>
-        <div class="news-card" onclick="go('news-detail')"><div class="img">🏅</div><div class="nb"><span class="ntag">หลักสูตร</span><div class="ntitle">เปิดรับสมัคร: First Aid &amp; AED รุ่นที่ 8</div><div class="ndate">1 มิถุนายน 2568</div><div class="nexcerpt">อบรมปฐมพยาบาลและการใช้ AED สำหรับพนักงาน รับวุฒิบัตร ออกใบรับรองให้ทุกคน</div></div></div>
-        <div class="news-card" onclick="go('news-detail')"><div class="img">❤️</div><div class="nb"><span class="ntag">ความรู้</span><div class="ntitle">วิธีใช้ AED อย่างถูกต้องในชีวิตจริง</div><div class="ndate">20 พฤษภาคม 2568</div><div class="nexcerpt">หลายคนกลัวที่จะหยิบ AED ขึ้นมาใช้ บทความนี้จะพาเข้าใจทีละขั้นตอน</div></div></div>
-        <div class="news-card" onclick="go('news-detail')"><div class="img">🚁</div><div class="nb"><span class="ntag">CSR</span><div class="ntitle">Prosperous มอบ AED ให้โรงเรียนในพื้นที่ห่างไกล 10 แห่ง</div><div class="ndate">15 พฤษภาคม 2568</div><div class="nexcerpt">โครงการ "AED เพื่อชุมชน" มอบเครื่อง AED พร้อมอบรมการใช้งาน</div></div></div>
-        <div class="news-card" onclick="go('news-detail')"><div class="img">🏋️</div><div class="nb"><span class="ntag">กิจกรรม</span><div class="ntitle">ส่งไลฟ์การ์ดประจำงาน Triathlon Thailand 2568</div><div class="ndate">10 พฤษภาคม 2568</div><div class="nexcerpt">ทีมไลฟ์การ์ด Prosperous ร่วมดูแลความปลอดภัยการแข่งขัน 4 วัน</div></div></div>
-        <div class="news-card" onclick="go('news-detail')"><div class="img">📋</div><div class="nb"><span class="ntag">ความรู้</span><div class="ntitle">กฎหมายใหม่: อาคารสาธารณะต้องติด AED ภายในปี 2569</div><div class="ndate">1 พฤษภาคม 2568</div><div class="nexcerpt">กระทรวงสาธารณสุขออกระเบียบกำหนดให้อาคารสาธารณะขนาดใหญ่ต้องติด AED</div></div></div>
+        <div class="news-card" onclick="go('news-detail')"><div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Water rescue training"></div><div class="nb"><span class="ntag">กิจกรรม</span><div class="ntitle">อบรม CPR ทางน้ำ ให้กับ รร.บางนาวิทยา 120 คน</div><div class="ndate">5 มิถุนายน 2568</div><div class="nexcerpt">ทีมวิทยากร Prosperous ออกอบรมการช่วยชีวิตทางน้ำ ให้ความรู้ภาคทฤษฎีและปฏิบัติจริง</div></div></div>
+        <div class="news-card" onclick="go('news-detail')"><div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="First Aid training"></div><div class="nb"><span class="ntag">หลักสูตร</span><div class="ntitle">เปิดรับสมัคร: First Aid &amp; AED รุ่นที่ 8</div><div class="ndate">1 มิถุนายน 2568</div><div class="nexcerpt">อบรมปฐมพยาบาลและการใช้ AED สำหรับพนักงาน รับวุฒิบัตร ออกใบรับรองให้ทุกคน</div></div></div>
+        <div class="news-card" onclick="go('news-detail')"><div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="AED heart"></div><div class="nb"><span class="ntag">ความรู้</span><div class="ntitle">วิธีใช้ AED อย่างถูกต้องในชีวิตจริง</div><div class="ndate">20 พฤษภาคม 2568</div><div class="nexcerpt">หลายคนกลัวที่จะหยิบ AED ขึ้นมาใช้ บทความนี้จะพาเข้าใจทีละขั้นตอน</div></div></div>
+        <div class="news-card" onclick="go('news-detail')"><div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Emergency response"></div><div class="nb"><span class="ntag">CSR</span><div class="ntitle">Prosperous มอบ AED ให้โรงเรียนในพื้นที่ห่างไกล 10 แห่ง</div><div class="ndate">15 พฤษภาคม 2568</div><div class="nexcerpt">โครงการ "AED เพื่อชุมชน" มอบเครื่อง AED พร้อมอบรมการใช้งาน</div></div></div>
+        <div class="news-card" onclick="go('news-detail')"><div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Physical therapy"></div><div class="nb"><span class="ntag">กิจกรรม</span><div class="ntitle">ส่งไลฟ์การ์ดประจำงาน Triathlon Thailand 2568</div><div class="ndate">10 พฤษภาคม 2568</div><div class="nexcerpt">ทีมไลฟ์การ์ด Prosperous ร่วมดูแลความปลอดภัยการแข่งขัน 4 วัน</div></div></div>
+        <div class="news-card" onclick="go('news-detail')"><div class="img" style="font-size:0;padding:0"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Medical documentation"></div><div class="nb"><span class="ntag">ความรู้</span><div class="ntitle">กฎหมายใหม่: อาคารสาธารณะต้องติด AED ภายในปี 2569</div><div class="ndate">1 พฤษภาคม 2568</div><div class="nexcerpt">กระทรวงสาธารณสุขออกระเบียบกำหนดให้อาคารสาธารณะขนาดใหญ่ต้องติด AED</div></div></div>
       </div>
       <div style="text-align:center;margin-top:24px;color:var(--slate);font-size:14px">หน้า 1 · 2 · 3</div>
     </div>
@@ -875,14 +1300,14 @@
   <div class="page" id="news-detail">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')" class="active">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')" class="active">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('news')">← กลับหน้าข่าวสาร</div>
     <div class="article-wrap">
       <span class="ntag">กิจกรรม</span>
       <h1>อบรม CPR ทางน้ำ ให้กับโรงเรียนบางนาวิทยา 120 คน</h1>
       <div class="ameta">โดย ทีม Prosperous &nbsp;·&nbsp; 5 มิถุนายน 2568 &nbsp;·&nbsp; อ่าน 3 นาที</div>
-      <div class="acover">🏊</div>
+      <div class="acover" style="padding:0;overflow:hidden"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=720&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius)" alt="Water rescue training"></div>
       <p>เมื่อวันที่ 5 มิถุนายน 2568 ทีมวิทยากรจาก Prosperous ได้เดินทางไปยังโรงเรียนบางนาวิทยา เพื่อจัดกิจกรรมอบรมการช่วยชีวิตทางน้ำและ CPR ให้กับคณะครูและนักเรียนรวม 120 คน</p>
       <h3>ไฮไลต์กิจกรรม</h3>
       <p>การอบรมครั้งนี้แบ่งออกเป็น 2 ภาค ได้แก่ ภาคทฤษฎี ครอบคลุมหลักการช่วยชีวิต การรับรู้สัญญาณอันตราย และขั้นตอนการปฏิบัติเมื่อพบเหตุฉุกเฉินทางน้ำ และภาคปฏิบัติในสระว่ายน้ำของโรงเรียน ซึ่งผู้เข้าอบรมได้ฝึกทั้งการกู้ชีพในน้ำ การ CPR บนบก และการใช้ AED จริง</p>
@@ -891,7 +1316,7 @@
       <div style="background:var(--mist);border-radius:var(--radius);padding:20px;margin-top:24px">
         <div style="font-weight:600;margin-bottom:8px">📞 สนใจให้ Prosperous ไปอบรมในองค์กรของท่าน?</div>
         <div style="font-size:13px;color:var(--slate);margin-bottom:12px">รับออกแบบหลักสูตรตามความต้องการ ออกบิลในนามบริษัทได้</div>
-        <button class="btn btn-primary btn-sm" onclick="go('contact')">ติดต่อเรา</button>
+        <button class="btn btn-primary btn-sm" onclick="go('contact-page')">ติดต่อเรา</button>
       </div>
     </div>
   </div>
@@ -899,12 +1324,15 @@
   <!-- ══════════════════════════════════════════════════════════════ -->
   <!-- A9 ติดต่อ -->
   <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="contact">
+  <div class="page" id="contact-page">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')" class="active">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')" class="active">ติดต่อ</a></div>
     </div>
-    <div class="section">
+    <div style="height:180px;overflow:hidden">
+  <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Contact us"/>
+</div>
+<div class="section">
       <h2>ติดต่อเรา</h2>
       <div class="lead">สอบถามสินค้า ขอใบเสนอราคา หรือนัดหมายการอบรม</div>
       <div class="two-col" style="padding:20px 0">
@@ -985,7 +1413,7 @@
   <div class="page" id="admin-news">
     <div class="admin">
       <div class="sidebar">
-        <div class="brand">Prosperous</div>
+        <div class="brand">Prosperous Admin</div>
         <a onclick="go('admin-dash')">📊 ภาพรวม</a>
         <a class="active" onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
         <a onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
@@ -1015,7 +1443,7 @@
   <div class="page" id="admin-add">
     <div class="admin">
       <div class="sidebar">
-        <div class="brand">Prosperous</div>
+        <div class="brand">Prosperous Admin</div>
         <a onclick="go('admin-dash')">📊 ภาพรวม</a>
         <a onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
         <a class="active" onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
@@ -1049,7 +1477,7 @@
   <div class="page" id="admin-edit">
     <div class="admin">
       <div class="sidebar">
-        <div class="brand">Prosperous</div>
+        <div class="brand">Prosperous Admin</div>
         <a onclick="go('admin-dash')">📊 ภาพรวม</a>
         <a class="active" onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
         <a onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
@@ -1087,9 +1515,13 @@
   <div class="page" id="about">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
-    <div class="about-hero">
+    <div style="height:220px;overflow:hidden;position:relative">
+  <img src="https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?w=900&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Medical team"/>
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.6))"></div>
+</div>
+<div class="about-hero" style="background:transparent">
       <div style="font-size:12px;text-transform:uppercase;letter-spacing:.1em;opacity:.6;margin-bottom:12px">เกี่ยวกับเรา</div>
       <h1>Prosperous Rescue Swimming Company</h1>
       <p>เราเชื่อว่าทุกชีวิตมีค่า ด้วยเหตุนี้เราจึงมุ่งมั่นออกแบบและจัดหาอุปกรณ์กู้ชีพมาตรฐานสากล พร้อมบริการอบรมและจัดหาบุคลากรด้านความปลอดภัยอย่างครบวงจร</p>
@@ -1130,10 +1562,10 @@
       <h2>ทีมผู้บริหาร</h2>
       <div class="lead">ผู้เชี่ยวชาญด้านความปลอดภัยและการแพทย์</div>
       <div class="team-grid">
-        <div class="team-card"><div class="av">👨</div><div class="t-name">คุณสมชาย วงศ์ดี</div><div class="t-role">CEO & ผู้ก่อตั้ง</div></div>
-        <div class="team-card"><div class="av">👩</div><div class="t-name">คุณสมหญิง รักไทย</div><div class="t-role">COO & หัวหน้าฝ่ายอบรม</div></div>
-        <div class="team-card"><div class="av">👨</div><div class="t-name">คุณวิชัย สุขสันต์</div><div class="t-role">หัวหน้าไลฟ์การ์ด</div></div>
-        <div class="team-card"><div class="av">👩</div><div class="t-name">คุณมาลี ใจงาม</div><div class="t-role">ผู้จัดการฝ่ายขาย</div></div>
+        <div class="team-card"><div class="av" style="overflow:hidden;font-size:0"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="CEO"></div><div class="t-name">คุณสมชาย วงศ์ดี</div><div class="t-role">CEO &amp; ผู้ก่อตั้ง</div></div>
+        <div class="team-card"><div class="av" style="overflow:hidden;font-size:0"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="COO"></div><div class="t-name">คุณสมหญิง รักไทย</div><div class="t-role">COO &amp; หัวหน้าฝ่ายอบรม</div></div>
+        <div class="team-card"><div class="av" style="overflow:hidden;font-size:0"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="Lifeguard Chief"></div><div class="t-name">คุณวิชัย สุขสันต์</div><div class="t-role">หัวหน้าไลฟ์การ์ด</div></div>
+        <div class="team-card"><div class="av" style="overflow:hidden;font-size:0"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="Sales Manager"></div><div class="t-name">คุณมาลี ใจงาม</div><div class="t-role">ผู้จัดการฝ่ายขาย</div></div>
       </div>
     </div>
 
@@ -1145,7 +1577,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="บริษัท ABC จำกัด..."></div>
         <div class="cf-field full"><label>ข้อความ</label><textarea placeholder="สอบถามข้อมูล หรือต้องการนัดหมาย..."></textarea></div>
@@ -1160,10 +1592,10 @@
   <div class="page" id="courses">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('csr')">← บริการและ CSR</div>
-    <div style="background:linear-gradient(120deg,#1A1A1A,#2C0A10);color:#fff;padding:48px 28px;text-align:center">
+    <div style="background:linear-gradient(120deg,rgba(26,26,26,.82),rgba(44,10,16,.82)),url('https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80&fit=crop') center/cover;color:#fff;padding:48px 28px;text-align:center">
       <div style="font-size:12px;text-transform:uppercase;letter-spacing:.1em;opacity:.6;margin-bottom:10px">หลักสูตรการอบรม</div>
       <h1 style="font-family:'Prompt';font-size:32px;margin-bottom:12px">ฝึกอบรมมาตรฐานสากล<br>โดยวิทยากรผู้เชี่ยวชาญ</h1>
       <p style="opacity:.85;font-size:15px;max-width:560px;margin:0 auto">หลักสูตรของเราออกแบบให้เหมาะกับทุกระดับ ตั้งแต่บุคคลทั่วไปจนถึงองค์กรขนาดใหญ่ ออกวุฒิบัตรรับรองทุกหลักสูตร</p>
@@ -1174,7 +1606,7 @@
       <div class="lead">คลิกที่หลักสูตรเพื่อดูรายละเอียดและลงทะเบียน</div>
       <div class="grid">
         <div class="course-card" onclick="go('course-cpr')">
-          <div class="cc-top">
+          <div class="cc-top" style="background:linear-gradient(120deg,rgba(26,26,26,.72),rgba(44,10,16,.72)),url('https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=500&q=80&fit=crop') center/cover">
             <div class="cc-level">ระดับพื้นฐาน</div>
             <div class="cc-name">First Aid &amp; CPR</div>
             <span class="cc-tag">เปิดรับสมัคร</span>
@@ -1187,7 +1619,7 @@
         </div>
 
         <div class="course-card" onclick="go('course-aed')">
-          <div class="cc-top">
+          <div class="cc-top" style="background:linear-gradient(120deg,rgba(26,26,26,.72),rgba(44,10,16,.72)),url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=500&q=80&fit=crop') center/cover">
             <div class="cc-level">ระดับพื้นฐาน</div>
             <div class="cc-name">การใช้งาน AED</div>
             <span class="cc-tag">เปิดรับสมัคร</span>
@@ -1200,7 +1632,7 @@
         </div>
 
         <div class="course-card" onclick="go('course-water')">
-          <div class="cc-top" style="background:linear-gradient(120deg,#0A1628,#1A2C50)">
+          <div class="cc-top" style="background:linear-gradient(120deg,rgba(10,22,40,.82),rgba(26,44,80,.82)),url('https://images.unsplash.com/photo-1530549387789-4c1017266635?w=500&q=80&fit=crop') center/cover">
             <div class="cc-level">ระดับกลาง</div>
             <div class="cc-name">Swimmer Rescue Level 1</div>
             <span class="cc-tag">เปิดรับสมัคร</span>
@@ -1213,7 +1645,7 @@
         </div>
 
         <div class="course-card" onclick="go('course-water')">
-          <div class="cc-top" style="background:linear-gradient(120deg,#0A1628,#1A2C50)">
+          <div class="cc-top" style="background:linear-gradient(120deg,rgba(10,22,40,.82),rgba(26,44,80,.82)),url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80&fit=crop') center/cover">
             <div class="cc-level">ระดับสูง</div>
             <div class="cc-name">Diving Rescue Level 2</div>
             <span class="cc-tag" style="background:#E8A317">กำลังจะเปิด</span>
@@ -1226,7 +1658,7 @@
         </div>
 
         <div class="course-card" onclick="go('course-water')">
-          <div class="cc-top" style="background:linear-gradient(120deg,#2D1B00,#5A3500)">
+          <div class="cc-top" style="background:linear-gradient(120deg,rgba(45,27,0,.85),rgba(90,53,0,.85)),url('https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80&fit=crop') center/cover">
             <div class="cc-level">ระดับวิทยากร</div>
             <div class="cc-name">Advanced Rescue Instructor</div>
             <span class="cc-tag" style="background:#7C3AED">สำหรับผู้ผ่าน Level 2</span>
@@ -1239,7 +1671,7 @@
         </div>
 
         <div class="course-card" onclick="go('course-cpr')">
-          <div class="cc-top" style="background:linear-gradient(120deg,#0A3020,#1A5A40)">
+          <div class="cc-top" style="background:linear-gradient(120deg,rgba(10,48,32,.85),rgba(26,90,64,.85)),url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=500&q=80&fit=crop') center/cover">
             <div class="cc-level">เฉพาะองค์กร</div>
             <div class="cc-name">Corporate Safety Package</div>
             <span class="cc-tag" style="background:#1B9E5A">ราคาพิเศษ</span>
@@ -1261,7 +1693,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="บริษัท ABC จำกัด..."></div>
         <div class="cf-field"><label>หลักสูตรที่สนใจ</label><select><option>First Aid &amp; CPR</option><option>การใช้งาน AED</option><option>Swimmer Rescue Level 1</option><option>Diving Rescue Level 2</option><option>Advanced Rescue Instructor</option><option>Corporate Safety Package</option></select></div>
@@ -1280,12 +1712,12 @@
   <div class="page" id="course-cpr">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('courses')">← กลับหน้าหลักสูตร</div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;background:#F7F8FA">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:100px;padding:48px;background:linear-gradient(135deg,#ECEEF2,#DFE3EA)">🩺</div>
+      <div style="overflow:hidden;height:280px"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="CPR Training"></div>
       <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
         <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-bottom:8px">หลักสูตร Prosperous — ระดับพื้นฐาน</div>
         <h1 style="font-family:'Prompt';font-size:28px;margin-bottom:8px">First Aid &amp; CPR</h1>
@@ -1349,7 +1781,7 @@
         <p style="color:var(--slate);font-size:14px;margin-bottom:20px">กรอกข้อมูล ทีมจะติดต่อกลับภายใน 1 วันทำการ</p>
         <div class="field"><label>ชื่อ-นามสกุล</label><input placeholder="สมชาย ใจดี"></div>
         <div class="field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
-        <div class="field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="field"><label>รุ่นที่ต้องการ</label><select><option>รุ่นที่ 8 (14–15 มิ.ย.)</option><option>รุ่นที่ 9 (28–29 มิ.ย.)</option><option>รุ่นที่ 10 (12–13 ก.ค.)</option><option>In-house (นัดหมาย)</option></select></div>
         <div class="field"><label>จำนวนผู้เข้าร่วม</label><input placeholder="เช่น 1 หรือ 20 คน"></div>
         <button class="btn btn-primary" onclick="submitForm(this)">ลงทะเบียน</button>
@@ -1363,7 +1795,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="บริษัท ABC จำกัด..."></div>
         <div class="cf-field"><label>จำนวนผู้เข้าร่วม</label><select><option>1–10 คน</option><option>11–30 คน</option><option>31–50 คน</option><option>50+ คน</option></select></div>
@@ -1380,12 +1812,12 @@
   <div class="page" id="course-water">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
     <div class="breadcrumb" onclick="go('courses')">← กลับหน้าหลักสูตร</div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;background:#0A1628">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:100px;padding:48px;background:linear-gradient(135deg,#0A1628,#1A2C50)">🏊</div>
+      <div style="overflow:hidden;height:280px"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Water Rescue Training"></div>
       <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center;color:#fff">
         <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.6;margin-bottom:8px">หลักสูตร Prosperous — ระดับกลาง</div>
         <h1 style="font-family:'Prompt';font-size:28px;margin-bottom:8px">Swimmer Rescue Level 1</h1>
@@ -1444,7 +1876,7 @@
         <p style="color:var(--slate);font-size:14px;margin-bottom:20px">กรอกข้อมูล ทีมจะติดต่อกลับภายใน 1 วันทำการ</p>
         <div class="field"><label>ชื่อ-นามสกุล</label><input placeholder="สมชาย ใจดี"></div>
         <div class="field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
-        <div class="field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="field"><label>รุ่นที่ต้องการ</label><select><option>รุ่นที่ 5 (20–22 มิ.ย.)</option><option>รุ่นที่ 6 (18–20 ก.ค.)</option><option>รุ่นที่ 7 (15–17 ส.ค.)</option></select></div>
         <div class="field"><label>เคยผ่านหลักสูตร CPR มาแล้วหรือไม่?</label><select><option>ผ่านแล้ว</option><option>ยังไม่ผ่าน (ต้องการเรียนคู่กัน)</option></select></div>
         <button class="btn btn-primary" onclick="submitForm(this)">ลงทะเบียน</button>
@@ -1458,7 +1890,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>ข้อความ / คำถาม</label><textarea placeholder="สอบถามรายละเอียดหลักสูตร..."></textarea></div>
       </div>
@@ -1472,11 +1904,11 @@
   <div class="page" id="rescue-club">
     <div class="navbar">
       <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact')">ติดต่อ</a></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
     </div>
 
     <!-- HERO — full dark cinematic -->
-    <div style="background:linear-gradient(160deg,#080C14 0%,#0D1A2E 50%,#1A0A0A 100%);color:#fff;padding:72px 28px;text-align:center;position:relative;overflow:hidden">
+    <div style="background:linear-gradient(160deg,rgba(8,12,20,.88) 0%,rgba(13,26,46,.82) 50%,rgba(26,10,10,.9) 100%),url('https://images.unsplash.com/photo-1530549387789-4c1017266635?w=1200&q=80&fit=crop') center/cover;color:#fff;padding:72px 28px;text-align:center;position:relative;overflow:hidden">
       <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(200,16,46,.03) 0px,rgba(200,16,46,.03) 1px,transparent 1px,transparent 40px);pointer-events:none"></div>
       <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(200,16,46,.15);border:1px solid rgba(200,16,46,.4);border-radius:999px;padding:6px 18px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px;position:relative">
         ⚓ Rescue Swimmer Thailand · Military Grade Training
@@ -1485,7 +1917,7 @@
       <p style="font-size:16px;opacity:.8;max-width:600px;margin:0 auto 32px;line-height:1.8;position:relative">เราฝึกมาตรฐาน Military Style เพื่อสร้างนักกู้ชีพมืออาชีพ ที่สามารถรับมือกับทุกสถานการณ์ทางน้ำได้จริง ไม่ใช่แค่การเรียนในห้อง</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative">
         <button class="btn btn-primary" onclick="go('news')">📢 ติดตามข่าวการรับสมัคร</button>
-        <button class="btn btn-ghost" onclick="go('contact')">📞 ให้ทีมเราไปอบรมองค์กรคุณ</button>
+        <button class="btn btn-ghost" onclick="go('contact-page')">📞 ให้ทีมเราไปอบรมองค์กรคุณ</button>
       </div>
     </div>
 
@@ -1566,7 +1998,7 @@
           <h2 style="font-family:'Prompt';font-size:24px;margin-bottom:14px">ให้ทีมเราไปฝึกอบรม<br>ให้กับองค์กรของคุณ</h2>
           <p style="font-size:14px;color:#444;line-height:1.8;margin-bottom:16px">ชมรม Rescue Swimmer Thailand พร้อมออกไปจัดการฝึกอบรมให้กับหน่วยงานที่สนใจ ไม่ว่าจะเป็นโรงแรม สระว่ายน้ำ หน่วยงานรัฐ หรือองค์กรเอกชน</p>
           <p style="font-size:14px;color:#444;line-height:1.8;margin-bottom:20px">เราออกแบบหลักสูตรให้เหมาะกับบริบทขององค์กรคุณ ตั้งแต่ 1 วันไปจนถึงโปรแกรมเต็มรูปแบบ 5 วัน ออกบิลในนามบริษัทได้ทุกกรณี</p>
-          <button class="btn btn-primary" onclick="go('contact')">📞 ติดต่อจัดอบรม</button>
+          <button class="btn btn-primary" onclick="go('contact-page')">📞 ติดต่อจัดอบรม</button>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div style="background:#fff;border-radius:var(--radius);padding:18px;border:1px solid var(--line);display:flex;gap:14px;align-items:flex-start">
@@ -1605,7 +2037,7 @@
       <div class="contact-form-grid">
         <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
         <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com" data-required="true"></div>
         <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
         <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="โรงแรม / โรงเรียน / หน่วยงานรัฐ..."></div>
         <div class="cf-field"><label>จำนวนผู้เข้าร่วม (ประมาณ)</label><select><option>ไม่เกิน 10 คน</option><option>11–30 คน</option><option>31–50 คน</option><option>50+ คน</option></select></div>
@@ -1622,12 +2054,14 @@
   <div class="page" id="admin-courses">
     <div class="admin">
       <div class="sidebar">
-        <div class="brand">Prosperous</div>
+        <div class="brand">Prosperous Admin</div>
         <a onclick="go('admin-dash')">📊 ภาพรวม</a>
         <a onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
         <a onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
         <a class="active" onclick="go('admin-courses')">🎓 จัดการหลักสูตร</a>
         <a onclick="go('admin-leads')">📥 Leads / ติดต่อ</a>
+        <a onclick="go('admin-lifeguard')">🤿 ทีมไลฟ์การ์ด</a>
+        <a onclick="go('admin-settings')">⚙️ ตั้งค่า</a>
         <a onclick="go('home')">↩ ออกจากระบบ</a>
       </div>
       <div class="admin-main">
@@ -1647,7 +2081,7 @@
   <div class="page" id="admin-leads">
     <div class="admin">
       <div class="sidebar">
-        <div class="brand">Prosperous</div>
+        <div class="brand">Prosperous Admin</div>
         <a onclick="go('admin-dash')">📊 ภาพรวม</a>
         <a onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
         <a onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
@@ -1674,9 +2108,581 @@
     </div>
   </div>
 
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- SOLUTIONS HUB -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="solutions">
+    <div class="navbar">
+      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('solutions')" class="active">โซลูชั่น</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
+    </div>
+    <div class="sol-hero" style="background:linear-gradient(135deg,rgba(26,26,26,.8),rgba(44,10,16,.9)),url('https://images.unsplash.com/photo-1631649614174-fc59243eaeda?w=1200&q=80&fit=crop') center/cover;background-blend-mode:overlay">
+      <h1>โซลูชั่นครบวงจร<br>สำหรับทุกองค์กร</h1>
+      <p>Prosperous ออกแบบแพ็กเกจความปลอดภัยทางน้ำที่ตอบโจทย์ทุกประเภทสถานที่ — ตั้งแต่สระว่ายน้ำสาธารณะ โรงแรม โรงเรียน ไปจนถึงองค์กรขนาดใหญ่ พร้อม AED · ไลฟ์การ์ด · อบรม CPR ครบในที่เดียว</p>
+    </div>
+    <div class="section">
+      <h2>เลือกโซลูชั่นที่เหมาะกับคุณ</h2>
+      <div class="lead">แต่ละแพ็กเกจออกแบบเฉพาะสำหรับความต้องการของแต่ละกลุ่ม พร้อมให้คำปรึกษาฟรีโดยผู้เชี่ยวชาญ</div>
+      <div class="grid sol-grid">
+        <div class="sol-card" onclick="go('sol-public')">
+          <div class="sc-top" style="background:url('https://images.unsplash.com/photo-1631649614174-fc59243eaeda?w=500&q=80') center/cover;position:relative;min-height:180px"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#EEF4FF,#C7DDFF);opacity:.4"></div></div>
+          <div class="sc-body">
+            <div class="cat">สาธารณะ · ราชการ</div>
+            <h3>โซลูชั่นพื้นที่สาธารณะ</h3>
+            <p>AED สำหรับพื้นที่สาธารณะ สวนสาธารณะ ศูนย์การค้า สถานีรถไฟฟ้า พร้อมอบรม CPR ให้เจ้าหน้าที่</p>
+            <div class="sc-cta">ดูแพ็กเกจ →</div>
+          </div>
+        </div>
+        <div class="sol-card" onclick="go('sol-sports')">
+          <div class="sc-top" style="background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&q=80') center/cover;position:relative;min-height:180px"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#E8FFEF,#A7F0C4);opacity:.4"></div></div>
+          <div class="sc-body">
+            <div class="cat">กีฬา · สระว่ายน้ำ</div>
+            <h3>โซลูชั่นสระว่ายน้ำ</h3>
+            <p>ไลฟ์การ์ดมืออาชีพ อุปกรณ์กู้ชีพทางน้ำ Rescue Board Ring Buoy และ AED กันน้ำ IPX5 ครบชุด</p>
+            <div class="sc-cta">ดูแพ็กเกจ →</div>
+          </div>
+        </div>
+        <div class="sol-card" onclick="go('sol-hotel')">
+          <div class="sc-top" style="background:url('https://images.unsplash.com/photo-1559329007-40ec44d1641a?w=500&q=80') center/cover;position:relative;min-height:180px"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#FFF8EC,#FFE0A0);opacity:.4"></div></div>
+          <div class="sc-body">
+            <div class="cat">โรงแรม · รีสอร์ท</div>
+            <h3>โซลูชั่นโรงแรม</h3>
+            <p>แพ็กเกจ All-in-One สำหรับโรงแรม รีสอร์ท ครอบคลุม AED · ไลฟ์การ์ดประจำ · อบรมพนักงาน ออกบิลนามบริษัท</p>
+            <div class="sc-cta">ดูแพ็กเกจ →</div>
+          </div>
+        </div>
+        <div class="sol-card" onclick="go('sol-schools')">
+          <div class="sc-top" style="background:url('https://images.unsplash.com/photo-1427504494785-cddc0c5dc42d?w=500&q=80') center/cover;position:relative;min-height:180px"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#FFF0EE,#FFCCC4);opacity:.4"></div></div>
+          <div class="sc-body">
+            <div class="cat">โรงเรียน · มหาวิทยาลัย</div>
+            <h3>โซลูชั่นสถาบันการศึกษา</h3>
+            <p>CPR สำหรับนักเรียน Water Safety Awareness AED ประจำอาคาร พร้อมวุฒิบัตรรับรองนักเรียน</p>
+            <div class="sc-cta">ดูแพ็กเกจ →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#1A1A1A;padding:36px 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;">
+      <div><div style="font-family:'Prompt';font-size:32px;font-weight:700;color:#C8102E;">300+</div><div style="color:rgba(255,255,255,.7);font-size:13px;margin-top:4px;">ลูกค้าองค์กร</div></div>
+      <div><div style="font-family:'Prompt';font-size:32px;font-weight:700;color:#C8102E;">5,000+</div><div style="color:rgba(255,255,255,.7);font-size:13px;margin-top:4px;">ผู้ผ่านการอบรม</div></div>
+      <div><div style="font-family:'Prompt';font-size:32px;font-weight:700;color:#C8102E;">120+</div><div style="color:rgba(255,255,255,.7);font-size:13px;margin-top:4px;">ไลฟ์การ์ดในระบบ</div></div>
+      <div><div style="font-family:'Prompt';font-size:32px;font-weight:700;color:#C8102E;">10 ปี</div><div style="color:rgba(255,255,255,.7);font-size:13px;margin-top:4px;">ประสบการณ์</div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- SOL-PUBLIC สาธารณะ -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="sol-public">
+    <div class="navbar">
+      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('solutions')" class="active">โซลูชั่น</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
+    </div>
+    <div class="breadcrumb" onclick="go('solutions')">← โซลูชั่นทั้งหมด</div>
+    <div class="sol-hero" style="background:linear-gradient(120deg,rgba(15,39,68,.85),rgba(26,58,106,.85)),url('https://images.unsplash.com/photo-1631649614174-fc59243eaeda?w=1200&q=80&fit=crop') center/cover;background-blend-mode:overlay">
+      <div style="display:inline-block;background:rgba(255,255,255,.1);border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.05em;margin-bottom:14px;">🏛️ พื้นที่สาธารณะ · ราชการ</div>
+      <h1>โซลูชั่นพื้นที่สาธารณะ</h1>
+      <p>ครอบคลุมทุกพื้นที่ที่ประชาชนใช้งาน — ศูนย์การค้า สถานีรถไฟฟ้า สวนสาธารณะ ห้องสมุด สนามกีฬา สถานที่ราชการ พร้อม AED และแผนฉุกเฉินครบชุด</p>
+    </div>
+    <div class="section">
+      <h2>ปัญหาที่เราแก้ให้</h2>
+      <div class="lead">ภาวะหัวใจหยุดเต้นกะทันหันเกิดได้ทุกที่ ทุกเวลา โดยไม่มีสัญญาณเตือน</div>
+      <div class="features">
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1631649614174-fc59243eaeda?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">⚡</div><h3>ผ่านมาตรฐาน AED สาธารณะ</h3><p>AED Lifeline ผ่านมาตรฐาน IEC 60601 และ CE Marking เหมาะสำหรับพื้นที่สาธารณะตามข้อกำหนดของกระทรวงสาธารณสุข</p></div>
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1576091160575-2173dba999ef?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">🗺️</div><h3>แผนผังและป้ายสัญลักษณ์</h3><p>ออกแบบผังการติดตั้ง ป้ายบอกทาง และสัญลักษณ์มาตรฐานสากล ให้ทุกคนเข้าถึง AED ได้ภายใน 2 นาที</p></div>
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1584308666744-24d5f400f6f1?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">📋</div><h3>อบรมเจ้าหน้าที่ครบทีม</h3><p>อบรม CPR-AED ให้เจ้าหน้าที่รักษาความปลอดภัย พนักงานต้อนรับ และ First Responder ของสถานที่ พร้อมวุฒิบัตร</p></div>
+      </div>
+    </div>
+    <div class="section" style="background:var(--mist)">
+      <h2>แพ็กเกจสำหรับพื้นที่สาธารณะ</h2>
+      <div class="lead">เลือกตามขนาดพื้นที่และจำนวนผู้ใช้งาน</div>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);padding:22px;text-align:center;">
+          <div style="font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">STARTER</div>
+          <div style="font-family:'Prompt';font-size:28px;font-weight:700;margin-bottom:4px;">฿45,000</div>
+          <div style="font-size:12px;color:var(--slate);margin-bottom:16px;">พื้นที่ไม่เกิน 2,000 ตร.ม.</div>
+          <div style="font-size:13px;line-height:2;text-align:left;">✅ AED Lifeline 1 เครื่อง<br>✅ ตู้กันน้ำ + ป้าย<br>✅ อบรม CPR 10 คน<br>✅ บำรุงรักษา 1 ปี<br>✅ Hotline 24 ชม.</div>
+          <button class="btn btn-outline" style="width:100%;margin-top:16px;" onclick="go('contact-page')">ขอใบเสนอราคา</button>
+        </div>
+        <div style="background:var(--primary);border-radius:14px;padding:22px;text-align:center;position:relative;">
+          <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#E8A317;color:#fff;font-size:11px;font-weight:700;padding:3px 12px;border-radius:999px;">แนะนำ</div>
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">STANDARD</div>
+          <div style="font-family:'Prompt';font-size:28px;font-weight:700;color:#fff;margin-bottom:4px;">฿89,000</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.75);margin-bottom:16px;">พื้นที่ 2,000–10,000 ตร.ม.</div>
+          <div style="font-size:13px;line-height:2;text-align:left;color:#fff;">✅ AED Lifeline 3 เครื่อง<br>✅ ตู้กันน้ำ + ป้ายครบชุด<br>✅ อบรม CPR 30 คน<br>✅ แผนฉุกเฉิน + mock drill<br>✅ บำรุงรักษา 2 ปี<br>✅ Hotline 24 ชม.</div>
+          <button class="btn btn-ghost" style="width:100%;margin-top:16px;" onclick="go('contact-page')">ขอใบเสนอราคา</button>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);padding:22px;text-align:center;">
+          <div style="font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">ENTERPRISE</div>
+          <div style="font-family:'Prompt';font-size:28px;font-weight:700;margin-bottom:4px;">Custom</div>
+          <div style="font-size:12px;color:var(--slate);margin-bottom:16px;">พื้นที่ขนาดใหญ่ / หลายจุด</div>
+          <div style="font-size:13px;line-height:2;text-align:left;">✅ AED หลายจุดตามแผน<br>✅ Survey + ออกแบบผัง<br>✅ อบรมครบทุกทีม<br>✅ ระบบ monitoring<br>✅ SLA บำรุงรักษาประจำปี<br>✅ Account Manager</div>
+          <button class="btn btn-outline" style="width:100%;margin-top:16px;" onclick="go('contact-page')">ติดต่อทีมงาน</button>
+        </div>
+      </div>
+    </div>
+    <div class="contact-section">
+      <div class="cs-head"><h2>ขอคำปรึกษาฟรี</h2><p>ทีมผู้เชี่ยวชาญพร้อม survey พื้นที่และออกแบบแผนให้โดยไม่มีค่าใช้จ่าย</p></div>
+      <div class="contact-form-grid">
+        <div class="cf-field"><label>ชื่อ-นามสกุล</label><input placeholder="สมชาย ใจดี"></div>
+        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@org.th" data-required="true"></div>
+        <div class="cf-field"><label>ประเภทสถานที่</label><select><option>ศูนย์การค้า</option><option>สถานีรถไฟฟ้า / ขนส่ง</option><option>สวนสาธารณะ</option><option>สนามกีฬา</option><option>หน่วยงานราชการ</option><option>อื่นๆ</option></select></div>
+        <div class="cf-field full"><label>ขนาดพื้นที่ / จำนวนผู้ใช้งานต่อวัน</label><input placeholder="เช่น 5,000 ตร.ม. / ผู้ใช้ 2,000 คน/วัน"></div>
+        <div class="cf-field full"><label>ข้อมูลเพิ่มเติม</label><textarea placeholder="งบประมาณ ไทม์ไลน์ ความต้องการพิเศษ..."></textarea></div>
+      </div>
+      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- SOL-SPORTS กีฬา/สระ -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="sol-sports">
+    <div class="navbar">
+      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('solutions')" class="active">โซลูชั่น</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
+    </div>
+    <div class="breadcrumb" onclick="go('solutions')">← โซลูชั่นทั้งหมด</div>
+    <div class="sol-hero" style="background:linear-gradient(120deg,rgba(10,42,26,.85),rgba(15,92,53,.85)),url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&fit=crop') center/cover;background-blend-mode:overlay">
+      <div style="display:inline-block;background:rgba(255,255,255,.1);border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.05em;margin-bottom:14px;">🏊 กีฬา · สระว่ายน้ำ · ชายหาด</div>
+      <h1>โซลูชั่นสระว่ายน้ำและกีฬาทางน้ำ</h1>
+      <p>ครบชุดสำหรับสระว่ายน้ำสาธารณะ คลับ โรงแรม สนามกีฬา และชายหาด — ไลฟ์การ์ดมืออาชีพ อุปกรณ์กู้ชีพ AED กันน้ำ และหลักสูตรอบรมทีม Water Safety</p>
+    </div>
+    <div class="section">
+      <h2>อุปกรณ์ที่แนะนำสำหรับสระ</h2>
+      <div class="lead">คัดสรรเฉพาะอุปกรณ์ที่ทนทานต่อน้ำและสารเคมีในสระ</div>
+      <div class="features">
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1631649614174-fc59243eaeda?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">💛</div><h3>AutoShock AED (IPX5)</h3><p>AED กันน้ำระดับ IPX5 ออกแบบมาสำหรับสภาพแวดล้อมที่ชื้นและใกล้น้ำ วิเคราะห์จังหวะหัวใจอัตโนมัติ ไม่ต้องกดปุ่ม Shock</p></div>
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">🏄</div><h3>Rescue Board มาตรฐาน ILSC</h3><p>กระดานช่วยชีวิตทางน้ำขนาด 280×55 ซม. โฟมแกนแข็ง น้ำหนักเบา ทนทาน รองรับน้ำหนักถึง 150 กก.</p></div>
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1524634126442-357e0eac6b14?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">🔴</div><h3>Ring Buoy + เชือกชุดสมบูรณ์</h3><p>ห่วงชูชีพพร้อมเชือก PP 20 เมตร ผ่านมาตรฐาน ISO 5489 ทนทานต่อ UV และสารคลอรีนในสระ</p></div>
+      </div>
+    </div>
+    <div class="section" style="background:var(--mist)">
+      <h2>บริการไลฟ์การ์ดประจำสระ</h2>
+      <div class="lead">ไลฟ์การ์ดทุกคนผ่านการรับรอง ILSE (International Lifesaving Education) และเป็นสมาชิกชมรม Rescue Swimmer</div>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);padding:22px;">
+          <div style="font-size:22px;margin-bottom:10px;">📅</div>
+          <h3 style="font-size:15px;margin-bottom:8px;">รายวัน / รายครั้ง</h3>
+          <p style="font-size:13px;color:var(--slate);line-height:1.7;">เหมาะสำหรับงาน event สนามแข่งขัน กีฬาสีโรงเรียน แคมป์ว่ายน้ำ สั่งล่วงหน้า 3 วัน</p>
+          <div style="margin-top:12px;font-family:'Prompt';font-size:18px;font-weight:700;color:var(--primary);">จาก ฿1,500/วัน</div>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);padding:22px;">
+          <div style="font-size:22px;margin-bottom:10px;">🗓️</div>
+          <h3 style="font-size:15px;margin-bottom:8px;">รายเดือน</h3>
+          <p style="font-size:13px;color:var(--slate);line-height:1.7;">สัญญา 3–12 เดือน ออกบิลในนามบริษัทได้ ทีม Prosperous ดูแลตารางกะและสวัสดิการ</p>
+          <div style="margin-top:12px;font-family:'Prompt';font-size:18px;font-weight:700;color:var(--primary);">จาก ฿18,000/เดือน</div>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);padding:22px;">
+          <div style="font-size:22px;margin-bottom:10px;">🏆</div>
+          <h3 style="font-size:15px;margin-bottom:8px;">Team Package</h3>
+          <p style="font-size:13px;color:var(--slate);line-height:1.7;">ทีมไลฟ์การ์ด 2–5 คน พร้อมหัวหน้าทีม Water Safety Manager รวมอุปกรณ์ครบชุด</p>
+          <div style="margin-top:12px;font-family:'Prompt';font-size:18px;font-weight:700;color:var(--primary);">ราคาเหมาทีม</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-section">
+      <div class="cs-head"><h2>ปรึกษาแพ็กเกจสระว่ายน้ำ</h2><p>บอกรายละเอียดสระและความต้องการ เราจะออกแบบโซลูชั่นที่เหมาะที่สุด</p></div>
+      <div class="contact-form-grid">
+        <div class="cf-field"><label>ชื่อ-นามสกุล</label><input placeholder="สมชาย ใจดี"></div>
+        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@pool.th" data-required="true"></div>
+        <div class="cf-field"><label>ประเภทสถานที่</label><select><option>สระว่ายน้ำสาธารณะ</option><option>สระโรงแรม / รีสอร์ท</option><option>สระคลับ / ฟิตเนส</option><option>สนามกีฬาทางน้ำ</option><option>ชายหาด / ทะเล</option><option>อื่นๆ</option></select></div>
+        <div class="cf-field"><label>จำนวนสระ / ขนาด</label><input placeholder="เช่น 2 สระ ขนาด 25 เมตร"></div>
+        <div class="cf-field"><label>บริการที่ต้องการ</label><select><option>ไลฟ์การ์ดประจำ</option><option>อุปกรณ์กู้ชีพ</option><option>AED + อุปกรณ์รวม</option><option>Rescue Board + Ring Buoy</option><option>แพ็กเกจครบชุด</option></select></div>
+        <div class="cf-field full"><label>ข้อมูลเพิ่มเติม</label><textarea placeholder="เวลาเปิด-ปิด จำนวนกะที่ต้องการ งบประมาณ..."></textarea></div>
+      </div>
+      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- SOL-HOTEL โรงแรม -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="sol-hotel">
+    <div class="navbar">
+      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('solutions')" class="active">โซลูชั่น</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
+    </div>
+    <div class="breadcrumb" onclick="go('solutions')">← โซลูชั่นทั้งหมด</div>
+    <div class="sol-hero" style="background:linear-gradient(120deg,rgba(26,21,0,.85),rgba(61,48,0,.85)),url('https://images.unsplash.com/photo-1559329007-40ec44d1641a?w=1200&q=80&fit=crop') center/cover;background-blend-mode:overlay">
+      <div style="display:inline-block;background:rgba(255,255,255,.1);border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.05em;margin-bottom:14px;">🏨 โรงแรม · รีสอร์ท · Serviced Apartment</div>
+      <h1>Hotel Safety Package<br>ครบในที่เดียว</h1>
+      <p>แพ็กเกจความปลอดภัยสำหรับโรงแรมและรีสอร์ท ครอบคลุมทุกจุด — Lobby, สระ, ห้องออกกำลังกาย, ร้านอาหาร พร้อมอบรมพนักงานทุกแผนก ออกบิลในนามบริษัทได้</p>
+    </div>
+    <div class="section">
+      <h2>ทำไมโรงแรมต้องมี AED และไลฟ์การ์ด?</h2>
+      <div class="lead">กรณีฉุกเฉินทางการแพทย์ที่พบบ่อยในโรงแรม ได้แก่ ภาวะหัวใจหยุดเต้น สำลักน้ำในสระ และ Heat Stroke</div>
+      <div class="features">
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1559329007-40ec44d1641a?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">⭐</div><h3>มาตรฐาน SHA Plus</h3><p>Prosperous ช่วยให้โรงแรมปฏิบัติตามข้อกำหนด SHA Plus ด้านความปลอดภัยของผู้เข้าพัก พร้อมเอกสารรับรองครบถ้วน</p></div>
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1559329007-40ec44d1641a?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">🌍</div><h3>รองรับนักท่องเที่ยวต่างชาติ</h3><p>AED ที่มีเสียงนำทางภาษาอังกฤษ และทีมไลฟ์การ์ดที่สื่อสารภาษาอังกฤษได้ เพิ่มความเชื่อมั่นแก่ผู้เข้าพักต่างประเทศ</p></div>
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1554224311-beede415c15e?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">📑</div><h3>ออกบิลนามบริษัทได้ทุกรูปแบบ</h3><p>ใบกำกับภาษีเต็มรูปแบบ รองรับการเบิกค่าใช้จ่ายองค์กร หน่วยงานราชการ และระบบบัญชีต่างๆ</p></div>
+      </div>
+    </div>
+    <div class="section" style="background:var(--mist)">
+      <h2>Hotel Safety Package</h2>
+      <div class="lead">ออกแบบเฉพาะสำหรับโรงแรม ครอบคลุมทุกจุดที่เสี่ยง</div>
+      <div class="two-col" style="padding:0;gap:20px">
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);overflow:hidden;">
+          <div style="background:var(--primary);color:#fff;padding:14px 20px;font-family:'Prompt';font-weight:700;font-size:16px;">🥈 Silver Package</div>
+          <div style="padding:20px;">
+            <div style="font-family:'Prompt';font-size:26px;font-weight:700;margin-bottom:4px;">฿120,000<span style="font-size:14px;font-weight:400;color:var(--slate)">/ปี</span></div>
+            <div style="font-size:12px;color:var(--slate);margin-bottom:16px;">เหมาะสำหรับโรงแรม 50–150 ห้อง</div>
+            <div style="font-size:13px;line-height:2.2;">✅ AED Lifeline 2 เครื่อง (Lobby + Pool)<br>✅ Ring Buoy + Rescue Hook ครบชุด<br>✅ อบรม CPR พนักงาน 20 คน<br>✅ แผนฉุกเฉิน + ป้ายสัญลักษณ์<br>✅ ตรวจบำรุงรักษาปีละ 2 ครั้ง<br>✅ Hotline ฉุกเฉิน 24 ชม.</div>
+            <button class="btn btn-outline" style="width:100%;margin-top:16px;" onclick="go('contact-page')">ขอใบเสนอราคา</button>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:2px solid var(--primary);overflow:hidden;position:relative;">
+          <div style="position:absolute;top:14px;right:14px;background:#E8A317;color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;">แนะนำ</div>
+          <div style="background:#1A1A1A;color:#fff;padding:14px 20px;font-family:'Prompt';font-weight:700;font-size:16px;">🥇 Gold Package</div>
+          <div style="padding:20px;">
+            <div style="font-family:'Prompt';font-size:26px;font-weight:700;margin-bottom:4px;">฿280,000<span style="font-size:14px;font-weight:400;color:var(--slate)">/ปี</span></div>
+            <div style="font-size:12px;color:var(--slate);margin-bottom:16px;">เหมาะสำหรับโรงแรม 150–400 ห้อง</div>
+            <div style="font-size:13px;line-height:2.2;">✅ AED AutoShock (IPX5) 2 + Lifeline 2 เครื่อง<br>✅ ไลฟ์การ์ดประจำสระ 1 คน (จันทร์–อาทิตย์)<br>✅ Rescue Board + Ring Buoy + Spine Board<br>✅ อบรม CPR พนักงาน 50 คน<br>✅ Mock Drill ฉุกเฉิน 2 ครั้ง/ปี<br>✅ บำรุงรักษาทุกไตรมาส<br>✅ Hotline ฉุกเฉิน 24 ชม. + Account Manager</div>
+            <button class="btn btn-primary" style="width:100%;margin-top:16px;" onclick="go('contact-page')">ขอใบเสนอราคา</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-section">
+      <div class="cs-head"><h2>ขอแพ็กเกจเฉพาะโรงแรมของคุณ</h2><p>ทีมผู้เชี่ยวชาญจะ survey สถานที่และออกแบบแผนความปลอดภัยให้ครบ ฟรีไม่มีค่าใช้จ่าย</p></div>
+      <div class="contact-form-grid">
+        <div class="cf-field"><label>ชื่อ-นามสกุล</label><input placeholder="ผู้ประสานงาน"></div>
+        <div class="cf-field"><label>ตำแหน่ง</label><input placeholder="เช่น Safety Manager, GM"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@hotel.com" data-required="true"></div>
+        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
+        <div class="cf-field full"><label>ชื่อโรงแรม / จำนวนห้อง / จังหวัด</label><input placeholder="เช่น The Grand Hotel · 200 ห้อง · กรุงเทพฯ"></div>
+        <div class="cf-field"><label>มีสระว่ายน้ำ?</label><select><option>มี 1 สระ</option><option>มี 2 สระขึ้นไป</option><option>ไม่มี</option></select></div>
+        <div class="cf-field"><label>แพ็กเกจที่สนใจ</label><select><option>Silver Package</option><option>Gold Package</option><option>Enterprise (Custom)</option><option>ยังไม่แน่ใจ / ขอคำปรึกษา</option></select></div>
+        <div class="cf-field full"><label>ข้อมูลเพิ่มเติม</label><textarea placeholder="งบประมาณ ระยะเวลาที่ต้องการเริ่ม ความต้องการพิเศษ..."></textarea></div>
+      </div>
+      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- SOL-SCHOOLS โรงเรียน -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="sol-schools">
+    <div class="navbar">
+      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
+      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('solutions')" class="active">โซลูชั่น</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
+    </div>
+    <div class="breadcrumb" onclick="go('solutions')">← โซลูชั่นทั้งหมด</div>
+    <div class="sol-hero" style="background:linear-gradient(120deg,rgba(26,0,40,.85),rgba(61,0,100,.85)),url('https://images.unsplash.com/photo-1427504494785-cddc0c5dc42d?w=1200&q=80&fit=crop') center/cover;background-blend-mode:overlay">
+      <div style="display:inline-block;background:rgba(255,255,255,.1);border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.05em;margin-bottom:14px;">🏫 โรงเรียน · มหาวิทยาลัย · อาชีวศึกษา</div>
+      <h1>โซลูชั่นสถาบันการศึกษา</h1>
+      <p>สร้างทักษะชีวิตให้นักเรียน เสริมความพร้อมฉุกเฉินให้ครูและบุคลากร ด้วยหลักสูตร CPR AED และ Water Safety ที่ออกแบบให้เหมาะกับทุกช่วงวัย พร้อมวุฒิบัตรรับรองระดับนานาชาติ</p>
+    </div>
+    <div class="section">
+      <h2>หลักสูตรสำหรับสถาบันการศึกษา</h2>
+      <div class="lead">ออกแบบเฉพาะตามช่วงอายุ — ปรับเนื้อหาและความเข้มข้นให้เหมาะกับแต่ละระดับ</div>
+      <div class="features">
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">🧒</div><h3>ประถม–มัธยมต้น (อายุ 8–14 ปี)</h3><p>Water Safety Awareness, การเอาชีวิตรอดทางน้ำ, การเรียกขอความช่วยเหลือ, CPR เบื้องต้น ผ่านกิจกรรม Gamified</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="University"></div><h3>มัธยมปลาย–มหาวิทยาลัย</h3><p>CPR-AED เต็มรูปแบบ ผ่านมาตรฐาน AHA Heartsaver หรือ ILSE พร้อมวุฒิบัตรรับรองโดยองค์กรนานาชาติ</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Teacher"></div><h3>คณาจารย์และบุคลากร</h3><p>หลักสูตร BLS (Basic Life Support) + AED สำหรับครู ผู้ดูแล และเจ้าหน้าที่ รับรองโดย AHA หรือ Thai Red Cross พร้อมใบรับรอง 2 ปี</p></div>
+      </div>
+    </div>
+    <div class="section" style="background:var(--mist)">
+      <h2>แพ็กเกจสำหรับสถาบันการศึกษา</h2>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);padding:22px;">
+          <div style="font-size:22px;margin-bottom:10px;">🌱</div>
+          <h3 style="font-size:15px;margin-bottom:4px;">Water Safety Awareness</h3>
+          <div style="font-family:'Prompt';font-size:20px;font-weight:700;color:var(--primary);margin:8px 0;">฿5,000<span style="font-size:12px;font-weight:400;color:var(--slate)">/ห้อง</span></div>
+          <p style="font-size:13px;color:var(--slate);line-height:1.7;">สำหรับนักเรียนประถม ระยะ 2 ชั่วโมง เน้นความตระหนักรู้และการป้องกัน ไม่ต้องมีสระ</p>
+          <button class="btn btn-outline btn-sm" style="margin-top:14px;" onclick="go('contact-page')">สอบถาม</button>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);padding:22px;border-color:var(--primary);border-width:2px;position:relative;">
+          <div style="position:absolute;top:-12px;right:14px;background:var(--primary);color:#fff;font-size:11px;font-weight:700;padding:3px 12px;border-radius:999px;">ยอดนิยม</div>
+          <div style="font-size:22px;margin-bottom:10px;">💚</div>
+          <h3 style="font-size:15px;margin-bottom:4px;">CPR-AED School Package</h3>
+          <div style="font-family:'Prompt';font-size:20px;font-weight:700;color:var(--primary);margin:8px 0;">฿35,000<span style="font-size:12px;font-weight:400;color:var(--slate)">/สถาบัน</span></div>
+          <p style="font-size:13px;color:var(--slate);line-height:1.7;">นักเรียน ม.4–ม.6 หรือ ป.1 จำนวน 50 คน + AED ประจำอาคาร 1 เครื่อง + อบรมครู 10 คน ใบรับรองครบ</p>
+          <button class="btn btn-primary btn-sm" style="margin-top:14px;" onclick="go('contact-page')">ขอใบเสนอราคา</button>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1px solid var(--line);padding:22px;">
+          <div style="font-size:22px;margin-bottom:10px;">🏆</div>
+          <h3 style="font-size:15px;margin-bottom:4px;">Safe School Enterprise</h3>
+          <div style="font-family:'Prompt';font-size:20px;font-weight:700;color:var(--primary);margin:8px 0;">Custom</div>
+          <p style="font-size:13px;color:var(--slate);line-height:1.7;">ครอบคลุมทั้งสถาบัน อบรมนักเรียน บุคลากร AED ทุกอาคาร ระบบฉุกเฉิน Mock Drill ประจำปี</p>
+          <button class="btn btn-outline btn-sm" style="margin-top:14px;" onclick="go('contact-page')">ติดต่อทีมงาน</button>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <h2>ทำไมต้องสอน CPR ตั้งแต่ในโรงเรียน?</h2>
+      <div class="features">
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1631649614174-fc59243eaeda?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">🫀</div><h3>ทุก 1 นาทีที่ช่วยช้า ลด 10%</h3><p>โอกาสรอดชีวิตจากภาวะหัวใจหยุดเต้นลดลง 7–10% ทุกนาทีที่ไม่ได้รับ CPR ทักษะนี้ช่วยชีวิตได้จริง</p></div>
+        <div class="feature"><div class="ic" style="font-size:52px;background:url('https://images.unsplash.com/photo-1559329007-40ec44d1641a?w=300&q=80') center/cover;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;text-shadow:0 0 8px rgba(0,0,0,.5)">🌍</div><h3>มาตรฐานสากลหลายประเทศ</h3><p>เดนมาร์ก สหราชอาณาจักร และอีก 30+ ประเทศ บังคับสอน CPR ในโรงเรียน นักเรียนไทยควรได้รับสิทธิ์เดียวกัน</p></div>
+        <div class="feature"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin-bottom:10px"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Certificate"></div><h3>วุฒิบัตรใช้ได้จริงในอนาคต</h3><p>ใบรับรอง CPR จาก AHA หรือ ILSE เป็นที่ยอมรับในการสมัครงาน ทุน และสถาบันการศึกษาต่างประเทศ</p></div>
+      </div>
+    </div>
+    <div class="contact-section">
+      <div class="cs-head"><h2>ปรึกษาหลักสูตรสำหรับสถาบันของคุณ</h2><p>เราจะออกแบบโปรแกรมที่เหมาะกับระดับชั้น จำนวนนักเรียน และงบประมาณ</p></div>
+      <div class="contact-form-grid">
+        <div class="cf-field"><label>ชื่อ-นามสกุล</label><input placeholder="ครู / ผู้ประสานงาน"></div>
+        <div class="cf-field"><label>ตำแหน่ง</label><input placeholder="เช่น ครูพลศึกษา, ฝ่ายกิจการนักเรียน"></div>
+        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@school.ac.th" data-required="true"></div>
+        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
+        <div class="cf-field full"><label>ชื่อสถาบัน / จังหวัด</label><input placeholder="เช่น โรงเรียนสาธิตมหาวิทยาลัย · กรุงเทพฯ"></div>
+        <div class="cf-field"><label>ระดับชั้นที่ต้องการอบรม</label><select><option>ประถมศึกษา</option><option>มัธยมศึกษาตอนต้น</option><option>มัธยมศึกษาตอนปลาย</option><option>อาชีวศึกษา</option><option>อุดมศึกษา</option><option>บุคลากร / ครู</option></select></div>
+        <div class="cf-field"><label>จำนวนนักเรียน / ผู้เข้าร่วม</label><input placeholder="เช่น 120 คน"></div>
+        <div class="cf-field full"><label>ข้อมูลเพิ่มเติม</label><textarea placeholder="งบประมาณ วันที่ต้องการ ความต้องการพิเศษ..."></textarea></div>
+      </div>
+      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ค้นหา -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="search">
+    <div class="topbar"><span>📞 02-XXX-XXXX &nbsp;|&nbsp; Line: @prosperous</span><a onclick="go('admin-login')">สำหรับผู้ดูแลระบบ</a></div>
+    <div class="navbar">
+      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
+      <div class="navlinks">
+        <a onclick="go('products')">สินค้า</a>
+        <a onclick="go('csr')">บริการและ CSR</a>
+        <a onclick="go('news')">ข่าวสาร</a>
+        <a onclick="go('contact-page')">ติดต่อ</a>
+      </div>
+      <button class="hamburger-btn" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+    </div>
+    <div class="breadcrumb" onclick="go('home')">← หน้าแรก</div>
+    <div class="section">
+      <h2>🔍 ค้นหา</h2>
+      <div class="lead">ค้นหาสินค้า บริการ หลักสูตร และข้อมูลทั้งหมดของ Prosperous</div>
+      <div class="search-bar">
+        <input id="sq" type="text" placeholder="พิมพ์คำค้นหา เช่น AED, CPR, ไลฟ์การ์ด..." oninput="doSearch(this.value)" autofocus>
+        <button class="btn btn-primary" onclick="doSearch(document.getElementById('sq').value)">ค้นหา</button>
+      </div>
+      <div class="chips" style="margin-bottom:16px">
+        <span class="chip" onclick="document.getElementById('sq').value='AED';doSearch('AED')">AED</span>
+        <span class="chip" onclick="document.getElementById('sq').value='CPR';doSearch('CPR')">CPR</span>
+        <span class="chip" onclick="document.getElementById('sq').value='ไลฟ์การ์ด';doSearch('ไลฟ์การ์ด')">ไลฟ์การ์ด</span>
+        <span class="chip" onclick="document.getElementById('sq').value='อบรม';doSearch('อบรม')">อบรม</span>
+        <span class="chip" onclick="document.getElementById('sq').value='โรงแรม';doSearch('โรงแรม')">โรงแรม</span>
+        <span class="chip" onclick="document.getElementById('sq').value='โรงเรียน';doSearch('โรงเรียน')">โรงเรียน</span>
+      </div>
+      <div id="search-results">
+        <div style="color:var(--slate);font-size:14px;padding:24px 0;text-align:center">พิมพ์คำค้นหาอย่างน้อย 2 ตัวอักษร</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div><h4>Prosperous</h4><a onclick="go('about')">เกี่ยวกับเรา</a><a onclick="go('csr')">บริการ CSR</a><a onclick="go('contact-page')">ติดต่อ</a></div>
+      <div><h4>สินค้า</h4><a onclick="go('prod-aed')">AED</a><a onclick="go('prod-auto-aed')">Auto AED</a><a onclick="go('prod-physio')">อุปกรณ์กายภาพ</a></div>
+      <div><h4>บริการ</h4><a onclick="go('csr')">อบรม CPR</a><a onclick="go('csr')">ไลฟ์การ์ด</a><a onclick="go('news')">ข่าวสาร</a></div>
+      <div><h4>ติดตามเรา</h4><a>Facebook</a><a>Line: @prosperous</a><a>YouTube</a></div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 404 Not Found -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="not-found">
+    <div class="navbar">
+      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
+      <div class="navlinks">
+        <a onclick="go('products')">สินค้า</a>
+        <a onclick="go('csr')">บริการและ CSR</a>
+        <a onclick="go('news')">ข่าวสาร</a>
+        <a onclick="go('contact-page')">ติดต่อ</a>
+      </div>
+      <button class="hamburger-btn" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+    </div>
+    <div class="not-found">
+      <div class="nf-num">404</div>
+      <h2>ไม่พบหน้าที่ต้องการ</h2>
+      <p>ขออภัย หน้าที่คุณต้องการอาจถูกย้าย ลบ หรือ URL ไม่ถูกต้อง<br>กรุณาตรวจสอบ URL หรือกลับไปยังหน้าแรก</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+        <button class="btn btn-primary" onclick="go('home')">🏠 กลับหน้าแรก</button>
+        <button class="btn btn-outline" onclick="go('search')">🔍 ค้นหา</button>
+        <button class="btn btn-outline" onclick="go('contact-page')">📞 ติดต่อเรา</button>
+      </div>
+      <div style="margin-top:40px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
+        <div class="feature" style="width:200px;text-align:center;cursor:pointer" onclick="go('products')"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin:0 auto 10px"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="AED"></div><h3>สินค้า AED</h3><p>เครื่องกระตุกหัวใจ มาตรฐาน FDA</p></div>
+        <div class="feature" style="width:200px;text-align:center;cursor:pointer" onclick="go('courses')"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin:0 auto 10px"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="Training"></div><h3>หลักสูตรอบรม</h3><p>CPR, First Aid, Rescue Swimmer</p></div>
+        <div class="feature" style="width:200px;text-align:center;cursor:pointer" onclick="go('csr')"><div class="ic" style="font-size:0;width:56px;height:56px;border-radius:10px;overflow:hidden;margin:0 auto 10px"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=120&q=80&fit=crop" style="width:100%;height:100%;object-fit:cover" alt="CSR"></div><h3>บริการ CSR</h3><p>ไลฟ์การ์ด อบรม In-house</p></div>
+      </div>
+    </div>
+    <div class="footer">
+      <div><h4>Prosperous</h4><a onclick="go('about')">เกี่ยวกับเรา</a><a onclick="go('csr')">บริการ CSR</a><a onclick="go('contact-page')">ติดต่อ</a></div>
+      <div><h4>สินค้า</h4><a onclick="go('prod-aed')">AED</a><a onclick="go('prod-auto-aed')">Auto AED</a><a onclick="go('prod-physio')">อุปกรณ์กายภาพ</a></div>
+      <div><h4>บริการ</h4><a onclick="go('csr')">อบรม CPR</a><a onclick="go('csr')">ไลฟ์การ์ด</a><a onclick="go('news')">ข่าวสาร</a></div>
+      <div><h4>ติดตามเรา</h4><a>Facebook</a><a>Line: @prosperous</a><a>YouTube</a></div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- B7 Admin — ทีมไลฟ์การ์ด -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="admin-lifeguard">
+    <div class="admin">
+      <div class="sidebar">
+        <div class="brand">Prosperous Admin</div>
+        <a onclick="go('admin-dash')">📊 ภาพรวม</a>
+        <a onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
+        <a onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
+        <a onclick="go('admin-courses')">🎓 จัดการหลักสูตร</a>
+        <a onclick="go('admin-leads')">📥 Leads / ติดต่อ</a>
+        <a class="active" onclick="go('admin-lifeguard')">🤿 ทีมไลฟ์การ์ด</a>
+        <a onclick="go('admin-settings')">⚙️ ตั้งค่า</a>
+        <a onclick="go('home')">↩ ออกจากระบบ</a>
+      </div>
+      <div class="admin-main">
+        <div class="admin-head">
+          <div><h2 style="font-family:'Prompt'">ทีมไลฟ์การ์ด</h2><div style="font-size:13px;color:var(--slate);margin-top:2px">จัดการสมาชิก รับรอง และตารางงาน</div></div>
+          <button class="btn btn-primary btn-sm" onclick="alert('เปิดฟอร์มเพิ่มสมาชิก')">+ เพิ่มสมาชิก</button>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><div class="slabel">สมาชิกทั้งหมด</div><div class="snum">18</div><div class="ssub" style="color:var(--success)">ใช้งานได้ 15 คน</div></div>
+          <div class="stat"><div class="slabel">ใบรับรอง ILSE</div><div class="snum">12</div><div class="ssub" style="color:var(--slate)">หมดอายุ 3 คน</div></div>
+          <div class="stat"><div class="slabel">งานเดือนนี้</div><div class="snum" style="color:var(--primary)">6</div><div class="ssub">จ้างงานที่ยืนยันแล้ว</div></div>
+        </div>
+
+        <div style="background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px">
+          <div style="padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+            <span style="font-weight:600;font-size:14px">รายชื่อสมาชิกทีม</span>
+            <div style="display:flex;gap:8px">
+              <select style="padding:6px 10px;border:1px solid var(--line);border-radius:6px;font-family:'Sarabun';font-size:12px"><option>ทุกระดับ</option><option>Level 1</option><option>Level 2</option><option>Instructor</option></select>
+              <select style="padding:6px 10px;border:1px solid var(--line);border-radius:6px;font-family:'Sarabun';font-size:12px"><option>ทุกสถานะ</option><option>ใช้งานได้</option><option>ไม่ว่าง</option><option>หยุดพัก</option></select>
+            </div>
+          </div>
+          <table>
+            <thead><tr><th>ชื่อ-นามสกุล</th><th>ระดับ</th><th>ใบรับรอง</th><th>หมดอายุ</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+            <tbody>
+              <tr><td><div style="font-weight:600">สมชาย ใจกล้า</div><div style="font-size:11px;color:var(--slate)">ประสบการณ์ 4 ปี</div></td><td><span class="pill csr">Instructor</span></td><td>ILSE · First Aid</td><td style="color:var(--success)">ธ.ค. 2568</td><td><span class="pill crs">✅ ว่าง</span></td><td><button class="btn btn-gray btn-sm">✏️ แก้ไข</button></td></tr>
+              <tr><td><div style="font-weight:600">วิภาวี รักษ์ทะเล</div><div style="font-size:11px;color:var(--slate)">ประสบการณ์ 2 ปี</div></td><td><span class="pill act">Level 2</span></td><td>ILSE · CPR</td><td style="color:var(--success)">มิ.ย. 2569</td><td><span class="pill crs">✅ ว่าง</span></td><td><button class="btn btn-gray btn-sm">✏️ แก้ไข</button></td></tr>
+              <tr><td><div style="font-weight:600">ธนา ผิวเข้ม</div><div style="font-size:11px;color:var(--slate)">ประสบการณ์ 1 ปี</div></td><td><span class="pill crs">Level 1</span></td><td>ILSE</td><td style="color:var(--amber)">มี.ค. 2569</td><td><span style="background:#FFF3DA;color:var(--amber);padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600">⏳ ไม่ว่าง</span></td><td><button class="btn btn-gray btn-sm">✏️ แก้ไข</button></td></tr>
+              <tr><td><div style="font-weight:600">มาลี สุขใจ</div><div style="font-size:11px;color:var(--slate)">ประสบการณ์ 3 ปี</div></td><td><span class="pill act">Level 2</span></td><td>ILSE · AED</td><td style="color:var(--primary)">ม.ค. 2569 ⚠️</td><td><span class="pill crs">✅ ว่าง</span></td><td><button class="btn btn-gray btn-sm">✏️ แก้ไข</button></td></tr>
+              <tr><td><div style="font-weight:600">ประพัน ว่ายเก่ง</div><div style="font-size:11px;color:var(--slate)">ประสบการณ์ 5 ปี</div></td><td><span class="pill csr">Instructor</span></td><td>ILSE · Military</td><td style="color:var(--success)">ก.ย. 2569</td><td><span class="pill crs">✅ ว่าง</span></td><td><button class="btn btn-gray btn-sm">✏️ แก้ไข</button></td></tr>
+              <tr><td><div style="font-weight:600">กนกวรรณ รอดชีวิต</div><div style="font-size:11px;color:var(--slate)">ใหม่ — ทดลองงาน</div></td><td><span class="pill crs">Level 1</span></td><td>First Aid</td><td style="color:var(--primary)">หมดแล้ว ⚠️</td><td><span style="background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600">❌ หยุดพัก</span></td><td><button class="btn btn-danger btn-sm">ต่ออายุใบรับรอง</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px">
+          <div style="font-weight:600;font-size:14px;margin-bottom:14px">📅 ตารางงานเดือนนี้</div>
+          <table>
+            <thead><tr><th>ลูกค้า/สถานที่</th><th>ไลฟ์การ์ด</th><th>วันที่</th><th>ระยะเวลา</th><th>ค่าจ้าง</th><th>สถานะ</th></tr></thead>
+            <tbody>
+              <tr><td><div style="font-weight:600">โรงแรม The Palace</div><div style="font-size:11px;color:var(--slate)">สระว่ายน้ำ 50m</div></td><td>สมชาย + วิภาวี</td><td>1–7 มิ.ย.</td><td>7 วัน</td><td style="color:var(--success);font-weight:600">฿14,000</td><td><span class="pill crs">✅ ยืนยัน</span></td></tr>
+              <tr><td><div style="font-weight:600">งาน Tri-ASEAN Fest</div><div style="font-size:11px;color:var(--slate)">ทะเลสาบสวนสาธารณะ</div></td><td>ประพัน + มาลี</td><td>15 มิ.ย.</td><td>1 วัน</td><td style="color:var(--success);font-weight:600">฿6,000</td><td><span class="pill crs">✅ ยืนยัน</span></td></tr>
+              <tr><td><div style="font-weight:600">โรงเรียนนานาชาติ ABC</div><div style="font-size:11px;color:var(--slate)">สระ Olympic</div></td><td>วิภาวี</td><td>20–22 มิ.ย.</td><td>3 วัน</td><td style="color:var(--success);font-weight:600">฿9,000</td><td><span style="background:#FFF3DA;color:var(--amber);padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600">⏳ รอยืนยัน</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- B8 Admin — ตั้งค่า -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="admin-settings">
+    <div class="admin">
+      <div class="sidebar">
+        <div class="brand">Prosperous Admin</div>
+        <a onclick="go('admin-dash')">📊 ภาพรวม</a>
+        <a onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
+        <a onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
+        <a onclick="go('admin-courses')">🎓 จัดการหลักสูตร</a>
+        <a onclick="go('admin-leads')">📥 Leads / ติดต่อ</a>
+        <a onclick="go('admin-lifeguard')">🤿 ทีมไลฟ์การ์ด</a>
+        <a class="active" onclick="go('admin-settings')">⚙️ ตั้งค่า</a>
+        <a onclick="go('home')">↩ ออกจากระบบ</a>
+      </div>
+      <div class="admin-main">
+        <div class="admin-head"><h2 style="font-family:'Prompt'">ตั้งค่าระบบ</h2></div>
+
+        <!-- ข้อมูลบริษัท -->
+        <div class="form-card" style="margin-bottom:18px">
+          <div style="font-size:15px;font-weight:700;font-family:'Prompt';margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)">🏢 ข้อมูลบริษัท</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="field"><label>ชื่อบริษัท (ไทย)</label><input value="บริษัท พรอสเพอรัส เรสคิว สวิมมิ่ง จำกัด"></div>
+            <div class="field"><label>ชื่อบริษัท (อังกฤษ)</label><input value="Prosperous Rescue Swimming Co., Ltd."></div>
+            <div class="field"><label>เลขทะเบียนนิติบุคคล</label><input value="0105xxx-xxxxx"></div>
+            <div class="field"><label>เลขประจำตัวผู้เสียภาษี (VAT)</label><input value="0105xxx-xxxxx"></div>
+            <div class="field" style="grid-column:1/-1"><label>ที่อยู่</label><textarea style="min-height:60px">123 ถนน... แขวง... เขต... กรุงเทพฯ 10110</textarea></div>
+            <div class="field"><label>โทรศัพท์</label><input value="02-XXX-XXXX"></div>
+            <div class="field"><label>Line Official</label><input value="@prosperous"></div>
+            <div class="field"><label>อีเมล</label><input value="info@prosperous-rescue.com"></div>
+            <div class="field"><label>เวลาทำการ</label><input value="จันทร์-ศุกร์ 9:00-18:00 น."></div>
+          </div>
+          <div style="margin-top:16px;text-align:right"><button class="btn btn-primary btn-sm" onclick="alert('บันทึกแล้ว ✅')">💾 บันทึกข้อมูลบริษัท</button></div>
+        </div>
+
+        <!-- บัญชีผู้ดูแล -->
+        <div class="form-card" style="margin-bottom:18px">
+          <div style="font-size:15px;font-weight:700;font-family:'Prompt';margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)">👤 บัญชีผู้ดูแลระบบ</div>
+          <table style="margin-bottom:16px">
+            <thead><tr><th>ชื่อผู้ใช้</th><th>ชื่อ-นามสกุล</th><th>บทบาท</th><th>เข้าใช้ล่าสุด</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>admin</strong></td><td>ผู้ดูแลหลัก</td><td><span class="pill csr">Super Admin</span></td><td>วันนี้ 10:24</td><td><span class="pill crs">✅ ใช้งาน</span></td><td><button class="btn btn-gray btn-sm">✏️</button></td></tr>
+              <tr><td>editor01</td><td>ทีมคอนเทนต์</td><td><span class="pill act">Editor</span></td><td>เมื่อวาน</td><td><span class="pill crs">✅ ใช้งาน</span></td><td><button class="btn btn-gray btn-sm">✏️</button> <button class="btn btn-danger btn-sm">🗑</button></td></tr>
+            </tbody>
+          </table>
+          <div style="border-top:1px solid var(--line);padding-top:16px">
+            <div style="font-weight:600;margin-bottom:12px;font-size:14px">เปลี่ยนรหัสผ่าน Admin</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+              <div class="field"><label>รหัสผ่านปัจจุบัน</label><input type="password" placeholder="••••••••"></div>
+              <div class="field"><label>รหัสผ่านใหม่</label><input type="password" placeholder="••••••••"></div>
+              <div class="field"><label>ยืนยันรหัสผ่าน</label><input type="password" placeholder="••••••••"></div>
+            </div>
+            <div style="margin-top:12px;text-align:right"><button class="btn btn-primary btn-sm" onclick="alert('เปลี่ยนรหัสผ่านแล้ว ✅')">🔒 เปลี่ยนรหัสผ่าน</button></div>
+          </div>
+        </div>
+
+        <!-- การแจ้งเตือน -->
+        <div class="form-card" style="margin-bottom:18px">
+          <div style="font-size:15px;font-weight:700;font-family:'Prompt';margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)">🔔 การแจ้งเตือน</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <label style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+              <div><div style="font-weight:600;font-size:14px">มี Lead ใหม่ส่งฟอร์มติดต่อ</div><div style="font-size:12px;color:var(--slate)">แจ้งเตือนทางอีเมลทันที</div></div>
+              <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--primary)">
+            </label>
+            <label style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+              <div><div style="font-weight:600;font-size:14px">ใบรับรองไลฟ์การ์ดใกล้หมดอายุ</div><div style="font-size:12px;color:var(--slate)">แจ้งเตือนล่วงหน้า 30 วัน</div></div>
+              <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--primary)">
+            </label>
+            <label style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+              <div><div style="font-weight:600;font-size:14px">สรุปรายงานรายสัปดาห์</div><div style="font-size:12px;color:var(--slate)">ส่งทุกวันจันทร์ 08:00</div></div>
+              <input type="checkbox" style="width:18px;height:18px;accent-color:var(--primary)">
+            </label>
+          </div>
+          <div style="margin-top:16px;text-align:right"><button class="btn btn-primary btn-sm" onclick="alert('บันทึกแล้ว ✅')">💾 บันทึกการแจ้งเตือน</button></div>
+        </div>
+
+        <!-- Zone Danger -->
+        <div class="form-card" style="border:1px solid #fca5a5">
+          <div style="font-size:15px;font-weight:700;font-family:'Prompt';margin-bottom:12px;color:#dc2626">⚠️ Danger Zone</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #fee2e2">
+            <div><div style="font-weight:600;font-size:14px">ล้างข้อมูล Leads ทั้งหมด</div><div style="font-size:12px;color:var(--slate)">ลบข้อความติดต่อทั้งหมดออกจากระบบ</div></div>
+            <button class="btn btn-danger btn-sm" onclick="if(confirm('ยืนยันลบข้อมูล Leads ทั้งหมด?'))alert('ลบแล้ว')">🗑 ล้างข้อมูล</button>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0">
+            <div><div style="font-weight:600;font-size:14px">รีเซ็ตระบบทั้งหมด</div><div style="font-size:12px;color:var(--slate)">คืนค่าทุกอย่างกลับเป็นค่าเริ่มต้น (ไม่สามารถยกเลิกได้)</div></div>
+            <button class="btn btn-danger btn-sm" onclick="alert('ฟังก์ชันนี้ปิดใช้งานใน Prototype')">⚠️ รีเซ็ต</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div><!-- end .device -->
+</div>
 
 <script>
+// ─── V5 Prototype ───
+
   const pages = [
     {id:'home',           label:'หน้าแรก',            url:'/',                   group:'ลูกค้า'},
     {id:'about',          label:'เกี่ยวกับเรา',        url:'/about',              group:'ลูกค้า'},
@@ -1819,415 +2825,76 @@
   }
 
   go('home');
+
+
+
+// ─── V7 New Features ───
+
+// ─── V7: FAQ Toggle ───
+function toggleFaq(el) {
+  var wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i){ i.classList.remove('open'); });
+  if (!wasOpen) el.classList.add('open');
+}
+
+// ─── V7: Form Validation ───
+function validateForm(formEl) {
+  var valid = true;
+  formEl.querySelectorAll('[data-required]').forEach(function(input) {
+    var field = input.closest('.form-field') || input.parentElement;
+    var val = input.value.trim();
+    if (!val) {
+      field.classList.add('invalid'); field.classList.remove('valid');
+      valid = false;
+    } else {
+      field.classList.remove('invalid'); field.classList.add('valid');
+    }
+    if (input.type === 'email' && val && !/^[^@]+@[^@]+\.[^@]+$/.test(val)) {
+      field.classList.add('invalid'); field.classList.remove('valid');
+      valid = false;
+    }
+  });
+  return valid;
+}
+
+// Intercept all form submits
+document.addEventListener('click', function(e) {
+  if (e.target.matches('.btn-submit, [data-submit]')) {
+    var form = e.target.closest('form') || e.target.closest('.contact-form') || e.target.closest('.cf');
+    if (form) {
+      if (!validateForm(form)) { e.stopImmediatePropagation(); return; }
+    }
+  }
+});
+
+// ─── V7: Export CSV (Admin Leads) ───
+function exportLeadsCSV() {
+  var leads = [
+    ['ชื่อ','อีเมล','โทรศัพท์','บริษัท','สินค้า','สถานะ','วันที่'],
+    ['สมชาย วงศ์ดี','somchai@abc.co.th','081-234-5678','บริษัท ABC จำกัด','AED','ใหม่','2568-06-05'],
+    ['วิภา สุขสันต์','wipa@hospital.or.th','089-876-5432','โรงพยาบาลสุขภาพดี','Auto AED','ติดต่อแล้ว','2568-06-03'],
+    ['ประพัน ชัยมงคล','prapat@school.ac.th','092-111-2222','โรงเรียนนานาชาติ','CPR Training','เสนอราคาแล้ว','2568-05-28'],
+  ];
+  var csv = leads.map(function(r){ return r.map(function(c){ return '"'+c+'"'; }).join(','); }).join('\n');
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
+  a.download = 'prosperous_leads_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+
+// ─── V7: Mobile Nav ───
+function toggleMobileNav() {
+  var navbar = document.querySelector('.page.active .navbar') || document.querySelector('.navbar');
+  if (navbar) navbar.classList.toggle('nav-mobile-open');
+}
+// Close mobile nav on navigate
+var _origGo = go;
+go = function(id) {
+  document.querySelectorAll('.navbar').forEach(function(n){ n.classList.remove('nav-mobile-open'); });
+  _origGo(id);
+};
+
 </script>
-
-  <!-- ══ SUCCESS MODAL ══ -->
-  <div class="modal-overlay" id="success-modal" onclick="if(event.target===this)closeModal()">
-    <div class="modal-box">
-      <div class="m-ic">✅</div>
-      <h3>ส่งข้อมูลสำเร็จ!</h3>
-      <p>ทีมของเราได้รับข้อมูลของคุณแล้ว และจะติดต่อกลับภายใน 1 วันทำการ<br><br>ขอบคุณที่ไว้วางใจ Prosperous</p>
-      <button class="btn btn-primary" style="width:100%" onclick="closeModal()">ปิด</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- หน้า Contact (standalone) -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="contact-page">
-    <div class="navbar">
-      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')" class="active">ติดต่อ</a></div>
-    </div>
-    <div style="background:linear-gradient(120deg,#1A1A1A,#2C0A10);color:#fff;padding:48px 28px;text-align:center">
-      <h1 style="font-family:'Prompt';font-size:28px;margin-bottom:10px">ติดต่อ Prosperous</h1>
-      <p style="opacity:.8;font-size:15px;max-width:500px;margin:0 auto">ผลิตภัณฑ์ Prosperous จำหน่ายผ่านทีมขายโดยตรง<br>กรอกแบบฟอร์มด้านล่าง หรือติดต่อผ่านช่องทางที่สะดวก</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:0">
-      <!-- Info column -->
-      <div style="padding:40px 32px;border-right:1px solid var(--line);background:var(--mist)">
-        <h3 style="font-family:'Prompt';font-size:18px;margin-bottom:24px">ช่องทางติดต่อ</h3>
-        <div style="display:flex;flex-direction:column;gap:22px">
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="font-size:22px;width:36px;text-align:center;flex-shrink:0">📞</div>
-            <div><div style="font-weight:600;font-size:14px;margin-bottom:3px">โทรศัพท์</div><div style="font-size:14px;color:var(--slate)">02-XXX-XXXX</div><div style="font-size:12px;color:var(--slate)">จ–ศ 9:00–18:00 น.</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="font-size:22px;width:36px;text-align:center;flex-shrink:0">💬</div>
-            <div><div style="font-weight:600;font-size:14px;margin-bottom:3px">Line Official</div><div style="font-size:14px;color:var(--slate)">@prosperous</div><div style="font-size:12px;color:var(--slate)">ตอบเร็วที่สุด</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="font-size:22px;width:36px;text-align:center;flex-shrink:0">📧</div>
-            <div><div style="font-weight:600;font-size:14px;margin-bottom:3px">อีเมล</div><div style="font-size:14px;color:var(--slate)">info@prosperous-rescue.com</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="font-size:22px;width:36px;text-align:center;flex-shrink:0">📘</div>
-            <div><div style="font-weight:600;font-size:14px;margin-bottom:3px">Facebook</div><div style="font-size:14px;color:var(--slate)">STORIESbyTuk</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="font-size:22px;width:36px;text-align:center;flex-shrink:0">📍</div>
-            <div><div style="font-weight:600;font-size:14px;margin-bottom:3px">ที่อยู่</div><div style="font-size:14px;color:var(--slate);line-height:1.6">123 ถนน... แขวง...<br>กรุงเทพมหานคร 10110</div></div>
-          </div>
-        </div>
-        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--line)">
-          <div style="font-size:13px;font-weight:600;margin-bottom:10px">เวลาทำการ</div>
-          <div style="font-size:13px;color:var(--slate);line-height:1.8">จันทร์ – ศุกร์: 9:00 – 18:00 น.<br>เสาร์: 9:00 – 13:00 น.<br>อาทิตย์: ปิด</div>
-        </div>
-      </div>
-      <!-- Form column -->
-      <div style="padding:40px 36px">
-        <h3 style="font-family:'Prompt';font-size:18px;margin-bottom:6px">ส่งข้อความมาหาเรา</h3>
-        <p style="font-size:13px;color:var(--slate);margin-bottom:24px">ทีมจะติดต่อกลับภายใน 1 วันทำการ</p>
-        <div class="contact-form-grid" style="max-width:100%">
-          <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
-          <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-          <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
-          <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
-          <div class="cf-field full"><label>บริษัท / หน่วยงาน</label><input placeholder="บริษัท ABC จำกัด (ถ้ามี)"></div>
-          <div class="cf-field full"><label>เรื่องที่ต้องการ</label><select><option>สอบถามสินค้า AED</option><option>สอบถาม Auto AED</option><option>อุปกรณ์กายภาพบำบัด</option><option>จ้างไลฟ์การ์ด</option><option>อบรม CPR / First Aid</option><option>อบรม Rescue Swimmer</option><option>ชมรม Rescue Swimmer Thailand</option><option>อื่นๆ</option></select></div>
-          <div class="cf-field full"><label>ข้อความ</label><textarea placeholder="บอกรายละเอียดที่ต้องการ..."></textarea></div>
-          <div class="cf-field full"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;accent-color:var(--primary)"> สมัครรับข่าวสารและโปรโมชั่น</label></div>
-        </div>
-        <div style="margin-top:16px"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อความ</button></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- หน้า Search -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="search">
-    <div class="navbar">
-      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
-    </div>
-    <div class="section">
-      <h2>ค้นหา</h2>
-      <div class="lead">ค้นหาสินค้า บริการ หรือบทความ</div>
-      <div class="search-bar">
-        <input id="search-input" placeholder="พิมพ์คำค้นหา เช่น AED, CPR, ไลฟ์การ์ด..." oninput="doSearch(this.value)">
-        <button class="btn btn-primary">ค้นหา</button>
-      </div>
-      <div id="search-results">
-        <div style="color:var(--slate);font-size:14px;padding:24px 0;text-align:center">พิมพ์คำค้นหาด้านบนเพื่อเริ่มต้น</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- หน้า Solutions -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="solutions">
-    <div class="navbar">
-      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
-    </div>
-    <div class="breadcrumb" onclick="go('home')">← หน้าแรก</div>
-    <div class="sol-hero">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.55;margin-bottom:10px">โซลูชั่น</div>
-      <h1>อุปกรณ์และบริการสำหรับทุกสถานการณ์</h1>
-      <p>Prosperous มีโซลูชั่นที่ออกแบบมาเฉพาะสำหรับแต่ละประเภทองค์กร เลือกที่เหมาะกับคุณ</p>
-    </div>
-    <div class="section">
-      <div class="grid">
-        <div class="sol-card" onclick="go('sol-public')">
-          <div class="sc-top" style="background:linear-gradient(135deg,#FFF0F2,#FFD6DD)">🏢</div>
-          <div class="sc-body"><h3>สถานที่สาธารณะ</h3><p>ห้างสรรพสินค้า สนามบิน สถานีรถไฟ อาคารสำนักงาน — ติดตั้ง AED ให้พร้อมตามกฎหมายใหม่</p><div class="sc-cta">ดูโซลูชั่น →</div></div>
-        </div>
-        <div class="sol-card" onclick="go('sol-sports')">
-          <div class="sc-top" style="background:linear-gradient(135deg,#E0EEFF,#C8DCFF)">🏊</div>
-          <div class="sc-body"><h3>กีฬาและสระว่ายน้ำ</h3><p>สระว่ายน้ำ สนามกีฬา ชายหาด — อุปกรณ์กู้ชีพครบวงจรและไลฟ์การ์ดมืออาชีพ</p><div class="sc-cta">ดูโซลูชั่น →</div></div>
-        </div>
-        <div class="sol-card" onclick="go('sol-schools')">
-          <div class="sc-top" style="background:linear-gradient(135deg,#E7F6ED,#C8EDDA)">🏫</div>
-          <div class="sc-body"><h3>โรงเรียนและมหาวิทยาลัย</h3><p>หลักสูตรอบรม CPR และ AED สำหรับนักเรียน ครู และบุคลากร ออกวุฒิบัตรให้ทุกคน</p><div class="sc-cta">ดูโซลูชั่น →</div></div>
-        </div>
-        <div class="sol-card" onclick="go('sol-hotel')">
-          <div class="sc-top" style="background:linear-gradient(135deg,#FFF3DA,#FFE8A8)">🏨</div>
-          <div class="sc-body"><h3>โรงแรมและรีสอร์ท</h3><p>แพ็กเกจครบวงจร AED ประจำโรงแรม + ไลฟ์การ์ดประจำสระ + อบรมบุคลากร</p><div class="sc-cta">ดูโซลูชั่น →</div></div>
-        </div>
-        <div class="sol-card" onclick="go('solutions')">
-          <div class="sc-top" style="background:linear-gradient(135deg,#F0E7FF,#DDD0FF)">🏭</div>
-          <div class="sc-body"><h3>โรงงานและอุตสาหกรรม</h3><p>AED และชุด First Aid ตามข้อกำหนดความปลอดภัยโรงงาน ออกบิลนามบริษัทได้</p><div class="sc-cta">ดูโซลูชั่น →</div></div>
-        </div>
-        <div class="sol-card" onclick="go('solutions')">
-          <div class="sc-top" style="background:linear-gradient(135deg,#FFE8E8,#FFCCCC)">🏥</div>
-          <div class="sc-body"><h3>โรงพยาบาลและคลินิก</h3><p>อุปกรณ์กู้ชีพและกายภาพบำบัดมาตรฐานการแพทย์ รองรับการจัดซื้อภาครัฐ</p><div class="sc-cta">ดูโซลูชั่น →</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="contact-section">
-      <div class="cs-head"><h2>ไม่แน่ใจว่าโซลูชั่นไหนเหมาะกับคุณ?</h2><p>บอกเราเกี่ยวกับองค์กร เราจะแนะนำสิ่งที่เหมาะที่สุด</p></div>
-      <div class="contact-form-grid">
-        <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
-        <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
-        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
-        <div class="cf-field full"><label>ประเภทองค์กร</label><select><option>สถานที่สาธารณะ</option><option>กีฬา/สระว่ายน้ำ</option><option>โรงเรียน/มหาวิทยาลัย</option><option>โรงแรม/รีสอร์ท</option><option>โรงงาน/อุตสาหกรรม</option><option>โรงพยาบาล/คลินิก</option><option>อื่นๆ</option></select></div>
-        <div class="cf-field full"><label>ข้อความ</label><textarea placeholder="บอกรายละเอียดองค์กรและความต้องการ..."></textarea></div>
-      </div>
-      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- Solution Detail: Public Access -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="sol-public">
-    <div class="navbar">
-      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
-    </div>
-    <div class="breadcrumb" onclick="go('solutions')">← โซลูชั่น</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;background:#F7F8FA">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:100px;padding:48px;background:linear-gradient(135deg,#FFF0F2,#FFD6DD)">🏢</div>
-      <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-bottom:8px">โซลูชั่น Prosperous</div>
-        <h1 style="font-family:'Prompt';font-size:28px;margin-bottom:8px">สถานที่สาธารณะ</h1>
-        <p style="font-size:14px;color:var(--slate);margin-bottom:16px;line-height:1.7">กฎหมายใหม่กำหนดให้อาคารสาธารณะขนาดใหญ่ต้องมี AED ภายในปี 2569 Prosperous พร้อมช่วยให้องค์กรของคุณเป็นไปตามข้อกำหนด</p>
-      </div>
-    </div>
-    <div class="section">
-      <h2>สิ่งที่เราให้ได้</h2>
-      <div class="features">
-        <div class="feature"><div class="ic">⚡</div><h3>AED พร้อมติดตั้ง</h3><p>จัดหาและติดตั้ง AED พร้อมป้ายบอกทาง ตู้ติดผนัง และระบบ maintenance ประจำปี</p></div>
-        <div class="feature"><div class="ic">🎓</div><h3>อบรมบุคลากร</h3><p>ฝึกพนักงานให้รู้จักตำแหน่ง AED และใช้งานได้จริงในเหตุฉุกเฉิน</p></div>
-        <div class="feature"><div class="ic">📄</div><h3>เอกสารรับรอง</h3><p>ออกเอกสารรับรองการติดตั้งสำหรับยื่นหน่วยงานราชการ รองรับการตรวจสอบ</p></div>
-      </div>
-    </div>
-    <div class="contact-section">
-      <div class="cs-head"><h2>ขอข้อมูลสำหรับองค์กรของคุณ</h2><p>บอกขนาดอาคารและจำนวนชั้น เราจะแนะนำจำนวน AED ที่เหมาะสม</p></div>
-      <div class="contact-form-grid">
-        <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
-        <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
-        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
-        <div class="cf-field full"><label>ชื่ออาคาร / องค์กร</label><input placeholder="อาคาร ABC จำนวน X ชั้น..."></div>
-        <div class="cf-field"><label>จำนวนชั้น</label><select><option>1–3 ชั้น</option><option>4–10 ชั้น</option><option>11–20 ชั้น</option><option>20+ ชั้น</option></select></div>
-        <div class="cf-field"><label>จำนวนผู้ใช้อาคารต่อวัน</label><select><option>น้อยกว่า 100 คน</option><option>100–500 คน</option><option>500–2000 คน</option><option>2000+ คน</option></select></div>
-        <div class="cf-field full"><label>ข้อความเพิ่มเติม</label><textarea placeholder="รายละเอียดอื่นๆ..."></textarea></div>
-      </div>
-      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- Solution Detail: Sports & Pool -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="sol-sports">
-    <div class="navbar">
-      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
-    </div>
-    <div class="breadcrumb" onclick="go('solutions')">← โซลูชั่น</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;background:#F7F8FA">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:100px;padding:48px;background:linear-gradient(135deg,#E0EEFF,#C8DCFF)">🏊</div>
-      <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-bottom:8px">โซลูชั่น Prosperous</div>
-        <h1 style="font-family:'Prompt';font-size:28px;margin-bottom:8px">กีฬาและสระว่ายน้ำ</h1>
-        <p style="font-size:14px;color:var(--slate);margin-bottom:16px;line-height:1.7">โซลูชั่นครบวงจรสำหรับสระว่ายน้ำ สนามกีฬา และพื้นที่น้ำ ตั้งแต่อุปกรณ์กู้ชีพไปจนถึงไลฟ์การ์ดมืออาชีพ</p>
-      </div>
-    </div>
-    <div class="section">
-      <h2>สิ่งที่เราให้ได้</h2>
-      <div class="features">
-        <div class="feature"><div class="ic">🏋️</div><h3>อุปกรณ์กู้ชีพทางน้ำ</h3><p>Rescue Board, Ring Buoy, Spine Board, Throw Bag ครบตามมาตรฐาน ILSE/ISO</p></div>
-        <div class="feature"><div class="ic">👨‍🚒</div><h3>ไลฟ์การ์ดมืออาชีพ</h3><p>จัดหาไลฟ์การ์ดผ่านชมรม Rescue Swimmer รายวัน รายเดือน หรือสัญญาระยะยาว</p></div>
-        <div class="feature"><div class="ic">🎓</div><h3>อบรม Water Safety</h3><p>ฝึกทีมงานประจำสระให้รู้ขั้นตอนรับมือเหตุฉุกเฉินทางน้ำอย่างถูกต้อง</p></div>
-      </div>
-    </div>
-    <div class="contact-section">
-      <div class="cs-head"><h2>ติดต่อสอบถาม</h2><p>บอกเราเกี่ยวกับสระว่ายน้ำหรือสนามกีฬาของคุณ</p></div>
-      <div class="contact-form-grid">
-        <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
-        <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@company.com"></div>
-        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
-        <div class="cf-field full"><label>ชื่อสระ / สนามกีฬา</label><input placeholder="สระว่ายน้ำ ABC..."></div>
-        <div class="cf-field full"><label>สิ่งที่ต้องการ</label><select><option>อุปกรณ์กู้ชีพ</option><option>ไลฟ์การ์ด</option><option>อบรมทีมงาน</option><option>ทั้งหมด</option></select></div>
-        <div class="cf-field full"><label>ข้อความ</label><textarea placeholder="รายละเอียดเพิ่มเติม..."></textarea></div>
-      </div>
-      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- Solution Detail: Schools -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="sol-schools">
-    <div class="navbar">
-      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
-    </div>
-    <div class="breadcrumb" onclick="go('solutions')">← โซลูชั่น</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;background:#F7F8FA">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:100px;padding:48px;background:linear-gradient(135deg,#E7F6ED,#C8EDDA)">🏫</div>
-      <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-bottom:8px">โซลูชั่น Prosperous</div>
-        <h1 style="font-family:'Prompt';font-size:28px;margin-bottom:8px">โรงเรียนและมหาวิทยาลัย</h1>
-        <p style="font-size:14px;color:var(--slate);margin-bottom:16px;line-height:1.7">ให้ความรู้ด้านการช่วยชีวิตแก่นักเรียนและบุคลากร สร้างวัฒนธรรมความปลอดภัยในสถาบันการศึกษา</p>
-      </div>
-    </div>
-    <div class="section">
-      <h2>สิ่งที่เราให้ได้</h2>
-      <div class="features">
-        <div class="feature"><div class="ic">🩺</div><h3>อบรม CPR สำหรับนักเรียน</h3><p>หลักสูตรเฉพาะสำหรับเยาวชน เข้าใจง่าย ฝึกปฏิบัติจริง ออกวุฒิบัตรให้ทุกคน</p></div>
-        <div class="feature"><div class="ic">⚡</div><h3>AED ประจำโรงเรียน</h3><p>จัดหาและติดตั้ง AED พร้อมฝึกครูและเจ้าหน้าที่ให้ใช้งานได้ทันทีในเหตุฉุกเฉิน</p></div>
-        <div class="feature"><div class="ic">🏊</div><h3>Water Safety Program</h3><p>สำหรับโรงเรียนที่มีสระว่ายน้ำ ฝึกความปลอดภัยทางน้ำทั้งนักเรียนและครู</p></div>
-      </div>
-    </div>
-    <div class="contact-section">
-      <div class="cs-head"><h2>สนใจโปรแกรมสำหรับสถาบันการศึกษา</h2><p>เราออกแบบหลักสูตรให้เหมาะกับแต่ละระดับ ตั้งแต่ประถมถึงมหาวิทยาลัย</p></div>
-      <div class="contact-form-grid">
-        <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
-        <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@school.ac.th"></div>
-        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
-        <div class="cf-field full"><label>ชื่อสถาบัน</label><input placeholder="โรงเรียน / มหาวิทยาลัย ABC..."></div>
-        <div class="cf-field"><label>ระดับการศึกษา</label><select><option>ประถมศึกษา</option><option>มัธยมศึกษา</option><option>อุดมศึกษา</option><option>อาชีวศึกษา</option></select></div>
-        <div class="cf-field"><label>จำนวนนักเรียน/บุคลากร</label><select><option>น้อยกว่า 200 คน</option><option>200–500 คน</option><option>500–1000 คน</option><option>1000+ คน</option></select></div>
-        <div class="cf-field full"><label>ข้อความ</label><textarea placeholder="รายละเอียดและความต้องการ..."></textarea></div>
-      </div>
-      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- Solution Detail: Hotel -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="sol-hotel">
-    <div class="navbar">
-      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')" class="active">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
-    </div>
-    <div class="breadcrumb" onclick="go('solutions')">← โซลูชั่น</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;background:#F7F8FA">
-      <div style="display:flex;align-items:center;justify-content:center;font-size:100px;padding:48px;background:linear-gradient(135deg,#FFF3DA,#FFE8A8)">🏨</div>
-      <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-bottom:8px">โซลูชั่น Prosperous</div>
-        <h1 style="font-family:'Prompt';font-size:28px;margin-bottom:8px">โรงแรมและรีสอร์ท</h1>
-        <p style="font-size:14px;color:var(--slate);margin-bottom:16px;line-height:1.7">แพ็กเกจครบวงจรสำหรับโรงแรม ตั้งแต่ AED ประจำอาคาร ไลฟ์การ์ดประจำสระ ไปจนถึงอบรมบุคลากร</p>
-      </div>
-    </div>
-    <div class="section">
-      <h2>Hotel Safety Package</h2>
-      <div class="features">
-        <div class="feature"><div class="ic">⚡</div><h3>AED ประจำโรงแรม</h3><p>ติดตั้ง AED ทุกชั้น หรือจุดที่กำหนด พร้อม maintenance service รายปี</p></div>
-        <div class="feature"><div class="ic">👨‍🚒</div><h3>ไลฟ์การ์ดประจำสระ</h3><p>ส่งไลฟ์การ์ดผ่านชมรม Rescue Swimmer รายวัน รายสัปดาห์ หรือสัญญาระยะยาว</p></div>
-        <div class="feature"><div class="ic">🎓</div><h3>อบรม Staff</h3><p>ฝึก Front desk, บอยสระ และทีมรักษาความปลอดภัย ให้พร้อมรับเหตุฉุกเฉิน</p></div>
-      </div>
-    </div>
-    <div class="contact-section">
-      <div class="cs-head"><h2>ขอแพ็กเกจสำหรับโรงแรม</h2><p>บอกขนาดและความต้องการ เราจะออกแบบแพ็กเกจพิเศษให้</p></div>
-      <div class="contact-form-grid">
-        <div class="cf-field"><label>ชื่อ</label><input placeholder="สมชาย"></div>
-        <div class="cf-field"><label>นามสกุล</label><input placeholder="ใจดี"></div>
-        <div class="cf-field"><label>อีเมล</label><input type="email" placeholder="example@hotel.com"></div>
-        <div class="cf-field"><label>เบอร์โทรศัพท์</label><input placeholder="08X-XXX-XXXX"></div>
-        <div class="cf-field full"><label>ชื่อโรงแรม</label><input placeholder="โรงแรม / รีสอร์ท ABC..."></div>
-        <div class="cf-field"><label>จำนวนห้อง</label><select><option>น้อยกว่า 50 ห้อง</option><option>50–100 ห้อง</option><option>100–300 ห้อง</option><option>300+ ห้อง</option></select></div>
-        <div class="cf-field"><label>มีสระว่ายน้ำไหม?</label><select><option>มี (ต้องการไลฟ์การ์ด)</option><option>มี (ไม่ต้องการไลฟ์การ์ด)</option><option>ไม่มี</option></select></div>
-        <div class="cf-field full"><label>ข้อความ</label><textarea placeholder="รายละเอียดและความต้องการ..."></textarea></div>
-      </div>
-      <div class="cf-submit"><button class="btn btn-primary" onclick="submitForm(this)">ส่งข้อมูล</button></div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- Admin: Members / Lifeguard / Settings -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="admin-lifeguard">
-    <div class="admin">
-      <div class="sidebar">
-        <div class="brand">Prosperous</div>
-        <a onclick="go('admin-dash')">📊 ภาพรวม</a>
-        <a onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
-        <a onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
-        <a onclick="go('admin-courses')">🎓 จัดการหลักสูตร</a>
-        <a onclick="go('admin-leads')">📥 Leads / ติดต่อ</a>
-        <a class="active" onclick="go('admin-lifeguard')">🏊 ทีมไลฟ์การ์ด</a>
-        <a onclick="go('admin-settings')">⚙️ ตั้งค่า</a>
-        <a onclick="go('home')">↩ ออกจากระบบ</a>
-      </div>
-      <div class="admin-main">
-        <div class="admin-head"><h2 style="font-family:'Prompt'">ทีมไลฟ์การ์ดในระบบ</h2><button class="btn btn-primary btn-sm">+ เพิ่มไลฟ์การ์ด</button></div>
-        <div class="stat-grid">
-          <div class="stat"><div class="slabel">ไลฟ์การ์ดทั้งหมด</div><div class="snum">24</div><div class="ssub">ในระบบ</div></div>
-          <div class="stat"><div class="slabel">กำลังปฏิบัติงาน</div><div class="snum" style="color:var(--success)">18</div><div class="ssub">วันนี้</div></div>
-          <div class="stat"><div class="slabel">ว่างงาน</div><div class="snum" style="color:var(--amber)">6</div><div class="ssub">พร้อมรับงาน</div></div>
-        </div>
-        <table>
-          <tr><th>ชื่อ</th><th>ระดับ</th><th>สถานะ</th><th>สถานที่ปัจจุบัน</th><th>วุฒิบัตร</th><th>จัดการ</th></tr>
-          <tr><td>สมชาย ว่ายดี</td><td><span class="pill act">Senior</span></td><td>🟢 ปฏิบัติงาน</td><td>โรงแรม ABC สระชั้น 2</td><td>✅ ILSE Lv.2</td><td><button class="btn btn-gray btn-sm">✏️</button></td></tr>
-          <tr><td>มาลี น้ำใส</td><td><span class="pill crs">Member</span></td><td>🟢 ปฏิบัติงาน</td><td>สระว่ายน้ำ XYZ</td><td>✅ ILSE Lv.1</td><td><button class="btn btn-gray btn-sm">✏️</button></td></tr>
-          <tr><td>วิชัย แข็งแกร่ง</td><td><span class="pill csr">Instructor</span></td><td>🟡 ว่าง</td><td>—</td><td>✅ ILSE Instructor</td><td><button class="btn btn-gray btn-sm">✏️</button></td></tr>
-          <tr><td>สุดา เร็วไว</td><td><span class="pill act">Senior</span></td><td>🟢 ปฏิบัติงาน</td><td>รีสอร์ท DEF ชายหาด</td><td>✅ ILSE Lv.2</td><td><button class="btn btn-gray btn-sm">✏️</button></td></tr>
-          <tr><td>ประสิทธิ์ ดำน้ำเก่ง</td><td><span class="pill crs">Member</span></td><td>🟡 ว่าง</td><td>—</td><td>✅ ILSE Lv.1</td><td><button class="btn btn-gray btn-sm">✏️</button></td></tr>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="page" id="admin-settings">
-    <div class="admin">
-      <div class="sidebar">
-        <div class="brand">Prosperous</div>
-        <a onclick="go('admin-dash')">📊 ภาพรวม</a>
-        <a onclick="go('admin-news')">📰 จัดการข่าวสาร</a>
-        <a onclick="go('admin-add')">✏️ เพิ่มบทความ</a>
-        <a onclick="go('admin-courses')">🎓 จัดการหลักสูตร</a>
-        <a onclick="go('admin-leads')">📥 Leads / ติดต่อ</a>
-        <a onclick="go('admin-lifeguard')">🏊 ทีมไลฟ์การ์ด</a>
-        <a class="active" onclick="go('admin-settings')">⚙️ ตั้งค่า</a>
-        <a onclick="go('home')">↩ ออกจากระบบ</a>
-      </div>
-      <div class="admin-main">
-        <div class="admin-head"><h2 style="font-family:'Prompt'">ตั้งค่าระบบ</h2></div>
-        <div class="form-card" style="margin-bottom:16px">
-          <div style="font-family:'Prompt';font-size:16px;font-weight:600;margin-bottom:16px">ข้อมูลบริษัท</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-            <div class="field"><label>ชื่อบริษัท</label><input value="Prosperous Rescue Swimming Company"></div>
-            <div class="field"><label>เบอร์โทรศัพท์</label><input value="02-XXX-XXXX"></div>
-            <div class="field"><label>อีเมล</label><input value="info@prosperous-rescue.com"></div>
-            <div class="field"><label>Line Official</label><input value="@prosperous"></div>
-            <div class="field" style="grid-column:1/-1"><label>ที่อยู่</label><input value="123 ถนน... กรุงเทพมหานคร 10110"></div>
-            <div class="field"><label>Facebook</label><input value="STORIESbyTuk"></div>
-            <div class="field"><label>YouTube</label><input value="@ProsperousRescue"></div>
-          </div>
-          <button class="btn btn-primary btn-sm" style="margin-top:8px">บันทึก</button>
-        </div>
-        <div class="form-card">
-          <div style="font-family:'Prompt';font-size:16px;font-weight:600;margin-bottom:16px">เปลี่ยนรหัสผ่าน Admin</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:500px">
-            <div class="field" style="grid-column:1/-1"><label>รหัสผ่านปัจจุบัน</label><input type="password" placeholder="••••••••"></div>
-            <div class="field"><label>รหัสผ่านใหม่</label><input type="password" placeholder="••••••••"></div>
-            <div class="field"><label>ยืนยันรหัสผ่านใหม่</label><input type="password" placeholder="••••••••"></div>
-          </div>
-          <button class="btn btn-primary btn-sm" style="margin-top:8px">เปลี่ยนรหัสผ่าน</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- หน้า 404 -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div class="page" id="not-found">
-    <div class="navbar">
-      <div class="logo" onclick="go('home')">Prosper<span>ous</span></div>
-      <div class="navlinks"><a onclick="go('products')">สินค้า</a><a onclick="go('csr')">บริการและ CSR</a><a onclick="go('news')">ข่าวสาร</a><a onclick="go('contact-page')">ติดต่อ</a></div>
-    </div>
-    <div class="not-found">
-      <div class="nf-num">404</div>
-      <h2>ไม่พบหน้าที่คุณค้นหา</h2>
-      <p>หน้านี้อาจถูกย้ายหรือลบไปแล้ว ลองกลับไปหน้าแรกหรือค้นหาสิ่งที่ต้องการ</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-        <button class="btn btn-primary" onclick="go('home')">กลับหน้าแรก</button>
-        <button class="btn btn-outline" onclick="go('search')">ค้นหา</button>
-      </div>
-    </div>
-  </div>
-
 </body>
 </html>
