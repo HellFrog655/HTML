@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>อ่าน Diagram แบบทหารเรือ — Prosperous</title>
+<a href="index.html" class="mode-btn active">Story Boards</a>
+<a href="prosperous-edd.html" class="mode-btn active">Architecture Engineering</a>
+<a href="prosperous-navy-guide.html" class="mode-btn active">เปรียบเทียบฉบับทหารเรือ</a>
+<a href="prosperous-diagram-guide.html" class="mode-btn active">เปรียบเทียบฉบับธรรมดา</a>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a1628; --navy2:#112240; --navy3:#1a3560;
+  --gold:#c9a227; --gold-lt:#fff8e0;
+  --red:#c8102e; --red-lt:#fff0f2;
+  --sea:#1b6ca8; --sea-lt:#e0f0ff;
+  --green:#1b9e5a; --green-lt:#e8fff0;
+  --slate:#8090a8; --line:#1e3a5f;
+  --mist:#f0f4f8; --white:#fff;
+  --ink:#0a1628;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Sarabun',sans-serif;background:var(--mist);color:var(--ink);line-height:1.75;font-size:16px;}
+
+/* HERO */
+.hero{
+  background:linear-gradient(160deg,var(--navy) 0%,var(--navy3) 100%);
+  color:#fff;padding:60px 28px 52px;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 15 L60 45 L30 60 L0 45 L0 15 Z' fill='none' stroke='rgba(201,162,39,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+  opacity:1;
+}
+.hero-inner{position:relative;z-index:2;}
+.hero-rank{display:inline-block;background:var(--gold);color:var(--navy);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 16px;border-radius:4px;margin-bottom:18px;}
+.hero h1{font-family:'Prompt';font-size:clamp(22px,4vw,42px);font-weight:800;line-height:1.2;margin-bottom:12px;}
+.hero h1 em{color:var(--gold);font-style:normal;}
+.hero p{font-size:15px;opacity:.7;max-width:580px;margin:0 auto 28px;line-height:1.8;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.hstat{background:rgba(255,255,255,.07);border:1px solid rgba(201,162,39,.3);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.85);}
+.hstat span{color:var(--gold);font-family:'Prompt';font-weight:800;margin-right:5px;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:999;background:var(--navy);border-bottom:2px solid var(--gold);padding:11px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+nav .brand{font-family:'Prompt';font-weight:800;font-size:14px;color:var(--gold);margin-right:8px;letter-spacing:.05em;}
+nav .nbadge{font-size:10px;background:var(--gold);color:var(--navy);border-radius:4px;padding:2px 8px;font-weight:800;letter-spacing:.08em;}
+
+/* CONTAINER */
+.wrap{max-width:940px;margin:0 auto;padding:28px 20px;}
+
+/* GROUP HEADER */
+.grp{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 20px;margin-bottom:16px;margin-top:8px;
+  background:var(--navy2);border-radius:10px;border-left:4px solid var(--gold);
+  color:#fff;
+}
+.grp-ic{font-size:22px;}
+.grp-label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+.grp-title{font-family:'Prompt';font-size:16px;font-weight:700;}
+.grp-count{margin-left:auto;background:rgba(201,162,39,.2);color:var(--gold);font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid rgba(201,162,39,.3);}
+
+/* CARD */
+.card{background:#fff;border:1px solid #d8e2ec;border-radius:14px;margin-bottom:14px;overflow:hidden;scroll-margin-top:70px;}
+.card-head{
+  padding:18px 22px;display:flex;align-items:center;gap:14px;
+  cursor:pointer;user-select:none;border-bottom:2px solid transparent;
+  transition:.2s;
+}
+.card-head:hover{background:#f8fafc;}
+.card.open .card-head{border-bottom-color:var(--gold);}
+.card-ic{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;background:var(--navy);color:#fff;}
+.card-meta{flex:1;}
+.card-num{font-size:9px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--slate);margin-bottom:2px;}
+.card-name{font-family:'Prompt';font-size:16px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:1px;}
+.card-en{font-size:11px;color:var(--slate);font-style:italic;}
+.card-badge{font-size:10px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap;align-self:flex-start;}
+.caret{color:var(--slate);font-size:14px;align-self:center;transition:.25s;flex-shrink:0;}
+.card.open .caret{transform:rotate(180deg);}
+
+/* BODY */
+.card-body{display:none;padding:0 22px 22px;}
+.card.open .card-body{display:block;}
+
+/* ANALOGY — Naval style */
+.analogy{
+  display:flex;gap:14px;
+  background:var(--navy);color:#fff;
+  border-radius:10px;padding:16px 18px;margin:0 0 18px;
+}
+.analogy .an-ic{font-size:30px;flex-shrink:0;line-height:1;align-self:flex-start;margin-top:2px;}
+.analogy .an-body{}
+.analogy .an-tag{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.analogy .an-title{font-family:'Prompt';font-size:15px;font-weight:700;color:#fff;margin-bottom:5px;}
+.analogy .an-text{font-size:13px;color:rgba(255,255,255,.75);line-height:1.8;}
+
+/* POINTS */
+.sec-lbl{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin-bottom:9px;margin-top:18px;display:flex;align-items:center;gap:6px;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--line);opacity:.4;}
+
+.pts{display:flex;flex-direction:column;gap:7px;}
+.pt{display:flex;gap:12px;align-items:flex-start;font-size:14px;padding:10px 13px;background:var(--mist);border-radius:8px;border-left:3px solid transparent;}
+.pt.gold{border-left-color:var(--gold);}
+.pt.red{border-left-color:var(--red);}
+.pt.sea{border-left-color:var(--sea);}
+.pt.green{border-left-color:var(--green);}
+.pt .ic{font-size:16px;flex-shrink:0;width:22px;text-align:center;margin-top:1px;}
+.pt .tx{line-height:1.7;}
+.pt .tx b{color:var(--navy);}
+
+/* SUMMARY */
+.summary{
+  margin-top:14px;background:var(--gold-lt);border:1px solid rgba(201,162,39,.35);
+  border-radius:10px;padding:13px 16px;font-size:14px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.summary .s-ic{font-size:20px;flex-shrink:0;margin-top:1px;}
+.summary .s-tx{line-height:1.7;}
+
+/* GRID 2 */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px;}
+.gbox{background:var(--mist);border-radius:8px;padding:13px 15px;}
+.gbox h4{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px;}
+.gbox ul{list-style:none;font-size:13px;color:#374151;display:flex;flex-direction:column;gap:5px;}
+.gbox li{padding-left:12px;position:relative;line-height:1.5;}
+.gbox li::before{content:'▸';position:absolute;left:0;color:var(--gold);font-size:10px;top:3px;}
+
+/* BUDGET ROW */
+.budget-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;}
+.bx{background:var(--mist);border-radius:8px;padding:13px;text-align:center;}
+.bv{font-family:'Prompt';font-size:22px;font-weight:800;}
+.bl{font-size:11px;color:var(--slate);margin-top:3px;}
+.total-row{background:var(--navy);border-radius:10px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+
+/* BADGE COLORS */
+.b-navy{background:#e0eaff;color:var(--navy);}
+.b-gold{background:var(--gold-lt);color:#7a6010;}
+.b-red{background:var(--red-lt);color:var(--red);}
+.b-sea{background:var(--sea-lt);color:var(--sea);}
+.b-green{background:var(--green-lt);color:var(--green);}
+
+footer{background:var(--navy);color:rgba(255,255,255,.45);text-align:center;padding:28px;font-size:12px;}
+footer strong{color:var(--gold);}
+
+@media(max-width:640px){
+  .g2,.budget-row{grid-template-columns:1fr;}
+  .hero{padding:44px 18px 40px;}
+  .wrap{padding:18px 12px;}
+  .card-head{padding:14px 16px;}
+  .card-body{padding:0 16px 18px;}
+  .analogy{flex-direction:column;gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-rank">⚓ คู่มืออ่านแผนผัง — ฉบับทหารเรือ</div>
+    <h1>ถ้าสร้างเว็บเหมือนออกรบ<br><em>แผนผังแต่ละชิ้นคืออะไร?</em></h1>
+    <p>อธิบาย 22 แผนผังจากเอกสาร Engineering Design ของ Prosperous โดยเปรียบกับการปฏิบัติการทางทะเล ให้เข้าใจโดยไม่ต้องรู้เรื่อง IT</p>
+    <div class="hero-stats">
+      <div class="hstat"><span>22</span>แผนผัง</div>
+      <div class="hstat"><span>5</span>กลุ่มยุทธการ</div>
+      <div class="hstat"><span>0</span>ศัพท์เทคนิคที่ไม่อธิบาย</div>
+    </div>
+  </div>
+</section>
+
+<nav>
+  <span class="brand">⚓ PROSPEROUS</span>
+  <span class="nbadge">BRIEFING DOC</span>
+</nav>
+
+<div class="wrap">
+
+<!-- ══ GROUP A ══ -->
+<div class="grp">
+  <div class="grp-ic">🗺️</div>
+  <div>
+    <div class="grp-label">กลุ่ม Alpha</div>
+    <div class="grp-title">ภาพรวมสนามปฏิบัติการ</div>
+  </div>
+  <div class="grp-count">2 แผนผัง</div>
+</div>
+
+<!-- 1. Context Diagram -->
+<div class="card open" id="ctx">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🗺️</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 01</div>
+      <div class="card-name">แผนที่ยุทธการภาพรวม</div>
+      <div class="card-en">Context Diagram</div>
+    </div>
+    <span class="card-badge b-navy">ภาพรวม</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🚢</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ห้องวางแผนยุทธการบนเรือธง</div>
+        <div class="an-text">ก่อนออกปฏิบัติการ ผู้บัญชาการต้องเห็นภาพรวมก่อนว่า <b style="color:var(--gold)">มีกำลังฝ่ายเราอยู่ที่ไหน ศัตรูอยู่ที่ไหน และเส้นทางการสื่อสารเชื่อมกันยังไง</b> — แผนผังนี้ทำหน้าที่นั้น สำหรับระบบเว็บ</div>
+      </div>
+    </div>
+    <div class="sec-lbl">ใครอยู่ในพื้นที่ปฏิบัติการ</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">🏢</div><div class="tx"><b>ระบบเว็บ Prosperous</b> — เรือธง ศูนย์กลางที่ทุกอย่างวนรอบ รับและส่งข้อมูลกับทุกฝ่าย</div></div>
+      <div class="pt sea"><div class="ic">👤</div><div class="tx"><b>ลูกค้า</b> — กำลังพลภาคสนาม ส่งคำขอเข้ามา (ดูสินค้า ส่งฟอร์ม) รับข้อมูลกลับไป</div></div>
+      <div class="pt sea"><div class="ic">👨‍💼</div><div class="tx"><b>Admin</b> — นายทหารฝ่ายเสนาธิการ เข้าถึงข้อมูลลับได้ทุกส่วน ออกคำสั่งผ่านระบบ</div></div>
+      <div class="pt"><div class="ic">📧</div><div class="tx"><b>บริการส่งอีเมล (Resend)</b> — หน่วยสื่อสาร รับคำสั่งจากเรือธง แล้วส่งสัญญาณแจ้งเตือน Admin ทันที</div></div>
+      <div class="pt"><div class="ic">▲</div><div class="tx"><b>Vercel (เซิร์ฟเวอร์)</b> — ฐานทัพเรือที่เรือธงจอดอยู่ รับส่งข้อมูลให้ผู้ใช้ทั่วโลก</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ดูแล้วรู้ทันทีว่า <b>ใครอยู่ในพื้นที่ปฏิบัติการ และแต่ละฝ่ายส่งข้อมูลอะไรให้กัน</b> เหมือน Intel Brief ก่อนออกรบ</div></div>
+  </div>
+</div>
+
+<!-- 2. Use Case -->
+<div class="card" id="uc">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🎖️</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 02</div>
+      <div class="card-name">คำสั่งภารกิจตามยศ</div>
+      <div class="card-en">Use Case Diagram</div>
+    </div>
+    <span class="card-badge b-navy">ภาพรวม</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📜</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ตารางสิทธิ์ตามยศในกองเรือ</div>
+        <div class="an-text">พลทหารมีสิทธิ์ทำอะไรได้บ้าง — นายทหารมีสิทธิ์เพิ่มอะไรอีก — ผู้บัญชาการทำได้ทุกอย่าง ห้ามก้าวข้ามอำนาจหน้าที่กัน</div>
+      </div>
+    </div>
+    <div class="sec-lbl">ตารางภารกิจตามยศ</div>
+    <div class="g2">
+      <div class="gbox">
+        <h4 style="color:var(--sea);">👤 พลทหาร — ลูกค้าทั่วไป (9 ภารกิจ)</h4>
+        <ul>
+          <li>ดูหน้าแรกและสินค้า</li>
+          <li>อ่านสเปคและราคา AED</li>
+          <li>ส่งฟอร์มขอใบเสนอราคา</li>
+          <li>ดูข่าวสารและบทความ</li>
+          <li>สมัครหลักสูตร CPR/AED</li>
+          <li>ขอแพ็กเกจโรงแรม</li>
+          <li>ดูชมรม Rescue Swimmer</li>
+          <li>ค้นหาข้อมูล</li>
+          <li>ดูโซลูชั่นรายประเภท</li>
+        </ul>
+      </div>
+      <div class="gbox">
+        <h4 style="color:var(--gold);">👨‍💼 นายทหาร — Admin (+ 8 ภารกิจ)</h4>
+        <ul>
+          <li>Login เข้าระบบปลอดภัย</li>
+          <li>ดู Dashboard และสถิติ</li>
+          <li>จัดการข่าว เผยแพร่/ร่าง</li>
+          <li>เพิ่ม แก้ไข ลบบทความ</li>
+          <li>จัดการ Leads ที่เข้ามา</li>
+          <li>จัดการทีมไลฟ์การ์ด</li>
+          <li>เปิด/ปิดหลักสูตร</li>
+          <li>ตั้งค่าข้อมูลบริษัท</li>
+        </ul>
+      </div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> เหมือนคำสั่งปฏิบัติการที่ระบุชัดว่า <b>ยศไหนทำอะไรได้บ้าง</b> ห้ามก้าวก่ายสิทธิ์กัน ทีมพัฒนาใช้เป็น checklist ว่าสร้างครบทุกภารกิจแล้วหรือยัง</div></div>
+  </div>
+</div>
+
+<!-- ══ GROUP B ══ -->
+<div class="grp" style="margin-top:28px;">
+  <div class="grp-ic">🔄</div>
+  <div>
+    <div class="grp-label">กลุ่ม Bravo</div>
+    <div class="grp-title">ขั้นตอนปฏิบัติการ (SOPs)</div>
+  </div>
+  <div class="grp-count">5 แผนผัง</div>
+</div>
+
+<!-- 3. DFD0 -->
+<div class="card" id="dfd0">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📡</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 03</div>
+      <div class="card-name">ภาพรวมการส่งข้อมูล Intel (ระดับบน)</div>
+      <div class="card-en">DFD Level 0 — Context Level</div>
+    </div>
+    <span class="card-badge b-sea">การไหลข้อมูล</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🛰️</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ภาพถ่ายดาวเทียมระดับยุทธศาสตร์</div>
+        <div class="an-text">มองจากระยะสูง เห็นแค่ว่า <b style="color:var(--gold)">กองเรือเราอยู่ที่ไหน ส่งสัญญาณไปทิศไหน รับสัญญาณจากใคร</b> แต่ยังไม่เห็นว่าในเรือแต่ละลำทำอะไร</div>
+      </div>
+    </div>
+    <div class="sec-lbl">สัญญาณที่วิ่งเข้า-ออกระบบ</div>
+    <div class="pts">
+      <div class="pt sea"><div class="ic">➡️</div><div class="tx"><b>ลูกค้าส่งเข้า</b> — ดูสินค้า, กรอกฟอร์มขอใบเสนอราคา</div></div>
+      <div class="pt sea"><div class="ic">⬅️</div><div class="tx"><b>ระบบส่งออกให้ลูกค้า</b> — หน้าเว็บที่ถูกต้อง, หน้ายืนยัน "ส่งเรียบร้อย"</div></div>
+      <div class="pt gold"><div class="ic">➡️</div><div class="tx"><b>Admin ส่งเข้า</b> — เขียนบทความ, แก้ไข Leads, จัดการหลักสูตร</div></div>
+      <div class="pt gold"><div class="ic">⬅️</div><div class="tx"><b>ระบบส่งออกให้ Admin</b> — Dashboard สถิติ, รายการ Leads ล่าสุด</div></div>
+      <div class="pt"><div class="ic">🗄️</div><div class="tx"><b>คลังข้อมูล 6 ชุด</b> — สินค้า / บทความ / หลักสูตร / Leads / ไลฟ์การ์ด / ตั้งค่าบริษัท</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ภาพถ่ายดาวเทียมช่วยให้ผู้บัญชาการเห็นภาพรวม ก่อนลงรายละเอียด — แผนผังนี้ก็เช่นกัน <b>ดูว่าข้อมูลไหลเข้า-ออกอะไร โดยไม่ต้องรู้กลไกข้างใน</b></div></div>
+  </div>
+</div>
+
+<!-- 4. DFD1 -->
+<div class="card" id="dfd1">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🔬</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 04</div>
+      <div class="card-name">แผนยุทธการระดับหน่วย (ซูมเข้า)</div>
+      <div class="card-en">DFD Level 1 — Process Level</div>
+    </div>
+    <span class="card-badge b-sea">การไหลข้อมูล</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🚁</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ลดระดับบินจากดาวเทียมมาถึงเฮลิคอปเตอร์</div>
+        <div class="an-text">ตอนนี้เห็นแล้วว่า <b style="color:var(--gold)">กองเรือประกอบด้วยเรือลำไหนบ้าง แต่ละลำทำภารกิจอะไร</b> และสัญญาณวิ่งระหว่างลำไหนถึงลำไหน</div>
+      </div>
+    </div>
+    <div class="sec-lbl">6 หน่วยรบในระบบ</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">1️⃣</div><div class="tx"><b>P1 — หน่วยแสดงสินค้า</b> ดึงข้อมูลสินค้าจากคลัง ส่งแสดงให้ลูกค้า</div></div>
+      <div class="pt gold"><div class="ic">2️⃣</div><div class="tx"><b>P2 — หน่วยรับฟอร์ม</b> รับข้อมูลที่ลูกค้ากรอก บันทึกลงคลัง Leads</div></div>
+      <div class="pt gold"><div class="ic">3️⃣</div><div class="tx"><b>P3 — หน่วยจัดการข่าว</b> ดึงบทความมาแสดง / Admin เพิ่มบทความใหม่</div></div>
+      <div class="pt gold"><div class="ic">4️⃣</div><div class="tx"><b>P4 — หน่วยบริการ/หลักสูตร</b> แสดงข้อมูลหลักสูตร รับใบสมัคร</div></div>
+      <div class="pt gold"><div class="ic">5️⃣</div><div class="tx"><b>P5 — หน่วย Admin ข่าว</b> Admin เขียน แก้ไข ลบ เผยแพร่บทความ</div></div>
+      <div class="pt gold"><div class="ic">6️⃣</div><div class="tx"><b>P6 — หน่วย Leads & ไลฟ์การ์ด</b> Admin ดู Leads เปลี่ยนสถานะ จัดการทีม</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> เวอร์ชันซูมเข้าจากแผนผัง 03 ทีมพัฒนาใช้เป็น <b>พิมพ์เขียวสร้าง API และฟังก์ชัน</b> — แต่ละหน่วยในแผนผังนี้ = กลุ่มโค้ดที่ต้องเขียน</div></div>
+  </div>
+</div>
+
+<!-- 5. Activity -->
+<div class="card" id="act">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📋</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 05</div>
+      <div class="card-name">SOP — ขั้นตอนปฏิบัติมาตรฐาน</div>
+      <div class="card-en">Activity Diagrams</div>
+    </div>
+    <span class="card-badge b-sea">การไหลข้อมูล</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📌</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">SOP — ระเบียบปฏิบัติประจำบนเรือ</div>
+        <div class="an-text">เช่น SOP ดับเพลิงบนเรือ — กดสัญญาณเตือนก่อน → ปิดระบบน้ำมัน → ฉีดน้ำ → ถ้าดับได้: รายงาน → ถ้าดับไม่ได้: อพยพ ทุกขั้นตอนมีลำดับที่ต้องทำตามเป๊ะ ถ้าข้ามขั้นอาจเกิดความเสียหาย</div>
+      </div>
+    </div>
+    <div class="sec-lbl">SOP 5 ฉบับสำหรับระบบนี้</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">①</div><div class="tx"><b>SOP ส่งฟอร์มขอใบเสนอราคา</b><br>เปิดหน้าสินค้า → กรอกชื่อ-เบอร์-บริษัท → กดส่ง → ระบบตรวจสอบ → <span style="color:var(--green)">✓ ครบ: บันทึก + ส่งอีเมล Admin + แสดงยืนยัน</span> / <span style="color:var(--red)">✗ ไม่ครบ: แจ้ง error ให้กรอกใหม่</span></div></div>
+      <div class="pt sea"><div class="ic">②</div><div class="tx"><b>SOP สมัครหลักสูตร</b><br>เลือกหลักสูตร → กรอกข้อมูล → ตรวจที่นั่งว่าง → <span style="color:var(--green)">✓ ว่าง: ยืนยัน</span> / <span style="color:var(--red)">✗ เต็ม: แจ้งรออบรมรอบหน้า</span></div></div>
+      <div class="pt sea"><div class="ic">③</div><div class="tx"><b>SOP Admin Login</b><br>กรอก username + password → ตรวจสอบ → <span style="color:var(--green)">✓ ถูก: ออกบัตรดิจิทัล เข้า Dashboard</span> / <span style="color:var(--red)">✗ ผิด 5 ครั้ง: ล็อค 15 นาที</span></div></div>
+      <div class="pt"><div class="ic">④</div><div class="tx"><b>SOP จัดการ Lead</b><br>เปิดรายการ → เลือก Lead → โทรหา → กดเปลี่ยนสถานะ "ติดต่อแล้ว" → ติดตามต่อ หรือ ปิดงาน</div></div>
+      <div class="pt"><div class="ic">⑤</div><div class="tx"><b>SOP เพิ่มบทความ</b><br>กดเพิ่ม → เขียน → บันทึกร่าง → ตรวจทาน → เผยแพร่ → ขึ้นเว็บทันที</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ทำไมเรือรบต้องมี SOP? เพราะ <b>ในสถานการณ์กดดันทุกคนต้องทำถูกต้องโดยไม่ต้องคิดใหม่</b> ระบบเว็บก็เช่นกัน ทุก action มีขั้นตอนที่ถูกต้องกำหนดไว้ล่วงหน้า</div></div>
+  </div>
+</div>
+
+<!-- 6. Sequence -->
+<div class="card" id="seq">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📻</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 06</div>
+      <div class="card-name">บันทึกการสื่อสารทางวิทยุ</div>
+      <div class="card-en">Sequence Diagrams</div>
+    </div>
+    <span class="card-badge b-sea">การไหลข้อมูล</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📻</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">บันทึกการสื่อสารวิทยุระหว่างเรือ</div>
+        <div class="an-text">เรือ A: "ALPHA เรียก BRAVO รายงานตำแหน่ง Over" → เรือ B: "BRAVO ที่ตำแหน่ง X Over" → เรือ A: "รับทราบ Out" — บันทึกชัดว่า <b style="color:var(--gold)">ใครพูดก่อน พูดอะไร อีกฝ่ายตอบว่าอะไร</b> ตามลำดับเวลาเป๊ะ</div>
+      </div>
+    </div>
+    <div class="sec-lbl">3 บทสนทนาหลักของระบบ</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">①</div><div class="tx"><b>ลูกค้าส่งฟอร์ม (7 รอบสื่อสาร)</b><br>ลูกค้า → กดส่ง → หน้าเว็บตรวจ → ส่งไป Server → Server บันทึกลงฐานข้อมูล → ฐานข้อมูลรับทราบ → Server ตอบหน้าเว็บ → แสดงยืนยันให้ลูกค้า</div></div>
+      <div class="pt sea"><div class="ic">②</div><div class="tx"><b>Admin Login (8 รอบสื่อสาร)</b><br>Admin → กรอกรหัส → ส่งไป Server → Server ดึงรหัสเข้ารหัสจาก DB → เปรียบเทียบ → <span style="color:var(--green)">ถูก: ออกบัตรดิจิทัล + เข้า Dashboard</span> / <span style="color:var(--red)">ผิด: ส่ง error กลับ</span></div></div>
+      <div class="pt"><div class="ic">③</div><div class="tx"><b>สมัครหลักสูตร (6 รอบสื่อสาร)</b><br>ลูกค้า → สมัคร → Server ตรวจที่นั่ง → <span style="color:var(--green)">ว่าง: บันทึก + ส่งอีเมลยืนยัน</span> / <span style="color:var(--red)">เต็ม: แจ้งกลับ</span></div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ต่างจาก SOP ตรงที่แผนผังนี้ <b>แยกให้เห็นว่าแต่ละหน่วยรับผิดชอบส่วนไหน</b> — หน้าเว็บทำอะไร, Server ทำอะไร, ฐานข้อมูลทำอะไร เหมือนแยกภารกิจให้แต่ละเรือในกองเรือ</div></div>
+  </div>
+</div>
+
+<!-- 7. State -->
+<div class="card" id="sta">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🚦</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 07</div>
+      <div class="card-name">ระดับความพร้อมรบ — เปลี่ยนได้ตามเงื่อนไข</div>
+      <div class="card-en">State Diagrams</div>
+    </div>
+    <span class="card-badge b-sea">การไหลข้อมูล</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">⚠️</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">DEFCON — ระดับความพร้อมรบ</div>
+        <div class="an-text">DEFCON 5 (ปกติ) → DEFCON 3 (ยกระดับ) → DEFCON 1 (พร้อมรบเต็มที่) — <b style="color:var(--gold)">ข้ามระดับทันทีไม่ได้ ต้องผ่านเงื่อนไขก่อน</b> และบางระดับกลับไม่ได้ง่ายๆ</div>
+      </div>
+    </div>
+    <div class="sec-lbl">4 สิ่งที่มีสถานะเปลี่ยนได้ในระบบ</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">📝</div><div class="tx"><b>บทความข่าว</b><br>"ร่าง" → (กดเผยแพร่) → "เผยแพร่" → (กดลบ) → "ลบแล้ว" · ลบแล้วกู้ไม่ได้ เหมือนคำสั่งที่ออกไปแล้ว</div></div>
+      <div class="pt sea"><div class="ic">📥</div><div class="tx"><b>Lead ผู้ติดต่อ</b><br>"ใหม่" → (โทรหา) → "ติดต่อแล้ว" → (ติดตาม) → "Follow up" → "ปิดงานได้ WIN" หรือ "ล้มเหลว LOSE" · ปิดแล้วย้อนไม่ได้</div></div>
+      <div class="pt"><div class="ic">🎓</div><div class="tx"><b>การสมัครหลักสูตร</b><br>"รอยืนยัน" → (Admin อนุมัติ, มีที่นั่ง) → "ยืนยัน" → (วันอบรมจบ) → "เสร็จสิ้น" · หรือยกเลิกได้ก่อนอบรม</div></div>
+      <div class="pt"><div class="ic">🤿</div><div class="tx"><b>ไลฟ์การ์ด</b><br>"ว่าง" → (รับงาน) → "ปฏิบัติการ" → (งานจบ) → "ว่าง" ใหม่ · หรือ → "อบรม" → กลับมา "ว่าง"</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> เหมือนระเบียบขั้นตอนในกองทัพที่ <b>ห้ามข้ามขั้น ห้ามถอยผิดลำดับ</b> ป้องกันความผิดพลาดที่ทำให้ระบบสับสน เช่น Lead ยังไม่โทรแต่กดปิดงานแล้ว</div></div>
+  </div>
+</div>
+
+<!-- ══ GROUP C ══ -->
+<div class="grp" style="margin-top:28px;">
+  <div class="grp-ic">🗄️</div>
+  <div>
+    <div class="grp-label">กลุ่ม Charlie</div>
+    <div class="grp-title">ทะเบียนกำลังพลและยุทโธปกรณ์</div>
+  </div>
+  <div class="grp-count">4 แผนผัง</div>
+</div>
+
+<!-- 8. Class -->
+<div class="card" id="cls">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📊</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 08</div>
+      <div class="card-name">TOE — กำลังพลและยุทโธปกรณ์แต่ละหน่วย</div>
+      <div class="card-en">Class Diagram</div>
+    </div>
+    <span class="card-badge b-gold">โครงสร้าง</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📋</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">TOE — Table of Organization & Equipment</div>
+        <div class="an-text">เอกสารที่บอกว่า <b style="color:var(--gold)">หน่วย SEAL ประกอบด้วยกำลังพลกี่คน มีอาวุธและอุปกรณ์อะไรบ้าง</b> และหน่วยไหนขึ้นตรงต่อหน่วยไหน</div>
+      </div>
+    </div>
+    <div class="sec-lbl">ข้อมูล 7 ประเภทในระบบ</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">📦</div><div class="tx"><b>สินค้า (Product)</b> — มีชื่อ, ประเภท AED/Auto/กายภาพ, ป้ายรับรอง FDA, สเปคแต่ละรุ่น</div></div>
+      <div class="pt gold"><div class="ic">📰</div><div class="tx"><b>บทความ (NewsArticle)</b> — มีหัวข้อ, ประเภท, สถานะร่าง/เผยแพร่, อ้างอิงว่าใคร (Admin) เป็นคนเขียน</div></div>
+      <div class="pt gold"><div class="ic">🎓</div><div class="tx"><b>หลักสูตร (Course)</b> — มีชื่อ, ระดับ, ระยะเวลา, ราคา, จำนวนที่นั่งสูงสุด</div></div>
+      <div class="pt gold"><div class="ic">📥</div><div class="tx"><b>Lead ผู้ติดต่อ</b> — มีชื่อ, อีเมล, เบอร์, บริษัท, สินค้าที่สนใจ, สถานะ</div></div>
+      <div class="pt gold"><div class="ic">🤿</div><div class="tx"><b>ไลฟ์การ์ด (Lifeguard)</b> — มีชื่อ, ระดับ, สถานะ ว่าง/ปฏิบัติการ, ใบรับรอง ILSE</div></div>
+      <div class="pt gold"><div class="ic">⚙️</div><div class="tx"><b>ตั้งค่าบริษัท</b> — มีเบอร์โทร, อีเมล, Line, Facebook, YouTube</div></div>
+      <div class="pt gold"><div class="ic">👨‍💼</div><div class="tx"><b>Admin</b> — มี username, รหัสผ่านเข้ารหัส, สิทธิ์การใช้งาน</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> TOE ช่วยให้ก่อนออกรบรู้ว่ากองกำลังมีอะไรบ้าง — แผนผังนี้ช่วยให้ทีมพัฒนารู้ว่า <b>ต้องสร้างตารางข้อมูลอะไร มีคอลัมน์อะไร ก่อนสร้างฐานข้อมูล</b></div></div>
+  </div>
+</div>
+
+<!-- 9. ER -->
+<div class="card" id="er">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🗂️</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 09</div>
+      <div class="card-name">ระบบทะเบียนกำลังพลดิจิทัล</div>
+      <div class="card-en">ER Diagram — Entity Relationship</div>
+    </div>
+    <span class="card-badge b-gold">โครงสร้าง</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📁</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ระบบทะเบียนกำลังพลของกองทัพ</div>
+        <div class="an-text">มีแฟ้มทะเบียนพล, แฟ้มอาวุธประจำกาย, แฟ้มประวัติปฏิบัติการ — <b style="color:var(--gold)">แต่ละแฟ้มอ้างถึงกัน</b> เช่น แฟ้มอาวุธ → ระบุว่าอยู่กับทหารคนไหน (อ้างทะเบียนพล)</div>
+      </div>
+    </div>
+    <div class="sec-lbl">แฟ้มข้อมูล 8 ชุดในฐานข้อมูล</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">📦</div><div class="tx"><b>products</b> — ทะเบียนสินค้า ชื่อ ราคา สเปค สถานะเปิด/ปิดขาย</div></div>
+      <div class="pt gold"><div class="ic">📰</div><div class="tx"><b>articles</b> — ทะเบียนบทความ → อ้างถึง admins ว่าใครเขียน</div></div>
+      <div class="pt gold"><div class="ic">🎓</div><div class="tx"><b>courses</b> — ทะเบียนหลักสูตร ที่นั่งสูงสุด ราคา สถานะ</div></div>
+      <div class="pt gold"><div class="ic">👨‍💼</div><div class="tx"><b>admins</b> — ทะเบียนนายทหาร username และรหัสที่เข้ารหัสแล้ว</div></div>
+      <div class="pt gold"><div class="ic">📥</div><div class="tx"><b>leads</b> — ทะเบียน "ผู้สนใจ" ทุกคนที่ส่งฟอร์มเข้ามา</div></div>
+      <div class="pt gold"><div class="ic">🎟️</div><div class="tx"><b>course_registrations</b> — ใบสมัครหลักสูตร → อ้างทั้ง leads และ courses</div></div>
+      <div class="pt gold"><div class="ic">🤿</div><div class="tx"><b>lifeguards</b> — ทะเบียนไลฟ์การ์ด ระดับ ใบรับรอง วันหมดอายุ</div></div>
+      <div class="pt gold"><div class="ic">⚙️</div><div class="tx"><b>company_settings</b> — แฟ้มข้อมูลบริษัท มีแถวเดียว ใช้ร่วมกันทั้งระบบ</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ทะเบียนกำลังพลที่ดีต้องไม่มีชื่อซ้ำ ค้นหาได้รวดเร็ว อ้างอิงกันได้ถูกต้อง — ER Diagram คือ <b>แบบแปลนฐานข้อมูล</b> ที่ทำให้ข้อมูลไม่สูญหาย ไม่ซ้ำซ้อน</div></div>
+  </div>
+</div>
+
+<!-- 10. Data Dictionary -->
+<div class="card" id="dict">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📖</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 10</div>
+      <div class="card-name">ระเบียบการกรอกแบบฟอร์มราชการ</div>
+      <div class="card-en">Data Dictionary</div>
+    </div>
+    <span class="card-badge b-gold">โครงสร้าง</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📑</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">คู่มือกรอกแบบฟอร์ม ทบ. 400</div>
+        <div class="an-text">"ช่องเลขประจำตัว: กรอกตัวเลข 10 หลัก ห้ามเว้นวรรค" · "ช่องยศ: ใช้ตัวย่อราชการเท่านั้น" — <b style="color:var(--gold)">บอกกฎของทุกช่องอย่างละเอียด</b> ป้องกันกรอกผิดรูปแบบ</div>
+      </div>
+    </div>
+    <div class="sec-lbl">ตัวอย่างกฎของแบบฟอร์ม Lead</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">🔑</div><div class="tx"><b>รหัสประจำตัว (id)</b> — สร้างอัตโนมัติ ห้ามแก้ไข ไม่ซ้ำกันทั่วโลก เหมือนเลขประจำตัวประชาชน</div></div>
+      <div class="pt gold"><div class="ic">👤</div><div class="tx"><b>ชื่อ-นามสกุล</b> — บังคับกรอก ยาว 2-100 ตัว ไทยหรืออังกฤษ</div></div>
+      <div class="pt gold"><div class="ic">📧</div><div class="tx"><b>อีเมล</b> — บังคับกรอก ต้องมี @ และ . เก็บเป็นตัวพิมพ์เล็กทั้งหมด</div></div>
+      <div class="pt gold"><div class="ic">📱</div><div class="tx"><b>เบอร์โทร</b> — บังคับกรอก ตัวเลข 9-10 หลัก ลบขีดและช่องว่างก่อนบันทึก</div></div>
+      <div class="pt"><div class="ic">🏢</div><div class="tx"><b>บริษัท</b> — ไม่บังคับ ถ้าไม่กรอกเก็บเป็นว่าง เหมือนช่องที่ไม่จำเป็น</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> แบบฟอร์มราชการที่ไม่มีคำอธิบายทำให้กรอกผิดกันทั่ว — Data Dictionary ป้องกันให้ <b>ทุกคนในทีมเข้าใจกฎของข้อมูลตรงกัน</b> ก่อนสร้างระบบ</div></div>
+  </div>
+</div>
+
+<!-- 11. Component -->
+<div class="card" id="comp">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">⚓</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 11</div>
+      <div class="card-name">โครงสร้างกองเรือ — เรือแต่ละลำทำหน้าที่อะไร</div>
+      <div class="card-en">Component Architecture</div>
+    </div>
+    <span class="card-badge b-gold">โครงสร้าง</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🚢</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ผังกองเรือรบ — เรือธง เรือฟริเกต เรือส่งกำลัง</div>
+        <div class="an-text">กองเรือประกอบด้วยเรือหลายลำ แต่ละลำมีบทบาทต่างกัน เรือธงออกคำสั่ง เรือฟริเกตป้องกัน เรือส่งกำลังซัพพอร์ต — ทุกลำทำงานประสานกัน ถ้าลำไหนขัดข้องต้องแก้ได้โดยไม่กระทบลำอื่น</div>
+      </div>
+    </div>
+    <div class="sec-lbl">โครงสร้างกองเรือเว็บ Prosperous</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">🚢</div><div class="tx"><b>เรือธง (RootLayout)</b> — โครงสร้างหลักที่ทุกหน้าใช้ร่วม: Navbar, Footer, ระบบรักษาความปลอดภัย, Font ภาษาไทย</div></div>
+      <div class="pt sea"><div class="ic">🌊</div><div class="tx"><b>กองเรือลูกค้า (20 หน้า)</b> — หน้าแรก, สินค้า, หลักสูตร, ข่าว, โซลูชั่น, ติดต่อ, ค้นหา แต่ละหน้าดึงส่วนประกอบมาประกอบร่าง</div></div>
+      <div class="pt gold"><div class="ic">🔒</div><div class="tx"><b>กองเรือ Admin (9 หน้า)</b> — Dashboard, จัดการข่าว, Leads, หลักสูตร, ไลฟ์การ์ด ทุกหน้าตรวจสิทธิ์ก่อนแสดง</div></div>
+      <div class="pt"><div class="ic">🔧</div><div class="tx"><b>เรือส่งกำลัง (Shared Components)</b> — การ์ดสินค้า, ฟอร์มติดต่อ, การ์ดข่าว สร้างครั้งเดียวใช้ได้ทุกหน้า ประหยัดเวลาพัฒนา</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ถ้าไม่มีผังกองเรือ แต่ละลำอาจชนกันหรือทำภารกิจซ้ำกัน — แผนผังนี้ทำให้ <b>ทีมพัฒนาสร้างงานโดยไม่ซ้ำซ้อนและเชื่อมต่อกันถูกต้อง</b></div></div>
+  </div>
+</div>
+
+<!-- ══ GROUP D ══ -->
+<div class="grp" style="margin-top:28px;">
+  <div class="grp-ic">📜</div>
+  <div>
+    <div class="grp-label">กลุ่ม Delta</div>
+    <div class="grp-title">คำสั่งยุทธการและเกณฑ์ผ่าน</div>
+  </div>
+  <div class="grp-count">5 แผนผัง</div>
+</div>
+
+<!-- 12. FR -->
+<div class="card" id="fr">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📜</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 12</div>
+      <div class="card-name">คำสั่งยุทธการ (OPORD) — ต้องทำอะไรให้สำเร็จ</div>
+      <div class="card-en">Functional Requirements</div>
+    </div>
+    <span class="card-badge b-red">ข้อกำหนด</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🗺️</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">OPORD — Operation Order คำสั่งยุทธการ</div>
+        <div class="an-text">คำสั่งที่บอกว่า <b style="color:var(--gold)">"หน่วย A ต้องยึดจุด X ภายใน H+4 · หน่วย B ต้องตัดการสื่อสารของศัตรู"</b> ชัดเจน วัดผลได้ ไม่คลุมเครือ ถ้าทำสำเร็จถือว่าภารกิจสมบูรณ์</div>
+      </div>
+    </div>
+    <div class="sec-lbl">ตัวอย่างคำสั่ง (23 ข้อทั้งหมด)</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">FR-001</div><div class="tx">หน้าแรกต้องแสดงสินค้า 3 รายการ + ข่าว 3 ชิ้น + Footer ครบ · ความสำคัญ: สูง</div></div>
+      <div class="pt gold"><div class="ic">FR-003</div><div class="tx">ฟอร์มต้องรับข้อมูล 6 ข้อ และตรวจสอบทุกครั้งก่อนส่ง ถ้าไม่ครบต้องแจ้งให้แก้ไข</div></div>
+      <div class="pt gold"><div class="ic">FR-004</div><div class="tx">เมื่อมี Lead ใหม่ ต้องส่งอีเมลแจ้ง Admin ภายใน 60 วินาที · เฟส 2</div></div>
+      <div class="pt gold"><div class="ic">FR-010</div><div class="tx">Admin ต้อง Login ก่อนเข้าทุกหน้า Admin ถ้าผิด 5 ครั้งให้ล็อค 15 นาที</div></div>
+      <div class="pt gold"><div class="ic">FR-015</div><div class="tx">เว็บต้องใช้งานได้บนมือถือทุกขนาดหน้าจอ กดปุ่มได้ง่ายไม่ต้อง zoom</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> OPORD ที่ดีต้องชัดเจน ไม่ตีความได้ 2 แบบ — FR ก็เช่นกัน คือ <b>"สัญญา" ที่ถ้าทำครบทุกข้อถือว่าส่งมอบงานสำเร็จ</b></div></div>
+  </div>
+</div>
+
+<!-- 13. Auth -->
+<div class="card" id="auth">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🪪</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 13</div>
+      <div class="card-name">บัตร Security Clearance — ยศไหนเข้าพื้นที่ไหน</div>
+      <div class="card-en">Authorization Matrix</div>
+    </div>
+    <span class="card-badge b-red">ข้อกำหนด</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🔒</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">Security Clearance ของกองทัพ</div>
+        <div class="an-text">พลทหาร: เข้าได้แค่พื้นที่ทั่วไป · นายทหาร: เข้าห้อง Classified ได้ · นายทหารอาวุโส: เข้าห้อง Top Secret ได้ — <b style="color:var(--gold)">ผ่านประตูผิดโดยไม่มีสิทธิ์ = แจ้งเตือนทันที</b></div>
+      </div>
+    </div>
+    <div class="sec-lbl">ตารางสิทธิ์เข้าถึงระบบ</div>
+    <div class="pts">
+      <div class="pt sea"><div class="ic">✅</div><div class="tx"><b>พลทหาร (ลูกค้า) เข้าได้</b> — ดูสินค้า, ดูบทความที่เผยแพร่แล้ว, ส่งฟอร์มติดต่อ, ดูหลักสูตร</div></div>
+      <div class="pt red"><div class="ic">❌</div><div class="tx"><b>พลทหาร (ลูกค้า) เข้าไม่ได้</b> — ดูบทความร่าง, เห็น Leads คนอื่น, แก้ไขข้อมูลใดๆ</div></div>
+      <div class="pt gold"><div class="ic">🔒</div><div class="tx"><b>นายทหาร (Admin) เท่านั้น</b> — Leads ทั้งหมด, แก้/ลบบทความ, เปลี่ยนสถานะ, จัดการทีม</div></div>
+      <div class="pt"><div class="ic">⚠️</div><div class="tx"><b>Rate Limit</b> — ส่งฟอร์มได้ไม่เกิน 3 ครั้ง/นาที/IP ป้องกัน spam อัตโนมัติ เหมือนระบบ anti-tamper</div></div>
+      <div class="pt red"><div class="ic">🚫</div><div class="tx"><b>รหัส Error ที่ชัดเจน</b> — 401 ไม่มีสิทธิ์ · 403 ห้ามเข้าเด็ดขาด · 429 ส่งเยอะเกิน</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> Security Clearance ป้องกันไม่ให้ข้อมูลลับหลุดไปผิดคน — แผนผังนี้ <b>ป้องกันไม่ให้ลูกค้าทั่วไปเห็นข้อมูลที่ Admin ควรเห็นคนเดียว</b></div></div>
+  </div>
+</div>
+
+<!-- 14. API Schema -->
+<div class="card" id="schema">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📡</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 14</div>
+      <div class="card-name">รหัสสัญญาณมาตรฐาน — ส่งข้อมูลต้องรูปแบบนี้เท่านั้น</div>
+      <div class="card-en">API Payload Schemas</div>
+    </div>
+    <span class="card-badge b-red">ข้อกำหนด</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📻</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">รหัสสัญญาณ NATO ในการสื่อสาร</div>
+        <div class="an-text">วิทยุทหารต้องส่งตาม format ที่กำหนด "ALPHA เรียก BRAVO · ตำแหน่ง Grid 123456 · Over" — <b style="color:var(--gold)">ถ้าส่งผิดรูปแบบปลายทางรับไม่เข้าใจ</b> หน้าเว็บกับ Server ก็ต้องคุยกันในรูปแบบที่ตกลงไว้เหมือนกัน</div>
+      </div>
+    </div>
+    <div class="sec-lbl">ตัวอย่างรหัสส่งฟอร์มติดต่อ</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">📤</div><div class="tx"><b>หน้าเว็บส่งไปที่ Server</b> — ชื่อจริง (บังคับ), นามสกุล (บังคับ), อีเมล (บังคับ, รูปแบบถูกต้อง), เบอร์ 9-10 หลัก (บังคับ), บริษัท, รุ่นสินค้า, ข้อความ</div></div>
+      <div class="pt green"><div class="ic">✅</div><div class="tx"><b>Server ตอบกลับ "รับทราบ"</b> — ส่งเรียบร้อย + รหัส Lead ที่สร้างขึ้น ใช้ tracking ได้</div></div>
+      <div class="pt red"><div class="ic">❌</div><div class="tx"><b>Server ตอบกลับ "ผิดรูปแบบ"</b> — ระบุว่าช่องไหนผิด เช่น "email ต้องมี @" ไม่ใช่แค่ "error"</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ถ้าไม่ตกลงรูปแบบสัญญาณก่อน สองฝ่ายคุยกันไม่รู้เรื่อง — <b>ทีม Frontend กับ Backend ต้อง agree schema นี้ก่อน</b> ไม่งั้นข้อมูลส่งไปแล้วอีกฝ่ายอ่านไม่ออก</div></div>
+  </div>
+</div>
+
+<!-- 15. Acceptance Criteria -->
+<div class="card" id="ac">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">✅</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 15</div>
+      <div class="card-name">เกณฑ์ผ่านการฝึก — ทำได้ขนาดนี้ถึงผ่าน</div>
+      <div class="card-en">Acceptance Criteria</div>
+    </div>
+    <span class="card-badge b-red">ข้อกำหนด</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🏊</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">มาตรฐานผ่านการฝึก Navy SEAL / Rescue Swimmer</div>
+        <div class="an-text">"ว่ายน้ำ 500 เมตรภายใน 12 นาที" · "กดดัน 45 นาทีต้องยืนได้" · "ยิงปืนได้ 90% accuracy" — <b style="color:var(--gold)">ตัวเลขชัดเจน ทดสอบได้ ไม่ใช่แค่ "ต้องว่ายน้ำเก่ง"</b></div>
+      </div>
+    </div>
+    <div class="sec-lbl">มาตรฐานที่ระบบต้องผ่าน</div>
+    <div class="pts">
+      <div class="pt green"><div class="ic">⏱️</div><div class="tx"><b>ความเร็ว</b> — หน้าแรกโหลดภายใน 2.5 วินาที วัดด้วย Lighthouse ไม่ใช่แค่ "รู้สึกว่าเร็ว"</div></div>
+      <div class="pt green"><div class="ic">📱</div><div class="tx"><b>มือถือ</b> — กดแท็บ 4 ปุ่มได้ถูกต้อง ทดสอบบน 3 browser ทั้ง iOS และ Android</div></div>
+      <div class="pt green"><div class="ic">📧</div><div class="tx"><b>อีเมล</b> — ส่งฟอร์ม → อีเมลถึง Admin ภายใน 60 วินาที ไม่ตกใน Spam ต้องมีชื่อ-เบอร์-สินค้าครบ</div></div>
+      <div class="pt green"><div class="ic">🔐</div><div class="tx"><b>Login</b> — รหัสผิด 5 ครั้งล็อค 15 นาที · รหัสถูกเข้า Dashboard ได้ทันที</div></div>
+      <div class="pt green"><div class="ic">🔍</div><div class="tx"><b>ค้นหา</b> — พิมพ์ "AED" ต้องเจอสินค้าและหลักสูตรที่เกี่ยวข้อง ไม่ขึ้นผลลัพธ์ว่าง</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> เหมือนเกณฑ์ผ่านการฝึก — <b>ถ้าทำได้ครบทุกข้อถือว่าผ่าน ถ้าข้อไหนพังยังส่งงานไม่ได้</b> ป้องกันการเถียงกันว่า "เสร็จหรือยัง"</div></div>
+  </div>
+</div>
+
+<!-- 16. Traceability -->
+<div class="card" id="trace">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🔗</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 16</div>
+      <div class="card-name">รายงานตรวจสอบยุทโธปกรณ์ — ทุกชิ้นมีที่เก็บและรับผิดชอบ</div>
+      <div class="card-en">Traceability Matrix</div>
+    </div>
+    <span class="card-badge b-red">ข้อกำหนด</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🗒️</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ใบตรวจรับ-จ่ายยุทโธปกรณ์</div>
+        <div class="an-text">ก่อนออกปฏิบัติการ นายทหารส่งกำลังต้องตรวจว่า <b style="color:var(--gold)">ปืนกล 5 กระบอก อยู่ที่คลังหมายเลข 3 รับผิดชอบโดยนาวาตรีสมชาย ทดสอบครั้งล่าสุดเมื่อวานนี้</b> ไม่มีชิ้นไหนหลุดหาย</div>
+      </div>
+    </div>
+    <div class="sec-lbl">ตัวอย่างการตรวจสอบ (ครบ 23 ข้อ = 100%)</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">🔗</div><div class="tx"><b>FR-003 ฟอร์มติดต่อ</b> → Use Case: UC-04 → Activity: Flow 1 → API: POST /api/contact → ฐานข้อมูล: leads → หน้าจอ: ContactForm → ทดสอบ: AC-003 ✅ ครบ</div></div>
+      <div class="pt gold"><div class="ic">🔗</div><div class="tx"><b>FR-010 Admin Login</b> → UC-10 → Activity: Flow 3 → API: POST /api/auth/login → ฐานข้อมูล: admins → หน้าจอ: LoginForm → ทดสอบ: AC-010 ✅ ครบ</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ถ้าข้อไหนในตารางไม่มี API หรือไม่มีการทดสอบ = งานยังไม่ครบ เหมือน <b>รายงานตรวจอาวุธที่ขาดตัวไหน ออกปฏิบัติการไม่ได้</b> ระบบนี้ผ่าน 23/23 ข้อ</div></div>
+  </div>
+</div>
+
+<!-- ══ GROUP E ══ -->
+<div class="grp" style="margin-top:28px;">
+  <div class="grp-ic">📅</div>
+  <div>
+    <div class="grp-label">กลุ่ม Echo</div>
+    <div class="grp-title">แผนส่งกำลังบำรุงและ Logistics</div>
+  </div>
+  <div class="grp-count">6 แผนผัง</div>
+</div>
+
+<!-- 17. Page Flow -->
+<div class="card" id="pf">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🗺️</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 17</div>
+      <div class="card-name">แผนที่เดินเรือ — จากท่าไหนไปท่าไหนได้</div>
+      <div class="card-en">Page Flow Diagram</div>
+    </div>
+    <span class="card-badge b-gold">แผนงาน</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">⛵</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">แผนที่เดินเรือและเส้นทางเดินเรือ</div>
+        <div class="an-text">บอกว่าจากท่าเรือกรุงเทพฯ ไปท่าเรือภูเก็ตได้โดยผ่านเส้นทางไหน จะอ้อมมาจากฝั่งซ้ายหรือขวา มีท่าแวะพักตรงไหนบ้าง — <b style="color:var(--gold)">เพื่อให้นักบินเรือไม่หลงทาง</b></div>
+      </div>
+    </div>
+    <div class="sec-lbl">เส้นทางเดินเรือ 2 โซน 30 ท่าเรือ</div>
+    <div class="g2">
+      <div class="gbox">
+        <h4 style="color:var(--sea);">🌊 โซนสาธารณะ (20 ท่า)</h4>
+        <ul>
+          <li>หน้าแรก → สินค้าทั้งหมด → AED/Auto/กายภาพ</li>
+          <li>หลักสูตร → CPR, Rescue Swimmer</li>
+          <li>บริการ CSR → โซลูชั่น 4 ประเภท</li>
+          <li>ข่าวสาร → บทความ</li>
+          <li>ติดต่อ, ค้นหา, เกี่ยวกับเรา, 404</li>
+        </ul>
+      </div>
+      <div class="gbox">
+        <h4 style="color:var(--gold);">🔒 โซนหวงห้าม (9 ท่า)</h4>
+        <ul>
+          <li>Login → Dashboard</li>
+          <li>จัดการข่าว, บทความ</li>
+          <li>จัดการหลักสูตร</li>
+          <li>Leads & ติดต่อ</li>
+          <li>ทีมไลฟ์การ์ด, ตั้งค่า</li>
+        </ul>
+      </div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> แผนที่เดินเรือป้องกันไม่ให้เรือหลงทาง — แผนผังนี้ทำให้ <b>ลูกค้าหาสินค้าได้ภายใน 3 คลิก Admin เข้าถึงฟังก์ชันได้รวดเร็ว</b></div></div>
+  </div>
+</div>
+
+<!-- 18. Gantt -->
+<div class="card" id="gantt">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📅</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 18</div>
+      <div class="card-name">ตาราง D-Day — ใครทำอะไร H+เท่าไหร่</div>
+      <div class="card-en">Gantt Chart</div>
+    </div>
+    <span class="card-badge b-gold">แผนงาน</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">⏰</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ตาราง H-Hour — ปฏิบัติการแบบ Phase</div>
+        <div class="an-text">D-Day H+0: หน่วย Alpha ยึดหาด → H+2: หน่วย Bravo เคลื่อนพล → H+6: หน่วย Charlie ส่งกำลัง — ทุกหน่วยรู้ว่า <b style="color:var(--gold)">ตัวเองต้องทำอะไร เมื่อไหร่ และงานต้องเสร็จก่อนหน่วยไหนเข้า Phase ต่อ</b></div>
+      </div>
+    </div>
+    <div class="sec-lbl">ตาราง 6 เดือน 2 Phase</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">🎨</div><div class="tx"><b>เดือน 1 (H+0 ถึง H+4 สัปดาห์)</b> — ออกแบบ, Prototype, โครงสร้างหลัก, หน้าแรก</div></div>
+      <div class="pt gold"><div class="ic">📦</div><div class="tx"><b>เดือน 2 (H+5 ถึง H+8 สัปดาห์)</b> — หน้าสินค้า 3 รายการ, หน้า CSR, หลักสูตร</div></div>
+      <div class="pt gold"><div class="ic">⭐</div><div class="tx"><b>เดือน 3 (H+9 ถึง H+12) — Phase 1 Launch</b> — ข่าวสาร, Admin 9 หน้า, ทดสอบ, เปิดตัว</div></div>
+      <div class="pt sea"><div class="ic">🗄️</div><div class="tx"><b>เดือน 4 (H+13 ถึง H+16)</b> — ฐานข้อมูลจริง, Login, API ฟอร์มติดต่อ</div></div>
+      <div class="pt sea"><div class="ic">⚙️</div><div class="tx"><b>เดือน 5 (H+17 ถึง H+20)</b> — Admin CRUD จริง, Leads, ไลฟ์การ์ด, อัปโหลดรูป</div></div>
+      <div class="pt sea"><div class="ic">🚀</div><div class="tx"><b>เดือน 6 (H+21 ถึง H+26) — Phase 2 Launch</b> — SEO, ทดสอบเต็มรูป, domain, Launch จริง</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> Phase 1 เปิดให้ลูกค้าใช้งานได้ที่เดือน 3 แม้ระบบหลังบ้านยังไม่สมบูรณ์ — เหมือน <b>ยึดพื้นที่หัวหาดก่อน แล้วส่งกำลังเสริมตามมา</b></div></div>
+  </div>
+</div>
+
+<!-- 19. Deployment -->
+<div class="card" id="dep">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🚁</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 19</div>
+      <div class="card-name">แผนส่งกำลังบำรุง — โค้ดถึงมือผู้ใช้ได้ยังไง</div>
+      <div class="card-en">Deployment Diagram</div>
+    </div>
+    <span class="card-badge b-gold">แผนงาน</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">🚢</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">ระบบโลจิสติกส์ — โรงงาน → คลัง → หน้างาน</div>
+        <div class="an-text">กระสุนผลิตที่โรงงาน → ส่งไปคลังสินค้ากลาง → คลังตรวจสอบคุณภาพ → ส่งไปหน้างานทันทีที่ได้รับการร้องขอ — <b style="color:var(--gold)">มีระบบตรวจสอบทุกขั้น ไม่มีของหลุดถึงหน้างานแบบไม่ผ่านการตรวจ</b></div>
+      </div>
+    </div>
+    <div class="sec-lbl">ขั้นตอนส่งโค้ดขึ้นเว็บ</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">1️⃣</div><div class="tx"><b>โรงงาน (Local)</b> — นักพัฒนาเขียนโค้ดบนเครื่องตัวเอง ทดสอบเบื้องต้น เหมือนผลิตกระสุน</div></div>
+      <div class="pt gold"><div class="ic">2️⃣</div><div class="tx"><b>ส่งเข้าคลัง (GitHub)</b> — โค้ดที่เขียนเสร็จส่งเข้าคลังกลาง ระบบตรวจสอบอัตโนมัติทันที</div></div>
+      <div class="pt gold"><div class="ic">3️⃣</div><div class="tx"><b>ตรวจสอบคุณภาพ (Preview)</b> — สร้างเว็บทดสอบขึ้นมาให้ดูก่อน เจ้าของโปรเจกต์ตรวจแล้วสั่ง approve</div></div>
+      <div class="pt gold"><div class="ic">4️⃣</div><div class="tx"><b>ส่งหน้างาน (Production)</b> — approve แล้ว → ขึ้น prosperous-rescue.com ทันที มี HTTPS อัตโนมัติ</div></div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ระบบนี้ทำให้ <b>อัปเดตเว็บได้โดยไม่ต้อง down ระบบ</b> มีจุดตรวจสอบก่อนขึ้นจริงทุกครั้ง เหมือนกระสุนทุกนัดต้องผ่าน QC ก่อนส่งหน้างาน</div></div>
+  </div>
+</div>
+
+<!-- 20. Env -->
+<div class="card" id="env">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">🔑</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 20</div>
+      <div class="card-name">รหัสลับทางยุทธการ — ห้ามตกถึงมือศัตรู</div>
+      <div class="card-en">Environment Variables</div>
+    </div>
+    <span class="card-badge b-gold">แผนงาน</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📖</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">สมุดรหัส CRYPTO ของกองทัพ</div>
+        <div class="an-text">รหัสวิทยุที่ใช้สื่อสารระหว่างหน่วย — เก็บแยกจากอาวุธ ห้ามบันทึกในที่เปิดเผย ถ้าตกถึงมือศัตรูต้องเปลี่ยนรหัสทั้งหมดทันที — <b style="color:var(--gold)">ห้าม "เขียนรหัสไว้บนกำแพง"</b> เด็ดขาด</div>
+      </div>
+    </div>
+    <div class="sec-lbl">รหัสลับที่ระบบต้องการ (ห้าม share)</div>
+    <div class="pts">
+      <div class="pt red"><div class="ic">📧</div><div class="tx"><b>RESEND_API_KEY</b> — กุญแจบริการส่งอีเมล ถ้าหายไปแจ้งเตือน Admin ไม่ได้</div></div>
+      <div class="pt red"><div class="ic">🗄️</div><div class="tx"><b>DATABASE_URL</b> — ที่อยู่และรหัสผ่านฐานข้อมูล ถ้าหายไปเว็บดึงข้อมูลไม่ได้เลย</div></div>
+      <div class="pt red"><div class="ic">🔐</div><div class="tx"><b>JWT_SECRET</b> — กุญแจสร้างบัตรดิจิทัล Admin ถ้าเปลี่ยน Admin ทุกคนต้อง Login ใหม่</div></div>
+      <div class="pt red"><div class="ic">🌐</div><div class="tx"><b>NEXT_PUBLIC_SITE_URL</b> — ที่อยู่เว็บจริง ใช้สร้าง link แชร์และ Google index</div></div>
+    </div>
+    <div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:13px;">
+      ⚠️ <b>กฎสนามรบ:</b> รหัสเหล่านี้ <b>ห้ามฝังในโค้ด ห้ามส่งผ่าน Line ห้าม commit ลง GitHub</b> — เก็บเฉพาะในระบบปลอดภัยของ Vercel
+    </div>
+    <div class="summary" style="margin-top:10px;"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> สมุดรหัสตกถึงมือศัตรู = ทุกการสื่อสารถูกดักฟัง — รหัสเหล่านี้ถูก leak = <b>ระบบเต็มของบริษัทอยู่ในมือคนอื่น</b></div></div>
+  </div>
+</div>
+
+<!-- 21. Glossary -->
+<div class="card" id="gloss">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">📚</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 21</div>
+      <div class="card-name">คู่มือศัพท์ทหาร — ทุกคนต้องใช้ภาษาเดียวกัน</div>
+      <div class="card-en">Glossary</div>
+    </div>
+    <span class="card-badge b-gold">แผนงาน</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📡</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">คู่มือ NATO STANAG — ศัพท์มาตรฐานพันธมิตร</div>
+        <div class="an-text">พันธมิตรหลายชาติต้องใช้คำเดียวกัน "ALPHA = เรือ A ไม่ใช่เรือ B" — <b style="color:var(--gold)">ถ้าแต่ละคนใช้ศัพท์ต่างกัน ในสนามรบอาจยิงกันเองโดยไม่ตั้งใจ</b></div>
+      </div>
+    </div>
+    <div class="sec-lbl">ศัพท์ที่ทุกคนในโปรเจกต์ต้องรู้ตรงกัน</div>
+    <div class="g2">
+      <div class="gbox">
+        <h4 style="color:var(--red);">⚕️ ศัพท์ธุรกิจ Prosperous</h4>
+        <ul>
+          <li><b>AED</b> — เครื่องช็อคหัวใจ (กดปุ่มเอง)</li>
+          <li><b>Auto AED</b> — ช็อคอัตโนมัติ ไม่ต้องกด</li>
+          <li><b>CPR</b> — ปั๊มหัวใจช่วยชีวิต</li>
+          <li><b>ILSE</b> — มาตรฐานไลฟ์การ์ดสากล</li>
+          <li><b>Lead</b> — คนที่ส่งฟอร์ม ยังไม่ซื้อ</li>
+          <li><b>CSR</b> — กิจกรรมเพื่อสังคมองค์กร</li>
+        </ul>
+      </div>
+      <div class="gbox">
+        <h4 style="color:var(--sea);">💻 ศัพท์เทคนิค (แปลเป็นทหาร)</h4>
+        <ul>
+          <li><b>API</b> — ช่องทางสื่อสารระหว่างหน่วย</li>
+          <li><b>JWT</b> — บัตร Security Clearance ดิจิทัล</li>
+          <li><b>Supabase</b> — คลังข้อมูลกลาง</li>
+          <li><b>Vercel</b> — ฐานทัพที่เว็บอยู่</li>
+          <li><b>UUID</b> — หมายเลขประจำตัวที่ไม่ซ้ำกันเลย</li>
+          <li><b>CRUD</b> — สร้าง/ดู/แก้/ลบ (4 ภารกิจพื้นฐาน)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="summary"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> ในกองทัพพูดว่า "TANGO" ทุกคนรู้ทันทีว่าหมายถึงศัตรู ไม่ต้องอธิบายใหม่ทุกครั้ง — Glossary ทำให้ <b>ทุกคนในโปรเจกต์คุยภาษาเดียวกันโดยไม่ตีความผิดกัน</b></div></div>
+  </div>
+</div>
+
+<!-- 22. Cost -->
+<div class="card" id="cost">
+  <div class="card-head" onclick="tog(this)">
+    <div class="card-ic">💰</div>
+    <div class="card-meta">
+      <div class="card-num">แผนผัง 22</div>
+      <div class="card-name">ประมาณการงบยุทโธปกรณ์ — ขอซื้ออะไร ราคาเท่าไหร่ เพราะอะไร</div>
+      <div class="card-en">Cost Estimation</div>
+    </div>
+    <span class="card-badge b-gold">แผนงาน</span>
+    <span class="caret">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="analogy">
+      <div class="an-ic">📋</div>
+      <div class="an-body">
+        <div class="an-tag">⚓ เปรียบกับ</div>
+        <div class="an-title">คำของบประมาณยุทโธปกรณ์ต่อกระทรวง</div>
+        <div class="an-text">"ขอซื้อปืนกล 20 กระบอก × 50,000 บาท = 1,000,000 บาท เหตุผล: หน่วยประจำการมีเพียงพอแล้วแต่หน่วย SEAL ยังขาด 20 กระบอก" — <b style="color:var(--gold)">ต้องอธิบายได้ว่าซื้อทำไม ราคาอ้างอิงจากอะไร ไม่ใช่แค่ยอดรวม</b></div>
+      </div>
+    </div>
+    <div class="sec-lbl">หลักการคิดราคา — โปร่งใส อ้างอิงได้</div>
+    <div class="pts">
+      <div class="pt gold"><div class="ic">⏰</div><div class="tx"><b>ค่าแรงนักพัฒนา 800 บาท/ชั่วโมง</b> — ทุกงานคิดตามชั่วโมงจริง ไม่ใช่ราคาเหมา</div></div>
+      <div class="pt gold"><div class="ic">📄</div><div class="tx"><b>หน้าทั่วไป</b> — 8–12 ชม. = 6,400–9,600 บาท เหมือนกระสุนธรรมดา</div></div>
+      <div class="pt gold"><div class="ic">⚡</div><div class="tx"><b>หน้า AED (ซับซ้อน 4 แท็บ)</b> — 28 ชม. × 800 = 22,400 บาท เหมือนกระสุนพิเศษต้องผลิตต่างกัน</div></div>
+      <div class="pt gold"><div class="ic">🖥️</div><div class="tx"><b>หน้า Admin</b> — 20–40 ชม. = 16,000–32,000 บาท เพราะต้องเชื่อมระบบหลังบ้านจริง</div></div>
+    </div>
+    <div class="budget-row">
+      <div class="bx"><div class="bv" style="color:var(--navy);">448,000</div><div class="bl">Phase 1 (UI ทั้งหมด)</div></div>
+      <div class="bx"><div class="bv" style="color:var(--sea);">202,000</div><div class="bl">Phase 2 (Backend)</div></div>
+      <div class="bx"><div class="bv" style="color:var(--green);">72,000</div><div class="bl">Hosting ปีแรก</div></div>
+    </div>
+    <div class="total-row">
+      <div style="color:rgba(255,255,255,.7);font-size:14px;font-weight:600;">รวมงบยุทโธปกรณ์ปีแรก</div>
+      <div style="font-family:'Prompt';font-size:26px;font-weight:800;color:var(--gold);">722,000 ฿</div>
+    </div>
+    <div class="summary" style="margin-top:10px;"><div class="s-ic">⚓</div><div class="s-tx"><b>สรุปสั้น:</b> คำของบที่ดีต้องอธิบายได้ทุกบาท — แผนผังนี้ทำให้เจ้าของโปรเจกต์ <b>เข้าใจว่าเงินแต่ละก้อนซื้ออะไร</b> ไม่ใช่แค่เซ็นอนุมัติตัวเลขรวม</div></div>
+  </div>
+</div>
+
+</div><!-- end wrap -->
+
+<footer>
+  <strong>⚓ PROSPEROUS RESCUE SWIMMING CO., LTD.</strong><br>
+  คู่มืออ่านแผนผัง ฉบับทหารเรือ · มิถุนายน 2568
+</footer>
+
+<script>
+function tog(head) {
+  head.closest('.card').classList.toggle('open');
+}
+</script>
+</body>
+</html>

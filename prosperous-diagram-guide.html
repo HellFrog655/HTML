@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มืออ่าน Diagram — Prosperous</title>
+<a href="index.html" class="mode-btn active">Story Boards</a>
+<a href="prosperous-edd.html" class="mode-btn active">Architecture Engineering</a>
+<a href="prosperous-navy-guide.html" class="mode-btn active">เปรียบเทียบฉบับทหารเรือ</a>
+<a href="prosperous-diagram-guide.html" class="mode-btn active">เปรียบเทียบฉบับธรรมดา</a>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C8102E; --red-lt:#FFF0F2; --red-dk:#8B0B20;
+  --ink:#111827; --navy:#1A2C3D; --slate:#5A6472;
+  --mist:#F7F8FA; --line:#E4E7EB; --white:#fff;
+  --green:#1B9E5A; --green-lt:#E8FFF0;
+  --amber:#D97706; --amber-lt:#FFF8E0;
+  --blue:#1A5FC8; --blue-lt:#E0EEFF;
+  --purple:#7C3AED; --purple-lt:#F3EEFF;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Sarabun',sans-serif;background:var(--mist);color:var(--ink);line-height:1.75;font-size:16px;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:2px solid var(--red);padding:12px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+nav .brand{font-family:'Prompt';font-weight:800;font-size:15px;color:var(--red);margin-right:8px;}
+nav .count{font-size:11px;background:var(--red);color:#fff;border-radius:999px;padding:2px 8px;font-weight:700;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--ink) 0%,#1e3a5f 100%);color:#fff;padding:56px 32px 48px;text-align:center;}
+.hero h1{font-family:'Prompt';font-size:clamp(22px,4vw,40px);font-weight:800;line-height:1.25;margin-bottom:12px;}
+.hero h1 em{color:#60a5fa;font-style:normal;}
+.hero p{font-size:16px;opacity:.75;max-width:560px;margin:0 auto 28px;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.hero-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;}
+
+/* CATEGORY BAR */
+.cat-bar{background:#fff;border-bottom:1px solid var(--line);padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px;}
+.cat-btn{font-size:12px;font-weight:700;padding:5px 12px;border-radius:6px;cursor:pointer;border:none;transition:.2s;font-family:'Sarabun';}
+.cat-btn:hover{opacity:.8;}
+
+/* DIAGRAM CARDS */
+.container{max-width:960px;margin:0 auto;padding:32px 24px;}
+.dia-card{background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:24px;overflow:hidden;scroll-margin-top:80px;}
+
+/* CARD HEADER */
+.dia-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:16px;cursor:pointer;user-select:none;}
+.dia-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.dia-titles{flex:1;}
+.dia-num{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:3px;}
+.dia-name-th{font-family:'Prompt';font-size:18px;font-weight:700;color:var(--ink);margin-bottom:2px;line-height:1.3;}
+.dia-name-en{font-size:12px;color:var(--slate);font-style:italic;}
+.dia-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;align-self:flex-start;margin-top:4px;}
+.dia-toggle{color:var(--slate);font-size:18px;align-self:center;transition:.25s;flex-shrink:0;}
+.dia-card.open .dia-toggle{transform:rotate(180deg);}
+
+/* CARD BODY */
+.dia-body{display:none;padding:24px;}
+.dia-card.open .dia-body{display:block;}
+
+/* ANALOGY BOX */
+.analogy{display:flex;gap:14px;background:var(--amber-lt);border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;}
+.analogy .an-ic{font-size:28px;flex-shrink:0;line-height:1;}
+.analogy .an-text{font-size:14px;line-height:1.8;}
+.analogy .an-text strong{color:var(--amber);display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;}
+
+/* EXPLAINS */
+.explain-label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:10px;margin-top:18px;}
+.explain-label:first-of-type{margin-top:0;}
+
+.points{display:flex;flex-direction:column;gap:8px;margin-bottom:4px;}
+.point{display:flex;gap:12px;align-items:flex-start;font-size:14px;padding:10px 14px;background:var(--mist);border-radius:8px;}
+.point .pt-ic{font-size:18px;flex-shrink:0;width:24px;text-align:center;}
+.point .pt-text{line-height:1.7;}
+.point .pt-text b{color:var(--ink);}
+
+.summary-box{background:var(--green-lt);border:1px solid rgba(27,158,90,.25);border-radius:10px;padding:14px 18px;margin-top:16px;font-size:14px;display:flex;gap:12px;align-items:flex-start;}
+.summary-box .sb-ic{font-size:20px;flex-shrink:0;}
+
+/* GRID 2 */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;}
+.gbox{background:var(--mist);border-radius:10px;padding:14px 16px;}
+.gbox h4{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.gbox ul{list-style:none;font-size:13px;color:var(--slate);display:flex;flex-direction:column;gap:4px;}
+.gbox ul li::before{content:'· ';color:var(--red);}
+
+/* NOTE */
+.note{font-size:13px;color:var(--slate);background:var(--blue-lt);border-radius:8px;padding:10px 14px;margin-top:12px;line-height:1.7;}
+.note b{color:var(--blue);}
+
+/* CATEGORY COLORS */
+.c-arch .dia-icon{background:#EFF6FF;} .c-arch .dia-badge{background:var(--blue-lt);color:var(--blue);}
+.c-flow .dia-icon{background:#F0FFF4;} .c-flow .dia-badge{background:var(--green-lt);color:var(--green);}
+.c-data .dia-icon{background:var(--purple-lt);} .c-data .dia-badge{background:var(--purple-lt);color:var(--purple);}
+.c-plan .dia-icon{background:var(--amber-lt);} .c-plan .dia-badge{background:var(--amber-lt);color:var(--amber);}
+.c-req  .dia-icon{background:var(--red-lt);} .c-req  .dia-badge{background:var(--red-lt);color:var(--red);}
+
+@media(max-width:640px){
+  .g2{grid-template-columns:1fr;}
+  .hero{padding:40px 20px 36px;}
+  .container{padding:20px 14px;}
+  .dia-head{padding:16px;}
+  .dia-body{padding:16px;}
+  nav a{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>อธิบาย <em>Diagram</em> แต่ละตัว<br>ในภาษาที่ทุกคนเข้าใจ</h1>
+  <p>เอกสารนี้แปลแผนผังเทคนิค 22 ชิ้นของโปรเจกต์ Prosperous ให้เป็นภาษาพูดปกติ — ไม่ต้องมีพื้นฐาน IT ก็อ่านได้</p>
+  <div class="hero-pills">
+    <div class="hero-pill">📐 ภาพรวมระบบ 2 แผนผัง</div>
+    <div class="hero-pill">🔄 การทำงาน 5 แผนผัง</div>
+    <div class="hero-pill">🗄️ ข้อมูล 5 แผนผัง</div>
+    <div class="hero-pill">📋 ข้อกำหนด 5 แผนผัง</div>
+    <div class="hero-pill">📅 แผนงาน 5 แผนผัง</div>
+  </div>
+</div>
+
+<nav>
+  <span class="brand">Prosperous</span>
+  <span class="count">22 แผนผัง</span>
+</nav>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════════
+  GROUP A: ภาพรวมระบบ
+══════════════════════════════════════════ -->
+<div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);padding:8px 0 14px;border-bottom:2px solid var(--line);margin-bottom:20px;">
+  🗺️ &nbsp;กลุ่ม A — ภาพรวมและโครงสร้าง
+</div>
+
+<!-- 1. Context Diagram -->
+<div class="dia-card c-arch open" id="ctx">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🗺️</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 1</div>
+      <div class="dia-name-th">แผนที่ภาพรวมทั้งหมด</div>
+      <div class="dia-name-en">Context Diagram</div>
+    </div>
+    <span class="dia-badge">ภาพรวม</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🏘️</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>แผนที่ย่านที่อยู่อาศัย — บอกว่าบ้านเราอยู่ตรงไหน ล้อมรอบด้วยถนนอะไร มีเพื่อนบ้านเป็นใคร แต่ยังไม่บอกว่าข้างในบ้านตกแต่งยังไง</div>
+    </div>
+    <div class="explain-label">มันอธิบายอะไร?</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">🏢</div><div class="pt-text"><b>ตัวระบบ</b> — เว็บไซต์ Prosperous ทำหน้าที่เป็น "ศูนย์กลาง" รับและส่งข้อมูลกับทุกฝ่าย</div></div>
+      <div class="point"><div class="pt-ic">👤</div><div class="pt-text"><b>ลูกค้า</b> — ส่งฟอร์ม ดูสินค้า → เว็บตอบกลับด้วยหน้าเว็บที่ถูกต้อง</div></div>
+      <div class="point"><div class="pt-ic">👨‍💼</div><div class="pt-text"><b>Admin</b> — เข้ามาจัดการข้อมูล → เว็บตอบด้วยแดชบอร์ดและข้อมูลล่าสุด</div></div>
+      <div class="point"><div class="pt-ic">📧</div><div class="pt-text"><b>บริการส่งอีเมล (Resend)</b> — เว็บสั่งให้ส่งอีเมลแจ้งเตือนเมื่อมีลูกค้าใหม่</div></div>
+      <div class="point"><div class="pt-ic">▲</div><div class="pt-text"><b>Vercel (เซิร์ฟเวอร์)</b> — บ้านที่เว็บอาศัยอยู่ ส่งหน้าเว็บให้ผู้ใช้ทั่วโลก</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>แผนผังนี้บอกว่า <b>ใครเกี่ยวข้องกับระบบนี้บ้าง</b> และแต่ละคนส่ง-รับข้อมูลอะไรกับระบบ ดูแล้วรู้ว่าระบบนี้ "คุยกับใครบ้าง" ในโลกความเป็นจริง</div></div>
+  </div>
+</div>
+
+<!-- 2. Use Case -->
+<div class="dia-card c-arch" id="uc">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">👥</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 2</div>
+      <div class="dia-name-th">ตารางสิทธิ์ — ใครทำอะไรได้บ้าง</div>
+      <div class="dia-name-en">Use Case Diagram</div>
+    </div>
+    <span class="dia-badge">ภาพรวม</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🎟️</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>บัตรเข้างาน — บัตรทั่วไปเข้าได้บางส่วน บัตร VIP เข้าได้ทุกส่วน แผนผังนี้บอกว่า "บัตร" แต่ละประเภทเข้าถึงอะไรได้บ้าง</div>
+    </div>
+    <div class="explain-label">มันอธิบายอะไร?</div>
+    <div class="g2">
+      <div class="gbox">
+        <h4 style="color:var(--blue);">👤 ลูกค้าทำได้ (9 อย่าง)</h4>
+        <ul>
+          <li>ดูหน้าแรก / Hero</li>
+          <li>ดูรายการสินค้า + สเปค</li>
+          <li>ส่งฟอร์มขอใบเสนอราคา</li>
+          <li>ดูข่าวสาร / บทความ</li>
+          <li>สมัครหลักสูตร CPR/AED</li>
+          <li>ขอแพ็กเกจโรงแรม</li>
+          <li>ดูชมรม Rescue Swimmer</li>
+          <li>ค้นหาข้อมูล</li>
+          <li>ดูโซลูชั่นตามประเภท</li>
+        </ul>
+      </div>
+      <div class="gbox">
+        <h4 style="color:var(--amber);">👨‍💼 Admin ทำได้เพิ่ม (8 อย่าง)</h4>
+        <ul>
+          <li>ล็อกอินเข้าระบบ</li>
+          <li>ดู Dashboard / สถิติ</li>
+          <li>จัดการข่าว (เผยแพร่/ร่าง/ลบ)</li>
+          <li>เพิ่ม/แก้ไข/ลบบทความ</li>
+          <li>จัดการ Leads</li>
+          <li>จัดการทีมไลฟ์การ์ด</li>
+          <li>จัดการหลักสูตร</li>
+          <li>ตั้งค่าบริษัท</li>
+        </ul>
+      </div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>แผนผังนี้ตอบคำถามว่า <b>"ใครทำอะไรได้บ้างในระบบนี้"</b> — เหมือน TOR ที่บอก scope ของงานแต่ละบทบาท ทีมพัฒนาใช้เป็น checklist ว่าสร้างครบหรือยัง</div></div>
+  </div>
+</div>
+
+<!-- ──── GROUP B ──── -->
+<div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);padding:24px 0 14px;border-bottom:2px solid var(--line);margin-bottom:20px;">
+  🔄 &nbsp;กลุ่ม B — การไหลของข้อมูลและการทำงาน
+</div>
+
+<!-- 3. DFD0 -->
+<div class="dia-card c-flow" id="dfd0">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🌐</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 3</div>
+      <div class="dia-name-th">ข้อมูลไหลเข้า-ออกอะไรบ้าง (ภาพใหญ่)</div>
+      <div class="dia-name-en">DFD Level 0 — Context Level</div>
+    </div>
+    <span class="dia-badge">การไหลข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🏭</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>แผนผังโรงงานมองจากเฮลิคอปเตอร์ — เห็นแค่ว่ามีวัตถุดิบเข้า ของสำเร็จรูปออก แต่ยังไม่เห็นสายพานด้านใน</div>
+    </div>
+    <div class="explain-label">มันอธิบายอะไร?</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">➡️</div><div class="pt-text"><b>ลูกค้าส่งเข้า</b> — การดูสินค้า / กรอกฟอร์มขอใบเสนอราคา</div></div>
+      <div class="point"><div class="pt-ic">⬅️</div><div class="pt-text"><b>ระบบส่งออกให้ลูกค้า</b> — หน้าเว็บที่ถูกต้อง, หน้ายืนยันการส่งฟอร์ม</div></div>
+      <div class="point"><div class="pt-ic">➡️</div><div class="pt-text"><b>Admin ส่งเข้า</b> — เขียนบทความ, แก้ Leads, จัดการหลักสูตร</div></div>
+      <div class="point"><div class="pt-ic">⬅️</div><div class="pt-text"><b>ระบบส่งออกให้ Admin</b> — Dashboard, สถิติ, รายการ Leads</div></div>
+      <div class="point"><div class="pt-ic">🗄️</div><div class="pt-text"><b>คลังข้อมูลที่ระบบเก็บ 6 ชุด</b> — สินค้า / บทความ / หลักสูตร / Leads / ไลฟ์การ์ด / ตั้งค่าบริษัท</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>ดูแล้วรู้ว่า <b>ข้อมูลอะไรเข้าออกระบบ</b> โดยไม่ต้องรู้ว่าข้างในทำงานยังไง เหมาะสำหรับนำเสนอให้เจ้าของกิจการดูภาพรวม</div></div>
+  </div>
+</div>
+
+<!-- 4. DFD1 -->
+<div class="dia-card c-flow" id="dfd1">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🔬</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 4</div>
+      <div class="dia-name-th">ข้อมูลไหลเข้า-ออกอะไรบ้าง (ซูมเข้า)</div>
+      <div class="dia-name-en">DFD Level 1 — Process Level</div>
+    </div>
+    <span class="dia-badge">การไหลข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🏭</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>แผนผังโรงงานที่ซูมเข้ามาดูข้างใน — เห็นแล้วว่ามีสายพานกี่เส้น แต่ละเส้นทำหน้าที่อะไร</div>
+    </div>
+    <div class="explain-label">ระบบมี 6 กระบวนการหลัก</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">1️⃣</div><div class="pt-text"><b>แสดงสินค้า (P1)</b> — ดึงข้อมูลสินค้าจากคลัง แสดงให้ลูกค้าดู</div></div>
+      <div class="point"><div class="pt-ic">2️⃣</div><div class="pt-text"><b>รับฟอร์มติดต่อ (P2)</b> — รับข้อมูลที่ลูกค้ากรอก บันทึกลงคลัง Leads</div></div>
+      <div class="point"><div class="pt-ic">3️⃣</div><div class="pt-text"><b>จัดการข่าวสาร (P3)</b> — ดึงบทความมาแสดง / Admin เพิ่มบทความใหม่</div></div>
+      <div class="point"><div class="pt-ic">4️⃣</div><div class="pt-text"><b>บริการ/หลักสูตร (P4)</b> — แสดงข้อมูลหลักสูตร รับใบสมัคร</div></div>
+      <div class="point"><div class="pt-ic">5️⃣</div><div class="pt-text"><b>Admin จัดการข่าว (P5)</b> — Admin เขียน แก้ไข ลบ เผยแพร่บทความ</div></div>
+      <div class="point"><div class="pt-ic">6️⃣</div><div class="pt-text"><b>Leads และไลฟ์การ์ด (P6)</b> — Admin ดู Leads เปลี่ยนสถานะ จัดการทีม</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>เป็นเวอร์ชันซูมเข้าของแผนผังที่ 3 — ทีมพัฒนาใช้เป็นพิมพ์เขียวในการสร้าง API และฟังก์ชันต่างๆ</div></div>
+  </div>
+</div>
+
+<!-- 5. Activity -->
+<div class="dia-card c-flow" id="act">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🏃</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 5</div>
+      <div class="dia-name-th">ขั้นตอนการทำงานทีละขั้น</div>
+      <div class="dia-name-en">Activity Diagrams</div>
+    </div>
+    <span class="dia-badge">การไหลข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🍳</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>สูตรการทำอาหาร — บอกว่าทำขั้นที่ 1 ก่อน แล้วค่อยขั้นที่ 2 ถ้าไม่ผ่านเงื่อนไขให้ย้อนกลับทำใหม่ ถ้าผ่านไปต่อได้</div>
+    </div>
+    <div class="explain-label">มีทั้งหมด 5 สูตรการทำงาน</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">①</div><div class="pt-text"><b>ลูกค้าส่งฟอร์มขอใบเสนอราคา</b><br>เปิดหน้าสินค้า → กรอกชื่อ-เบอร์-บริษัท → กดส่ง → ระบบตรวจสอบข้อมูล → ถ้าครบ: บันทึกและส่งอีเมล Admin → แสดง "ส่งเรียบร้อย" → ถ้าไม่ครบ: แจ้ง error ให้กรอกใหม่</div></div>
+      <div class="point"><div class="pt-ic">②</div><div class="pt-text"><b>ลูกค้าสมัครหลักสูตร</b><br>เลือกหลักสูตร → กรอกข้อมูล → ระบบตรวจว่าที่นั่งว่างไหม → ถ้าว่าง: ยืนยัน → ถ้าเต็ม: แจ้งให้รออบรมรอบถัดไป</div></div>
+      <div class="point"><div class="pt-ic">③</div><div class="pt-text"><b>Admin เข้าสู่ระบบ</b><br>กรอก username + password → ระบบตรวจสอบ → ถ้าถูก: ได้รับ "บัตรดิจิทัล" (JWT) เข้าแดชบอร์ด → ถ้าผิด: แจ้งเตือนและล็อคหลัง 5 ครั้ง</div></div>
+      <div class="point"><div class="pt-ic">④</div><div class="pt-text"><b>Admin จัดการ Lead</b><br>เปิดรายการ Leads → เลือก Lead → โทรหาลูกค้า → กดเปลี่ยนสถานะ "ติดต่อแล้ว" → บันทึก → หรือ ติดตามต่อ → ปิดงาน</div></div>
+      <div class="point"><div class="pt-ic">⑤</div><div class="pt-text"><b>Admin เพิ่มบทความข่าว</b><br>กดเพิ่มบทความ → เขียนเนื้อหา → บันทึกเป็นร่าง → ตรวจทาน → กดเผยแพร่ → ขึ้นเว็บทันที</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>แผนผังนี้เป็น <b>คู่มือการทำงาน</b> ของระบบ ทีมพัฒนาใช้เพื่อให้แน่ใจว่าสร้างครบทุกกรณี รวมถึงกรณีที่ผิดพลาดด้วย</div></div>
+  </div>
+</div>
+
+<!-- 6. Sequence -->
+<div class="dia-card c-flow" id="seq">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">💬</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 6</div>
+      <div class="dia-name-th">บทสนทนาระหว่างระบบ — ใครพูดก่อน</div>
+      <div class="dia-name-en">Sequence Diagrams</div>
+    </div>
+    <span class="dia-badge">การไหลข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">📞</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>บันทึกการโทรศัพท์ — ใครพูดก่อน พูดว่าอะไร อีกฝ่ายตอบว่าอะไร ทีละประโยคตามลำดับเวลา</div>
+    </div>
+    <div class="explain-label">มี 3 บทสนทนาหลัก</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">①</div><div class="pt-text"><b>ลูกค้าส่งฟอร์ม</b> — ลูกค้ากดส่ง → หน้าเว็บตรวจสอบ → ส่งไปที่ Server → Server บันทึกลงฐานข้อมูล → ฐานข้อมูลตอบกลับ → Server ตอบหน้าเว็บ → หน้าเว็บแสดง "สำเร็จ" ให้ลูกค้า (7 ขั้นตอน)</div></div>
+      <div class="point"><div class="pt-ic">②</div><div class="pt-text"><b>Admin Login</b> — Admin กรอกรหัส → หน้าเว็บส่งให้ Server → Server ดึงรหัสเข้ารหัสจากฐานข้อมูล → เปรียบเทียบ → ถ้าถูก: ออกบัตรดิจิทัล (JWT) → Admin เข้าแดชบอร์ดได้ (8 ขั้นตอน)</div></div>
+      <div class="point"><div class="pt-ic">③</div><div class="pt-text"><b>สมัครหลักสูตร</b> — ลูกค้าสมัคร → Server ตรวจที่นั่ง → ถ้าว่าง: บันทึก → ส่งอีเมลยืนยัน → ถ้าเต็ม: แจ้งกลับ (6 ขั้นตอน)</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>ต่างจาก Activity Diagram ตรงที่ <b>เห็นว่าแต่ละฝ่ายรับผิดชอบส่วนไหน</b> — หน้าเว็บทำอะไร, Server ทำอะไร, ฐานข้อมูลทำอะไร แยกกันชัดเจน</div></div>
+  </div>
+</div>
+
+<!-- 7. State -->
+<div class="dia-card c-flow" id="sta">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🚦</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 7</div>
+      <div class="dia-name-th">สถานะที่เปลี่ยนได้ — เหมือนสัญญาณไฟ</div>
+      <div class="dia-name-en">State Diagrams</div>
+    </div>
+    <span class="dia-badge">การไหลข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🚦</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>สัญญาณไฟจราจร — มีได้แค่ "แดง เหลือง เขียว" และเปลี่ยนได้เฉพาะตามเงื่อนไขที่กำหนด จะข้ามจากแดงไปเขียวทันทีไม่ได้</div>
+    </div>
+    <div class="explain-label">ระบบมี 4 สิ่งที่มีสถานะเปลี่ยนได้</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">📝</div><div class="pt-text"><b>บทความข่าว</b><br>"ร่าง" → (กดเผยแพร่) → "เผยแพร่แล้ว" → (กดลบ) → "ลบแล้ว" · หรือ "ร่าง" → "ลบแล้ว" ได้เลย · ลบแล้วกู้คืนไม่ได้</div></div>
+      <div class="point"><div class="pt-ic">📥</div><div class="pt-text"><b>Lead ผู้ติดต่อ</b><br>"ใหม่" → (โทรหา) → "ติดต่อแล้ว" → (ติดตาม) → "Follow up" → ปิดได้ "Win" / ปิดไม่ได้ "Lose" · ย้อนกลับจาก Win/Lose ไม่ได้</div></div>
+      <div class="point"><div class="pt-ic">🎓</div><div class="pt-text"><b>การสมัครหลักสูตร</b><br>"รอยืนยัน" → (Admin ยืนยัน) → "ยืนยันแล้ว" → (วันอบรมผ่าน) → "เสร็จแล้ว" · หรือ "รอ/ยืนยัน" → (ยกเลิก) → "ยกเลิก"</div></div>
+      <div class="point"><div class="pt-ic">🤿</div><div class="pt-text"><b>ไลฟ์การ์ด</b><br>"ลงทะเบียน" → "ว่าง" → (มีงาน) → "ปฏิบัติงาน" → (งานจบ) → "ว่าง" ได้อีก · หรือ → "อบรม" → กลับมา "ว่าง"</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>แผนผังนี้บอกว่า <b>ข้อมูลแต่ละชิ้นเปลี่ยนสถานะยังไงได้บ้าง</b> และมีเงื่อนไขอะไรถึงจะเปลี่ยนได้ ป้องกันการเปลี่ยนสถานะผิดลำดับ เช่น ลูกค้ายังไม่โทรแต่กดปิดงานแล้ว</div></div>
+  </div>
+</div>
+
+<!-- ──── GROUP C ──── -->
+<div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);padding:24px 0 14px;border-bottom:2px solid var(--line);margin-bottom:20px;">
+  🗄️ &nbsp;กลุ่ม C — ข้อมูลและโครงสร้างระบบ
+</div>
+
+<!-- 8. Class -->
+<div class="dia-card c-data" id="cls">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🧬</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 8</div>
+      <div class="dia-name-th">โครงกระดูกข้อมูล — แต่ละอย่างมีรายละเอียดอะไร</div>
+      <div class="dia-name-en">Class Diagram</div>
+    </div>
+    <span class="dia-badge">โครงสร้างข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">📋</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>แบบฟอร์มว่างๆ ก่อนกรอก — บอกว่าแบบฟอร์มแต่ละชุดมีช่องอะไรบ้าง ช่องไหนกรอกอะไร และแบบฟอร์มแต่ละชุดสัมพันธ์กันยังไง</div>
+    </div>
+    <div class="explain-label">ระบบมีข้อมูล 7 ประเภท</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">📦</div><div class="pt-text"><b>สินค้า (Product)</b> — มีชื่อ, ประเภท (AED/Auto/กายภาพ), ป้ายรับรอง, สเปค</div></div>
+      <div class="point"><div class="pt-ic">📰</div><div class="pt-text"><b>บทความ (NewsArticle)</b> — มีหัวข้อ, ประเภท, สถานะ (ร่าง/เผยแพร่), วันเผยแพร่</div></div>
+      <div class="point"><div class="pt-ic">🎓</div><div class="pt-text"><b>หลักสูตร (Course)</b> — มีชื่อ, ระดับ, ระยะเวลา, ราคา, จำนวนที่นั่ง</div></div>
+      <div class="point"><div class="pt-ic">📥</div><div class="pt-text"><b>Lead ผู้ติดต่อ</b> — มีชื่อ, อีเมล, เบอร์, บริษัท, สินค้าที่สนใจ, สถานะ</div></div>
+      <div class="point"><div class="pt-ic">🤿</div><div class="pt-text"><b>ไลฟ์การ์ด (Lifeguard)</b> — มีชื่อ, ระดับ, สถานะ (ว่าง/ปฏิบัติงาน), ใบรับรอง</div></div>
+      <div class="point"><div class="pt-ic">⚙️</div><div class="pt-text"><b>ตั้งค่าบริษัท</b> — มีเบอร์โทร, อีเมล, Line ID, Facebook, YouTube</div></div>
+      <div class="point"><div class="pt-ic">👨‍💼</div><div class="pt-text"><b>Admin</b> — มี username, รหัสผ่านเข้ารหัส, สิทธิ์การใช้งาน</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>ทีมพัฒนาใช้แผนผังนี้เป็น <b>พิมพ์เขียวก่อนสร้างฐานข้อมูล</b> — รู้ว่าต้องสร้างตารางอะไร มีคอลัมน์อะไร และตารางไหนเชื่อมกับตารางไหน</div></div>
+  </div>
+</div>
+
+<!-- 9. ER -->
+<div class="dia-card c-data" id="er">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🗃️</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 9</div>
+      <div class="dia-name-th">ตู้เก็บเอกสารดิจิทัล — เก็บอะไร เชื่อมกันยังไง</div>
+      <div class="dia-name-en">ER Diagram (Entity Relationship)</div>
+    </div>
+    <span class="dia-badge">โครงสร้างข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🗂️</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>ตู้เก็บแฟ้มเอกสารในออฟฟิศ — มีแฟ้มหลายชุด บางแฟ้มอ้างอิงถึงกัน เช่น แฟ้มใบเสนอราคา → อ้างถึงแฟ้มลูกค้า</div>
+    </div>
+    <div class="explain-label">ฐานข้อมูลมี 8 ตาราง</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">📦</div><div class="pt-text"><b>products</b> — เก็บสินค้าทุกรายการ ชื่อ ราคา สเปค สถานะ active/inactive</div></div>
+      <div class="point"><div class="pt-ic">📰</div><div class="pt-text"><b>articles</b> — เก็บบทความทุกชิ้น อ้างอิงถึง admins ว่าใครเป็นคนเขียน</div></div>
+      <div class="point"><div class="pt-ic">🎓</div><div class="pt-text"><b>courses</b> — เก็บหลักสูตร ราคา ที่นั่งสูงสุด สถานะเปิด/ปิด</div></div>
+      <div class="point"><div class="pt-ic">👨‍💼</div><div class="pt-text"><b>admins</b> — เก็บบัญชีผู้ดูแล username และรหัสผ่านที่เข้ารหัสแล้ว</div></div>
+      <div class="point"><div class="pt-ic">📥</div><div class="pt-text"><b>leads</b> — เก็บทุกฟอร์มที่ลูกค้ากรอก ชื่อ เบอร์ บริษัท สินค้าที่สนใจ</div></div>
+      <div class="point"><div class="pt-ic">🎟️</div><div class="pt-text"><b>course_registrations</b> — เก็บการสมัครหลักสูตร อ้างอิงทั้ง leads และ courses</div></div>
+      <div class="point"><div class="pt-ic">🤿</div><div class="pt-text"><b>lifeguards</b> — เก็บข้อมูลทีมไลฟ์การ์ด ระดับ ใบรับรอง วันหมดอายุ</div></div>
+      <div class="point"><div class="pt-ic">⚙️</div><div class="pt-text"><b>company_settings</b> — เก็บข้อมูลบริษัท โทร อีเมล Line มีแถวเดียว</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>ER Diagram คือ <b>แบบแปลนฐานข้อมูล</b> ก่อนสร้างจริง ถ้าตกลงรูปแบบนี้แล้ว ข้อมูลจะไม่สูญหาย ไม่ซ้ำซ้อน และค้นหาได้รวดเร็ว</div></div>
+  </div>
+</div>
+
+<!-- 10. Data Dictionary -->
+<div class="dia-card c-data" id="dict">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">📚</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 10</div>
+      <div class="dia-name-th">พจนานุกรมข้อมูล — แต่ละช่องเก็บอะไรได้บ้าง</div>
+      <div class="dia-name-en">Data Dictionary</div>
+    </div>
+    <span class="dia-badge">โครงสร้างข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">📖</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>คำอธิบายหลังแบบฟอร์ม — เช่น "ช่องเบอร์โทร: กรอกตัวเลข 9-10 หลักเท่านั้น ห้ามใส่ขีด" บอกกฎทุกช่องอย่างละเอียด</div>
+    </div>
+    <div class="explain-label">ตัวอย่างกฎของช่อง Lead</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">🔑</div><div class="pt-text"><b>รหัสประจำตัว (id)</b> — สร้างอัตโนมัติ ห้ามแก้ไข เป็นเลข UUID เช่น a3f8-4b2c-...</div></div>
+      <div class="point"><div class="pt-ic">👤</div><div class="pt-text"><b>ชื่อ-นามสกุล</b> — ต้องกรอก ยาว 2-100 ตัวอักษร ภาษาไทยหรืออังกฤษ</div></div>
+      <div class="point"><div class="pt-ic">📧</div><div class="pt-text"><b>อีเมล</b> — ต้องกรอก ต้องมี @ และ . เก็บเป็นตัวพิมพ์เล็กทั้งหมด</div></div>
+      <div class="point"><div class="pt-ic">📱</div><div class="pt-text"><b>เบอร์โทร</b> — ต้องกรอก ตัวเลข 9-10 หลัก ลบขีดและช่องว่างก่อนบันทึก</div></div>
+      <div class="point"><div class="pt-ic">🏢</div><div class="pt-text"><b>บริษัท</b> — ไม่บังคับ ถ้าไม่กรอกระบบเก็บเป็นว่าง (NULL)</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>เอกสารนี้ทำให้ <b>ทุกคนในทีมเข้าใจกฎของข้อมูลตรงกัน</b> ป้องกันบัคที่เกิดจากการเข้าใจกฎต่างกัน เช่น บางคนคิดว่าเบอร์โทรกรอก 10 หลักได้ แต่บางคนคิดว่า 9 หลัก</div></div>
+  </div>
+</div>
+
+<!-- 11. Component Architecture -->
+<div class="dia-card c-data" id="comp">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🧩</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 11</div>
+      <div class="dia-name-th">แบบแปลนเว็บ — ห้องไหนทำหน้าที่อะไร</div>
+      <div class="dia-name-en">Component Architecture</div>
+    </div>
+    <span class="dia-badge">โครงสร้างข้อมูล</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🏠</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>แบบบ้านสถาปัตยกรรม — บอกว่ามีห้องอะไรบ้าง แต่ละห้องทำหน้าที่อะไร เชื่อมถึงกันยังไง และมีของใช้ร่วมกันอะไรบ้าง</div>
+    </div>
+    <div class="explain-label">โครงสร้างหลักของเว็บ</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">🏗️</div><div class="pt-text"><b>โครงกระดูกหลัก (RootLayout)</b> — ทุกหน้าใช้ร่วมกัน: Navbar, Footer, แถบด้านบน, Font ภาษาไทย, ระบบรักษาความปลอดภัย</div></div>
+      <div class="point"><div class="pt-ic">🌐</div><div class="pt-text"><b>หน้าลูกค้า (20 หน้า)</b> — หน้าแรก, สินค้า, หลักสูตร, ข่าว, โซลูชั่น, ติดต่อ, ค้นหา ฯลฯ แต่ละหน้าดึง Component ที่ใช้ซ้ำมาประกอบ</div></div>
+      <div class="point"><div class="pt-ic">🔒</div><div class="pt-text"><b>หน้า Admin (9 หน้า)</b> — Dashboard, จัดการข่าว, Leads, หลักสูตร, ไลฟ์การ์ด, ตั้งค่า ทุกหน้าตรวจสิทธิ์ก่อนแสดง</div></div>
+      <div class="point"><div class="pt-ic">🔧</div><div class="pt-text"><b>ชิ้นส่วนที่ใช้ซ้ำ (Shared Components)</b> — การ์ดสินค้า, ฟอร์มติดต่อ, การ์ดข่าว, ช่องค้นหา ฯลฯ สร้างครั้งเดียวใช้ได้ทุกหน้า</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>เหมือนแบบบ้านที่ช่างก่อสร้างต้องอ่านก่อนลงมือ — ถ้าไม่มีแผนผังนี้ แต่ละคนในทีมอาจสร้างซ้ำกันหรือขัดแย้งกัน</div></div>
+  </div>
+</div>
+
+<!-- ──── GROUP D ──── -->
+<div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);padding:24px 0 14px;border-bottom:2px solid var(--line);margin-bottom:20px;">
+  📋 &nbsp;กลุ่ม D — ข้อกำหนดและกฎการทำงาน
+</div>
+
+<!-- 12. FR -->
+<div class="dia-card c-req" id="fr">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">📋</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 12</div>
+      <div class="dia-name-th">รายการสิ่งที่ระบบต้องทำได้ — ข้อกำหนดหลัก</div>
+      <div class="dia-name-en">Functional Requirements (FR)</div>
+    </div>
+    <span class="dia-badge">ข้อกำหนด</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">📜</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>TOR (Terms of Reference) หรือสัญญาจ้าง — เขียนชัดเจนว่า "ระบบต้องทำสิ่งนี้ได้" แต่ละข้อตรวจสอบได้ว่าทำเสร็จหรือยัง</div>
+    </div>
+    <div class="explain-label">ตัวอย่างข้อกำหนด (มีทั้งหมด 23 ข้อ)</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">FR-001</div><div class="pt-text">หน้าแรกต้องแสดงสินค้า 3 รายการ, ข่าว 3 ชิ้น และ Footer ครบ · ความสำคัญ: สูง</div></div>
+      <div class="point"><div class="pt-ic">FR-003</div><div class="pt-text">ฟอร์มขอใบเสนอราคาต้องรับ 6 ข้อมูล และตรวจสอบก่อนส่งทุกครั้ง · ความสำคัญ: สูง</div></div>
+      <div class="point"><div class="pt-ic">FR-004</div><div class="pt-text">เมื่อมี Lead ใหม่ระบบต้องส่งอีเมลแจ้ง Admin ภายใน 60 วินาที · เฟส 2</div></div>
+      <div class="point"><div class="pt-ic">FR-010</div><div class="pt-text">Admin ต้องล็อกอินก่อนเข้าทุกหน้า Admin ถ้ารหัสผิด 5 ครั้งให้ล็อค 15 นาที</div></div>
+      <div class="point"><div class="pt-ic">FR-015</div><div class="pt-text">หน้าเว็บต้องโหลดได้บนมือถือทุกขนาดหน้าจอ ปุ่มกดได้ง่าย ไม่ต้อง zoom</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>นี่คือ <b>"สัญญา"</b> ระหว่างเจ้าของโปรเจกต์กับทีมพัฒนา ถ้าทำครบทุกข้อถือว่าส่งมอบงานสำเร็จ</div></div>
+  </div>
+</div>
+
+<!-- 13. Auth Matrix -->
+<div class="dia-card c-req" id="auth">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🔐</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 13</div>
+      <div class="dia-name-th">ตารางกุญแจ — ใครเปิดประตูไหนได้บ้าง</div>
+      <div class="dia-name-en">Authorization Matrix</div>
+    </div>
+    <span class="dia-badge">ข้อกำหนด</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🔑</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>ระบบ key card ในโรงแรม — บัตรพนักงานทั่วไปเข้าได้แค่บางส่วน บัตรผู้จัดการเข้าได้ทุกที่ แผนผังนี้ระบุว่ากุญแจไหนเปิดประตูไหนได้</div>
+    </div>
+    <div class="explain-label">กฎสำคัญ</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">✅</div><div class="pt-text"><b>ลูกค้าเข้าได้</b> — ดูสินค้า, ดูบทความที่เผยแพร่แล้ว, ส่งฟอร์มติดต่อ, ดูหลักสูตร</div></div>
+      <div class="point"><div class="pt-ic">❌</div><div class="pt-text"><b>ลูกค้าเข้าไม่ได้</b> — ดูบทความที่ยังเป็นร่าง, เห็น Leads คนอื่น, แก้ไขข้อมูลใดๆ</div></div>
+      <div class="point"><div class="pt-ic">🔒</div><div class="pt-text"><b>Admin เท่านั้น</b> — ดู Leads ทั้งหมด, เพิ่ม/แก้/ลบบทความ, เปลี่ยนสถานะ Lead, จัดการทีม</div></div>
+      <div class="point"><div class="pt-ic">⚠️</div><div class="pt-text"><b>Rate Limit</b> — ส่งฟอร์มได้ไม่เกิน 3 ครั้ง/นาที/IP ป้องกัน spam อัตโนมัติ</div></div>
+      <div class="point"><div class="pt-ic">🚫</div><div class="pt-text"><b>Error ที่ชัดเจน</b> — 401 ไม่มีสิทธิ์, 403 ห้ามเข้า, 404 ไม่พบ, 429 ส่งมากเกินไป</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>แผนผังนี้ป้องกันไม่ให้ข้อมูลลูกค้าหลุดไปยังคนที่ไม่มีสิทธิ์ — เป็นพื้นฐานของความปลอดภัยระบบ</div></div>
+  </div>
+</div>
+
+<!-- 14. API Schema -->
+<div class="dia-card c-req" id="schema">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">📨</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 14</div>
+      <div class="dia-name-th">รูปแบบพัสดุ — ส่งข้อมูลต้องห่อแบบไหน</div>
+      <div class="dia-name-en">API Payload Schemas</div>
+    </div>
+    <span class="dia-badge">ข้อกำหนด</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">📦</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>มาตรฐานการส่งพัสดุ — ต้องติดป้ายชื่อผู้รับ ชื่อผู้ส่ง รหัสไปรษณีย์ ห้ามส่งโดยไม่มีที่อยู่ กำหนดว่า "กล่อง" ของข้อมูลต้องมีรูปแบบอะไรบ้าง</div>
+    </div>
+    <div class="explain-label">ตัวอย่างการส่งฟอร์มติดต่อ</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">📤</div><div class="pt-text"><b>หน้าเว็บต้องส่งไป</b> — ชื่อจริง, นามสกุล, อีเมล (บังคับ), เบอร์ 9-10 หลัก (บังคับ), บริษัท, รุ่นสินค้า, ข้อความ (ไม่บังคับ)</div></div>
+      <div class="point"><div class="pt-ic">📥</div><div class="pt-text"><b>เมื่อสำเร็จ Server ตอบกลับ</b> — "ส่งเรียบร้อย" + รหัส Lead ที่ได้รับ (เก็บไว้ track ได้)</div></div>
+      <div class="point"><div class="pt-ic">❌</div><div class="pt-text"><b>เมื่อข้อมูลผิด Server ตอบกลับ</b> — บอกว่าช่องไหนผิด เช่น "email ไม่ถูกต้อง" แบบระบุตำแหน่ง</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>ทั้งทีม Frontend และ Backend ต้องตกลง schema นี้ก่อน — ป้องกันปัญหาที่ข้อมูลส่งไปแล้ว Server ไม่รู้จักเพราะชื่อ field ต่างกัน</div></div>
+  </div>
+</div>
+
+<!-- 15. Acceptance Criteria -->
+<div class="dia-card c-req" id="ac">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">✅</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 15</div>
+      <div class="dia-name-th">เกณฑ์ตรวจรับงาน — ถือว่าเสร็จเมื่อไหร่</div>
+      <div class="dia-name-en">Acceptance Criteria</div>
+    </div>
+    <span class="dia-badge">ข้อกำหนด</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🔍</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>checklist ของช่างที่ส่งบ้าน — "ก๊อกน้ำเปิด-ปิดได้", "ประตูล็อคได้", "ไฟทุกห้องติด" ถ้าทำเครื่องหมายครบทุกข้อถือว่ารับงานได้</div>
+    </div>
+    <div class="explain-label">ตัวอย่าง checklist ที่ทดสอบได้จริง</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">⏱️</div><div class="pt-text"><b>ความเร็ว</b> — หน้าแรกต้องโหลดภายใน 2.5 วินาที วัดด้วยเครื่องมือ Lighthouse</div></div>
+      <div class="point"><div class="pt-ic">📱</div><div class="pt-text"><b>มือถือ</b> — กดแท็บ 4 ปุ่มได้ถูกต้อง, Accordion ขยาย/ย่อได้ ทดสอบ 3 browser</div></div>
+      <div class="point"><div class="pt-ic">📧</div><div class="pt-text"><b>อีเมล</b> — ส่งฟอร์ม → อีเมลต้องถึง Admin ภายใน 60 วินาที ไม่ตกใน Spam</div></div>
+      <div class="point"><div class="pt-ic">🔐</div><div class="pt-text"><b>Login</b> — รหัสผิด 5 ครั้งต้องล็อค 15 นาที รหัสถูกต้องเข้า Dashboard ได้ทันที</div></div>
+      <div class="point"><div class="pt-ic">🔍</div><div class="pt-text"><b>ค้นหา</b> — พิมพ์ "AED" ต้องเจอผลลัพธ์สินค้าและหลักสูตรที่เกี่ยวข้อง</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>เป็น <b>สัญญาว่างานเสร็จเมื่อไหร่</b> — ป้องกันการเถียงกันว่า "เสร็จแล้ว" หรือ "ยังไม่เสร็จ" เพราะมี checklist ที่ชัดเจนและทดสอบได้</div></div>
+  </div>
+</div>
+
+<!-- 16. Traceability -->
+<div class="dia-card c-req" id="trace">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🔗</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 16</div>
+      <div class="dia-name-th">ตารางสอบทาน — ทุกอย่างเชื่อมกันครบไหม</div>
+      <div class="dia-name-en">Traceability Matrix</div>
+    </div>
+    <span class="dia-badge">ข้อกำหนด</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🧵</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>การสอบทานว่า "ทุก requirement มีคนรับผิดชอบแล้ว" — เหมือนตาราง RACI ที่ตรวจว่าทุกงานมีเจ้าของ ไม่มีงานหลุดหาย</div>
+    </div>
+    <div class="explain-label">ตารางนี้เชื่อมโยงทุกอย่างเข้าหากัน</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">🔗</div><div class="pt-text"><b>FR-003 (ฟอร์มติดต่อ)</b> → Use Case UC-04 → Activity Flow 1 → API: POST /api/contact → ฐานข้อมูล: leads → Component: ContactForm → ทดสอบ: AC-003</div></div>
+      <div class="point"><div class="pt-ic">🔗</div><div class="pt-text"><b>FR-010 (Admin Login)</b> → UC-10 → Activity Flow 3 → API: POST /api/auth/login → ฐานข้อมูล: admins → Component: LoginForm → ทดสอบ: AC-010</div></div>
+    </div>
+    <div class="note"><b>ทำไมต้องมีตารางนี้?</b> ถ้า requirement ข้อหนึ่งไม่มี API, ไม่มีฐานข้อมูล, หรือไม่มีการทดสอบรองรับ — แสดงว่างานยังไม่ครบ ตารางนี้ตรวจสอบให้อัตโนมัติว่าไม่มีข้อไหนหลุดหาย</div>
+    <div class="summary-box" style="margin-top:12px"><div class="sb-ic">💡</div><div>เหมือน <b>ตาราง cross-check</b> ว่าทุก requirement มีคนสร้าง มีที่เก็บข้อมูล และมีวิธีทดสอบครบ — ระบบนี้ผ่าน 100% ครบทุก 23 ข้อ</div></div>
+  </div>
+</div>
+
+<!-- ──── GROUP E ──── -->
+<div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);padding:24px 0 14px;border-bottom:2px solid var(--line);margin-bottom:20px;">
+  📅 &nbsp;กลุ่ม E — แผนงาน การติดตั้ง และการอ้างอิง
+</div>
+
+<!-- 17. Page Flow -->
+<div class="dia-card c-plan" id="pf">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🗺️</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 17</div>
+      <div class="dia-name-th">แผนที่นำทางเว็บ — กดปุ่มแล้วไปไหน</div>
+      <div class="dia-name-en">Page Flow Diagram</div>
+    </div>
+    <span class="dia-badge">แผนงาน</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🏢</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>แผนผังห้างสรรพสินค้า — บอกว่าชั้น 1 มีอะไร ชั้น 2 มีอะไร ลิฟต์และบันไดอยู่ที่ไหน ไปจากห้องไหนถึงห้องไหนได้</div>
+    </div>
+    <div class="explain-label">เว็บมี 2 โซนหลัก 30 หน้า</div>
+    <div class="g2">
+      <div class="gbox">
+        <h4 style="color:var(--blue);">🌐 โซนลูกค้า (20 หน้า)</h4>
+        <ul>
+          <li>หน้าแรก → สินค้าทั้งหมด → รายละเอียด AED/Auto/กายภาพ</li>
+          <li>หลักสูตร → CPR, Rescue Swimmer</li>
+          <li>บริการ CSR → โซลูชั่น 4 ประเภท</li>
+          <li>ข่าวสาร → บทความ</li>
+          <li>ติดต่อ, ค้นหา, เกี่ยวกับเรา, 404</li>
+        </ul>
+      </div>
+      <div class="gbox">
+        <h4 style="color:var(--amber);">🔒 โซน Admin (9 หน้า)</h4>
+        <ul>
+          <li>Login → Dashboard</li>
+          <li>จัดการข่าว, เพิ่ม/แก้ไขบทความ</li>
+          <li>จัดการหลักสูตร</li>
+          <li>Leads & ติดต่อ</li>
+          <li>ทีมไลฟ์การ์ด, ตั้งค่า</li>
+        </ul>
+      </div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>ทีม UX ใช้แผนผังนี้ออกแบบ navigation ให้ <b>ลูกค้าหาทางไปสินค้าได้ภายใน 3 คลิก</b> และ Admin เข้าถึงฟังก์ชันที่ต้องการได้รวดเร็ว</div></div>
+  </div>
+</div>
+
+<!-- 18. Gantt -->
+<div class="dia-card c-plan" id="gantt">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">📅</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 18</div>
+      <div class="dia-name-th">ปฏิทินโปรเจกต์ — งานไหนทำสัปดาห์ไหน</div>
+      <div class="dia-name-en">Gantt Chart</div>
+    </div>
+    <span class="dia-badge">แผนงาน</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">📆</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>ปฏิทินก่อสร้างบ้าน — เดือนแรกเทฐานราก เดือนสองขึ้นโครงสร้าง เดือนสามตกแต่ง บอกว่างานไหนต้องเสร็จก่อน งานไหนทำพร้อมกันได้</div>
+    </div>
+    <div class="explain-label">แผน 6 เดือน แบ่งเป็น 2 เฟส</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">🎨</div><div class="pt-text"><b>เดือน 1 (สัปดาห์ 1–4)</b> — ออกแบบ UI/UX, ทำ Prototype, ย้ายโค้ดไปโครงสร้างใหม่, สร้างหน้าแรก</div></div>
+      <div class="point"><div class="pt-ic">📦</div><div class="pt-text"><b>เดือน 2 (สัปดาห์ 5–8)</b> — หน้าสินค้า 3 รายการ, หน้า CSR, หลักสูตร, Rescue Club</div></div>
+      <div class="point"><div class="pt-ic">🔧</div><div class="pt-text"><b>เดือน 3 (สัปดาห์ 9–12)</b> — ข่าวสาร, ติดต่อ, ระบบ Admin ทั้ง 9 หน้า, ทดสอบ, เปิดตัว เฟส 1 ⭐</div></div>
+      <div class="point"><div class="pt-ic">🗄️</div><div class="pt-text"><b>เดือน 4 (สัปดาห์ 13–16)</b> — สร้างฐานข้อมูล Supabase, ระบบ Login จริง, API ฟอร์มติดต่อ</div></div>
+      <div class="point"><div class="pt-ic">⚙️</div><div class="pt-text"><b>เดือน 5 (สัปดาห์ 17–20)</b> — Admin CRUD ข่าว, จัดการ Leads และไลฟ์การ์ด, อัปโหลดรูป</div></div>
+      <div class="point"><div class="pt-ic">🚀</div><div class="pt-text"><b>เดือน 6 (สัปดาห์ 21–26)</b> — SEO, ทดสอบระบบเต็มรูปแบบ, ตั้งค่า domain, Launch จริง 🚀</div></div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>จุดสำคัญ — <b>เฟส 1 เปิดให้ลูกค้าใช้งานได้ที่เดือน 3</b> แม้ระบบหลังบ้านยังไม่สมบูรณ์ เพื่อให้บริษัทเริ่มรับ Lead ได้ก่อน</div></div>
+  </div>
+</div>
+
+<!-- 19. Deployment -->
+<div class="dia-card c-plan" id="dep">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🚀</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 19</div>
+      <div class="dia-name-th">แผนการส่งของ — โค้ดไปถึงลูกค้าได้ยังไง</div>
+      <div class="dia-name-en">Deployment Diagram</div>
+    </div>
+    <span class="dia-badge">แผนงาน</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🏭</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>ระบบขนส่งโรงงาน → คลังสินค้า → ร้านค้า → ลูกค้า — บอกว่าโค้ดที่นักพัฒนาเขียนเสร็จแล้ว ผ่านกระบวนการอะไรถึงไปถึงมือผู้ใช้</div>
+    </div>
+    <div class="explain-label">กระบวนการส่งโค้ดขึ้นเว็บ (CI/CD)</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">1️⃣</div><div class="pt-text"><b>นักพัฒนาส่งโค้ด</b> → GitHub (คลังเก็บโค้ดออนไลน์) — เหมือนส่งสินค้าเข้าคลัง</div></div>
+      <div class="point"><div class="pt-ic">2️⃣</div><div class="pt-text"><b>ระบบตรวจสอบอัตโนมัติ</b> — ตรวจว่าโค้ดมีข้อผิดพลาดไหม Build ผ่านหรือเปล่า ใช้เวลาไม่กี่นาที</div></div>
+      <div class="point"><div class="pt-ic">3️⃣</div><div class="pt-text"><b>ขึ้น Preview URL</b> — สร้างเว็บทดสอบให้ดูก่อน เช่น xxx.vercel.app ลูกค้าตรวจได้ก่อน go live</div></div>
+      <div class="point"><div class="pt-ic">4️⃣</div><div class="pt-text"><b>Merge ขึ้น Production</b> — ผ่านแล้ว กดอนุมัติ → ขึ้น prosperous-rescue.com ทันที มี SSL (HTTPS) อัตโนมัติ</div></div>
+    </div>
+    <div class="note"><b>3 Environment ที่ใช้งาน:</b> "Local" บนเครื่องนักพัฒนา → "Preview" URL ทดสอบ → "Production" เว็บจริง</div>
+    <div class="summary-box" style="margin-top:12px"><div class="sb-ic">💡</div><div>ระบบนี้ทำให้ <b>อัปเดตเว็บได้โดยไม่ต้อง down ระบบ</b> และมีจุดตรวจสอบก่อนขึ้นจริงทุกครั้ง</div></div>
+  </div>
+</div>
+
+<!-- 20. Environment Variables -->
+<div class="dia-card c-plan" id="env">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">🔑</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 20</div>
+      <div class="dia-name-th">กุญแจลับของระบบ — รหัสที่ห้ามใครรู้</div>
+      <div class="dia-name-en">Environment Variables</div>
+    </div>
+    <span class="dia-badge">แผนงาน</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🏦</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>รหัส PIN ของ ATM — ระบบใช้งานทุกวัน แต่ไม่มีใครควรรู้นอกจากเจ้าของ ห้ามจดไว้บนการ์ดเด็ดขาด</div>
+    </div>
+    <div class="explain-label">กุญแจลับที่ระบบต้องการ (ห้าม share)</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">🌐</div><div class="pt-text"><b>NEXT_PUBLIC_SITE_URL</b> — ที่อยู่เว็บจริง (https://prosperous-rescue.com) ใช้สร้าง link แชร์และ Google index</div></div>
+      <div class="point"><div class="pt-ic">📧</div><div class="pt-text"><b>RESEND_API_KEY</b> — รหัสบริการส่งอีเมล ถ้าหายไประบบส่งอีเมลไม่ได้</div></div>
+      <div class="point"><div class="pt-ic">🗄️</div><div class="pt-text"><b>DATABASE_URL</b> — ที่อยู่ฐานข้อมูล + รหัสผ่าน ถ้าหายไปเว็บดึงข้อมูลไม่ได้</div></div>
+      <div class="point"><div class="pt-ic">🔐</div><div class="pt-text"><b>JWT_SECRET</b> — รหัสลับสำหรับสร้างบัตรดิจิทัล Admin ถ้าเปลี่ยน Admin ทุกคนต้อง Login ใหม่</div></div>
+      <div class="point"><div class="pt-ic">📊</div><div class="pt-text"><b>NEXT_PUBLIC_GA_ID</b> — รหัส Google Analytics ติดตาม traffic เว็บ</div></div>
+    </div>
+    <div class="note"><b>กฎสำคัญ:</b> รหัสเหล่านี้ <b>ห้ามฝังในโค้ด</b> และ <b>ห้าม commit ลง GitHub</b> เด็ดขาด เก็บแยกในระบบปลอดภัยของ Vercel</div>
+    <div class="summary-box" style="margin-top:12px"><div class="sb-ic">💡</div><div>เอกสารนี้บอกว่า <b>มีกุญแจอะไรบ้างที่ต้องตั้งค่าก่อนระบบจะทำงาน</b> — ถ้าตั้งผิดหรือขาดตัวใดตัวหนึ่ง ฟีเจอร์ที่เกี่ยวข้องจะพัง</div></div>
+  </div>
+</div>
+
+<!-- 21. Glossary -->
+<div class="dia-card c-plan" id="gloss">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">📖</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 21</div>
+      <div class="dia-name-th">พจนานุกรมโปรเจกต์ — คำศัพท์ที่ทุกคนต้องเข้าใจตรงกัน</div>
+      <div class="dia-name-en">Glossary</div>
+    </div>
+    <span class="dia-badge">อ้างอิง</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">📕</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>ศัพท์เฉพาะในสัญญา — ก่อนเซ็น ทนายอธิบายว่า "การยกเลิก" หมายถึงอะไรในสัญญานี้ เพื่อป้องกันการตีความต่างกันภายหลัง</div>
+    </div>
+    <div class="explain-label">คำศัพท์สำคัญที่ใช้ในโปรเจกต์</div>
+    <div class="g2">
+      <div class="gbox">
+        <h4 style="color:var(--red);">🏥 ศัพท์ธุรกิจ Prosperous</h4>
+        <ul>
+          <li><b>AED</b> — เครื่องช็อคไฟฟ้าหัวใจ (กดปุ่มเอง)</li>
+          <li><b>Auto AED</b> — ช็อคอัตโนมัติ ไม่ต้องกดปุ่ม</li>
+          <li><b>CPR</b> — การปั๊มหัวใจช่วยชีวิต</li>
+          <li><b>ILSE</b> — มาตรฐานไลฟ์การ์ดสากล</li>
+          <li><b>Lead</b> — คนที่ส่งฟอร์มสนใจ ยังไม่ซื้อ</li>
+          <li><b>CSR</b> — กิจกรรมเพื่อสังคมขององค์กร</li>
+        </ul>
+      </div>
+      <div class="gbox">
+        <h4 style="color:var(--blue);">💻 ศัพท์เทคนิค (แปลแล้ว)</h4>
+        <ul>
+          <li><b>API</b> — ช่องทางที่หน้าเว็บคุยกับ Server</li>
+          <li><b>JWT</b> — บัตรดิจิทัลพิสูจน์ตัวตน Admin</li>
+          <li><b>Supabase</b> — ฐานข้อมูลออนไลน์</li>
+          <li><b>Vercel</b> — บริษัท Hosting เว็บ</li>
+          <li><b>UUID</b> — รหัสประจำตัวที่ไม่ซ้ำกันเลย</li>
+          <li><b>CRUD</b> — สร้าง/ดู/แก้/ลบข้อมูล</li>
+        </ul>
+      </div>
+    </div>
+    <div class="summary-box"><div class="sb-ic">💡</div><div>ทุกคนในโปรเจกต์ ตั้งแต่เจ้าของบริษัทถึงนักพัฒนา ต้องใช้คำศัพท์ตรงกัน ป้องกันความเข้าใจผิดที่อาจทำให้สร้างผิดฟีเจอร์</div></div>
+  </div>
+</div>
+
+<!-- 22. Cost -->
+<div class="dia-card c-plan" id="cost">
+  <div class="dia-head" onclick="toggle(this)">
+    <div class="dia-icon">💰</div>
+    <div class="dia-titles">
+      <div class="dia-num">แผนผังที่ 22</div>
+      <div class="dia-name-th">ตารางประเมินราคา — คิดราคายังไง โปร่งใสแค่ไหน</div>
+      <div class="dia-name-en">Cost Estimation & Non-functional Requirements</div>
+    </div>
+    <span class="dia-badge">แผนงาน</span>
+    <span class="dia-toggle">▼</span>
+  </div>
+  <div class="dia-body">
+    <div class="analogy">
+      <div class="an-ic">🧾</div>
+      <div class="an-text"><strong>เปรียบได้กับ</strong>ใบเสนอราคารับเหมาก่อสร้าง — บอกว่าห้องไหนราคาเท่าไหร่ คิดจากอะไร ค่าวัสดุเท่าไหร่ ค่าแรงเท่าไหร่ ไม่ใช่แค่บอกรวมตัวเลขเดียว</div>
+    </div>
+    <div class="explain-label">หลักการคิดราคา</div>
+    <div class="points">
+      <div class="point"><div class="pt-ic">⏰</div><div class="pt-text"><b>ค่าแรง 800 บาท/ชั่วโมง</b> — ทุกงานคิดจากชั่วโมงที่ใช้จริง ไม่ใช่ราคาเหมา</div></div>
+      <div class="point"><div class="pt-ic">📄</div><div class="pt-text"><b>หน้าธรรมดา</b> — 8–12 ชม. = 6,400–9,600 บาท/หน้า เช่น หน้าเกี่ยวกับเรา</div></div>
+      <div class="point"><div class="pt-ic">⚡</div><div class="pt-text"><b>หน้า AED (ซับซ้อน)</b> — 28 ชม. × 800 = 22,400 บาท เพราะมี 4 แท็บ, Accordion, ฟอร์ม</div></div>
+      <div class="point"><div class="pt-ic">🖥️</div><div class="pt-text"><b>หน้า Admin</b> — 20–40 ชม. = 16,000–32,000 บาท เพราะต้องเชื่อมฐานข้อมูลจริง</div></div>
+      <div class="point"><div class="pt-ic">🔌</div><div class="pt-text"><b>API แต่ละตัว</b> — 4–8 ชม. × 800 = 3,200–6,400 บาท/endpoint (มี 20 endpoint)</div></div>
+    </div>
+    <div style="background:var(--mist);border-radius:10px;padding:14px 18px;margin-top:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center;">
+      <div><div style="font-family:'Prompt';font-size:22px;font-weight:800;color:var(--red);">448,000</div><div style="font-size:12px;color:var(--slate)">เฟส 1 (UI ทั้งหมด)</div></div>
+      <div><div style="font-family:'Prompt';font-size:22px;font-weight:800;color:var(--blue);">202,000</div><div style="font-size:12px;color:var(--slate)">เฟส 2 (Backend)</div></div>
+      <div><div style="font-family:'Prompt';font-size:22px;font-weight:800;color:var(--green);">72,000</div><div style="font-size:12px;color:var(--slate)">Hosting ปีแรก</div></div>
+    </div>
+    <div style="background:var(--ink);border-radius:10px;padding:14px 18px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;">
+      <div style="color:rgba(255,255,255,.75);font-size:14px;font-weight:600;">รวมทั้งหมดปีแรก</div>
+      <div style="font-family:'Prompt';font-size:26px;font-weight:800;color:#fff;">722,000 ฿</div>
+    </div>
+    <div class="summary-box" style="margin-top:12px"><div class="sb-ic">💡</div><div>นอกจากราคา ตารางนี้ยังบอก <b>ข้อกำหนดที่ไม่ใช่ฟีเจอร์</b> เช่น โหลดเร็วไม่เกิน 2.5 วินาที, รองรับ 100 คนพร้อมกัน, uptime 99.5% — มาตรฐานคุณภาพที่ต้องทำได้</div></div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<footer style="background:var(--ink);color:rgba(255,255,255,.5);text-align:center;padding:28px;font-size:13px;">
+  <strong style="color:#fff;">Prosperous Rescue Swimming Co., Ltd.</strong><br>
+  คำอธิบาย Engineering Design Document — มิถุนายน 2568
+</footer>
+
+<script>
+function toggle(head) {
+  var card = head.closest('.dia-card');
+  card.classList.toggle('open');
+}
+// Open first card by default already via class
+</script>
+</body>
+</html>
